@@ -1,0 +1,39 @@
+\chapter{Relativity}
+\restartlist{enumerate}
+\begin{enumerate}
+    \item Einstein postulated that
+    \begin{slinenum}
+        \item the laws of physics are the same in every inertial reference frame, independent of the motion of the reference frame -- covariance; and
+        \item the speed of light in vacuum \(c = \SI{299792458}{\metre\per\second}\) is the same in every inertial reference frame -- invariance.
+    \end{slinenum}
+    These postulates give rise to special relativity.
+    \item \(\gamma = \left(1-\frac{v^2}{c^2}\right)^{\frac{-1}{2}}\). \(v = c\sqrt{1 - \frac{1}{\gamma^2}}\).
+    \item If an object is moving in a moving reference frame, to an observer in a stationary reference frame, the object will travel a greater distance -- the combination of the movement of the object and of the moving frame itself.
+    
+    Since light can be this object, and \(c\) must stay the same across both frames, time must be different between the frames. This is time dilation.
+    
+    The time measured by the observer stationary relative to the event is known as the proper time \(\Delta t_0\). The time measured by an observer moving relative to the observer is \(\Delta t = \gamma\Delta t_0\).
+    \item Length contraction can be derived from time dilation. \(\frac{l}{l_0} = \frac{t_0v}{tv} = \frac{1}{\gamma} \Rightarrow l = \frac{l_0}{\gamma}\).
+    
+    The proper length (or rest length) is the length as seen by an observer stationary relative to the length. Length contraction occurs only in the direction of motion; lengths in the other orthogonal axes remain uncontracted.
+    \item Events that occurs simultaneously in one frame may not occur simultaneously in another frame. However, physical events e.g. light being emitted by a light source, or light reaching some object or point, are always simultaneous -- it does not make sense to say that to one observer, light from two sources reaches a detector simultaneously but to another observer it does not.
+    \item The Doppler effect occurs as a result of special relativity. Consider a source moving towards a stationary observer with speed \(u\), emitting wave crests every \(T\) in the observer's frame.
+    
+    The observer measures \(f = \frac{c}{\lambda}\ = \frac{c}{(c-u)T}\). Since the observer's time is dilated \(T = \gamma T_0\), substituting, we get \(f = f_0\sqrt{\frac{c + u}{c - u}}\), where positive \(u\) is when the source is moving towards the observer.
+    \item For a primed frame moving in the \(x\)-direction at speed \(v\),
+    \begin{itemize}
+        \item the Lorentz transformation for coordinates is \(x\prime = \gamma(x-vt)\), \(t\prime = \gamma\left(t - \frac{v}{c^2}x\right)\);
+        \item and the inverse Lorentz transformation is \(x = \gamma(x\prime+vt\prime)\), \(t = \gamma\left(t\prime + \frac{v}{c^2}x\prime\right)\)
+    \end{itemize}
+    \item The spacetime interval \(s^2\) is the 4-dimensional spacetime equivalent of the 3-dimensional distance. \(s^2 = c^2\Delta t^2 - \Delta x^2 - \Delta y^2 - \Delta z^2\). From the spacetime interval,
+    \begin{itemize}
+        \item Proper time \(\Delta\tau = \sqrt{\Delta t^2 - c^{-2}(\Delta x^2 + \Delta y^2 + \Delta z^2)}\).
+        \item Proper distance \(\Delta\sigma = \sqrt{\Delta x^2 + \Delta y^2 + \Delta z^2 - c^2\Delta t^2}\).
+    \end{itemize}
+    The spacetime quantity is invariant across inertial frames of reference.
+    \item The relativistic velocity transformation, where \(v\) is the velocity of the moving frame, for velocity parallel to the motion of the moving frame is \(u_x\prime = \frac{u_x - v}{1 - u_xvc^{-2}}\) and for velocity perpendicular to the moving frame is \(u_{y,z}\prime = \frac{u_{y,z}}{\gamma(1-u_xvc^{-2})}\).
+    \item Relativistic momentum is \(\mathbf{p} = \gamma m\mathbf{v}\). Newton's 2nd law stays the same -- \(\mathbf{F} = \sldd{\mathbf{p}}{t}\).
+    \item The rest energy of a particle is \(E = mc^2\), and the energy of a moving particle is \(E = \gamma mc^2\), which leads to \(KE = (\gamma-1)mc^2\). This further leads to the energy dispersion relation \(E^2 = \mathbf{p}^2c^2 + m^2c^4\).
+    
+    Since mass is invariant across all frames, the quantity \((E^2 - \mathbf{p}^2c^2)\) is also invariant.
+\end{enumerate}

@@ -1,0 +1,73 @@
+\chapter{Quantum Physics}
+\restartlist{enumerate}
+\section{Black body radiation}
+\begin{enumerate}
+    \item A black body is an ideal physical body that absorbs all incident electromagnetic radiation and emits electromagnetic radiation called black body radiation.
+    \item Planck's law describes the electromagnetic radiation emitted by a black body in thermal equilibrium at a definite temperature.
+    \(I(\lambda)=\frac{2\pi hc^2}{\lambda^5\left(e^{hc/\lambda k_BT}-1\right)}\).
+    \(I(f)=\frac{2\pi hf^3}{c^2\left(e^{hf/k_BT}-1\right)}\).
+    \item Wein's approximation approximates spectral emittance for small wavelengths. \(I(\lambda) = 2hc^2\lambda^{-5}e^{-hc/\lambda k_BT}\).
+    
+    Wein's approximation can be derived from Planck's law by assuming \(hf \gg k_BT\), so \((e^{hf/k_BT} - 1)^{-1} \approx e^{-hf/k_BT}\). Substituting this into Planck's law results in Wein's approximation.
+    \item Rayleigh-Jeans law approximates spectral emittance for large wavelengths. \(I(\lambda) = 2\pi ck_BT\lambda^{-4}\).
+    
+    Rayleigh-Jeans law can be derived from Planck's law by Taylor expansion. \(e^{hc/\lambda k_BT} \approx 1 + \frac{hc}{\lambda k_BT}\); substituting this into Planck's law results in Rayleigh-Jeans law.
+    \item The Stefan-Boltzmann law gives the total intensity radiated by a black body at temperature \(T\).
+    
+    \(I = \int^{\infty}_{0}I(\lambda)\mathrm{d}\lambda = \sigma T^4\), \(\sigma = \frac{2\pi^5{k_B}^4}{15c^2h^3} = \SI{5.670400(40)E-8}{\watt\per\square\meter\per\kelvin\tothe{4}}\).
+    \item Wein's displacement law \(\lambda_mT = \SI{2.90E-3}{\metre\kelvin}\) gives the peak wavelength of the radiation from a black body. It can be derived from Planck's law by taking the derivative w.r.t. \(\lambda\) and setting it to 0.
+\end{enumerate}
+\section{Particle model of light}
+\begin{enumerate}
+    \item The energy of a photon is given by \(E = hf\) and momentum \(p = \frac{h}{\lambda}\).
+    \item The photoelectric effect occurs when a material emits electrons from its surface when illuminated. Electrons absorb energy from incident photons to overcome the attraction of positive ions in the material. Electrons emitted as a result of this effect are photoelectrons, and they create a photocurrent.
+    \item The work function \(\phi\) is the minimum energy needed to remove an electron from the surface. Since electrons can only either absorb all or none of a photon's energy, electrons are only emitted when \(hf > \phi\).
+    \item The stopping potential \(V_0\) is the potential that is just negative enough to stop the photocurrent.
+    
+    \(eV_0 = \frac{1}{2}m_ev^2_{max} = (\gamma-1)m_ec^2 = hf - \phi\); this is just an energy conservation equation.
+    \item Light can be scattered when it hits an electron. When a photon is scattered, its wavelength changes by \(\Delta\lambda = \frac{h}{m_ec}(1-\cos\phi)\) -- this is derived from conservation of energy and momentum.
+    \item Pair production occurs when a photon of sufficiently high energy of at least \(2m_ec^2\) hits a target and disappears completely, creating an electron and a positron or other particle-antiparticle pair.
+    
+    Pair production cannot occur in free space, as otherwise conservation of momentum cannot be satisfied -- consider the case where the photon has exactly \(2m_ec^2\) of energy.
+    \item When particle and anti-particle collide, they annihilate and produce photons.
+    \item Photons can be scattered when they collide with electrons, being re-emitted with a longer wavelength \(\lambda\prime\) and at an angle \(\theta\). Through conservation of momentum and energy, we have \(\lambda\prime - \lambda_0 = \frac{h}{mc}(1-\cos\theta)\).
+    
+    If the intensity-wavelength is plotted for a Compton scattering experiment, two peaks at \(\lambda\prime\) and \(\lambda_0\) will be seen. The first peak occurs when photons strike loosely bound electrons and have most of their energy transferred to the electron; the second occurs when photons strike tightly bound electrons and have almost no energy transferred.
+\end{enumerate}
+\section{Electron energy levels}
+\begin{enumerate}
+    \item Atoms have a set of infinite possible discrete energy levels in which electrons can reside.
+    \item When an electron emits or absorbs a photon with energy equal to the energy difference between the two levels, it can make a transition between the two levels.
+    \item If all the possible photons emitted or absorbed by an atom are dispersed to form a spectrum, each line in the spectrum -- emission and absorption, respectively -- corresponds to one particular transition.
+    \item When all the electrons of an atom are at the lowest energy levels, the atom is in the ground state. When at least 1 electron is at a higher energy level, the atom is excited.
+    \item The Bohr model is based on the postulate that each energy level of a hydrogen atom corresponds to a specific stable circular orbit of the electron around the nucleus i.e. the magnitude of the electron's angular momentum is quantised. Bohr's quantisation condition \(L_n =m_ev_nr_n = n\hbar\).
+    \item Using Bohr's quantisation condition, the Coulomb force and Newton's 2nd law, the radius of the hydrogen energy levels and the energy of each level can be determined.
+
+    When deriving, the electron mass \(m_e\) can be replaced by the reduced mass \(\mu_e = \frac{m_eM}{m_e+M}\) to account for the fact that the electron and proton in the nucleus revolve about their mutual centre of mass instead of the proton being stationary.
+\end{enumerate}
+\section{Lasers}
+\begin{enumerate}
+    \item Light can interact with atoms through absorption, spontaneous emission, and stimulated emission.
+    \item Stimulated emission is when an electron in a higher energy level encounters a passing photon and transits to a lower energy level by emitting a photon with the same frequency and phase.
+    \item Stimulated emission can be exploited to create strong coherent beams of light i.e. lasers.
+    \begin{enumerate}
+        \item Population inversion in a gas is achieved i.e. more atoms are in an excited state than the ground state, by using certain atoms with a metastable state with longer excited lifetimes.
+        \item A short while later, some electrons will fall to lower energy states by spontaneous emission. Emitted photons cause stimulated emission of other gas atoms.
+        \item An intense, monochromatic and coherent beam of light is created.
+    \end{enumerate}
+\end{enumerate}
+\section{X-ray production}
+\begin{enumerate}
+    \item X-rays can be produced when electrons hit a metal target and decelerate abruptly. \item Accelerating charges emit photons -- bremstrahhlung -- with energies equal to the loss in kinetic energy. Since the magnitude of deceleration can vary, this gives rise to a continuous spectrum of photons.
+    \item Incident electrons can eject electrons from the target metal atoms, leaving a vacancy in one of the electron shells. An electron can fall from a higher energy level, emitting a photon in the process.
+    
+    If the incident electron kicks out an electron in the \(n = 1\) shell i.e. the K shell, and an electron in the \(n=2\) shell falls to fill the vacancy, the line created in the spectrum is termed the K\textsubscript{\upalpha} line.
+    
+    This gives rise to the characteristic X-ray spectrum of the target metal.
+    \item Mosley's law gives the frequency of the K\textsubscript{\upalpha} lines of an element: \(f = (\SI{2.48E15}{\hertz})(Z-1)^2\).
+\end{enumerate}
+\section{Wave nature of matter}
+\begin{enumerate}
+    \item For a particle with mass \(m\) moving at speed \(v\), its de Broglie wavelength \(\lambda = \frac{h}{p} = \frac{h}{\gamma mv}\).
+    \item Electrons scattered by suitable surface (i.e. line spacing approximately same order as de Broglie wavelength or smaller) will form diffraction patterns.
+\end{enumerate}

@@ -1,0 +1,42 @@
+\chapter{Nuclear Physics}
+\restartlist{enumerate}
+\section{Definitions}
+\begin{itemize}
+    \item Nucleons refer to protons and neutrons.
+    \item Isotopes are nuclei with same \(Z\) but different \(N\).
+    \item Isobars are nuclei with same \(A\).
+    \item Isotones are nuclei with same \(N\) but different \(Z\).
+\end{itemize}
+\section{Binding energy}
+Nuclear binding energy is the difference in mass-energy between a nucleus and its constituent protons and neutrons. \[B = \left[Zm_p + Nm_n - (m(^AX)-Zm_e)\right]c^2 = \left[Zm(^1H) + Nm_n - m(^AX)\right]c^2\] 
+\section{Liquid drop model}
+The liquid drop model estimates the binding energy based on the number of neutrons and protons. \[B = C_1A - C_2A^{2/3} - C_3Z(Z-1)A^{-1/3} - C_4\frac{(A-2Z)^2}{A} + \delta C_5A^{-3/4}\] where \[\delta = \begin{dcases}1 &\text{Z, N even}\\0 &\text{one odd, one even}\\-1 &\text{Z, N odd}\end{dcases}\]
+\begin{enumerate}
+    \item The first term i.e. the volume term reflects nearest-neighbour interactions i.e. interactions between a nucleon and adjacent nucleons.
+    \item The second term i.e. the surface term accounts for nucleons at the surface having less interactions as they have less nucleons. It is proportional to surface area \(4\pi R^2 \mathrel\propto A^{2/3}\).
+    \item The third term i.e. the Coulomb term accounts for the electric repulsion of protons, and can be derived using the Coulomb potential for work done in assembling the nucleus from infinity.
+    \item The fourth term i.e. the symmetry term accounts for the fact that \(Z=N\) is stable for light nuclei. It cannot be derived at this level.
+    \item The fifth term i.e. the pairing term is to account for the fact that there are nearly no stable nuclei with odd \(Z\) and \(N\), some with either one of \(Z\) or \(N\) odd, and many with both \(Z\) and \(N\) even.
+\end{enumerate}
+Nuclear shells.
+\section{Radioactive decay}
+Radioactivity occurs when a nuclide decays to form other nuclides by emitting particles and electromagnetic radiation. A decay constant \(\lambda\) can be defined which is the probability of decay per unit time. \(\lambda\) is characteristic of the atom and does not depend on any physical state.
+
+From the definition of decay rate we have \[-\frac{1}{N(t)}\frac{\sld{N(T)}}{\sld{t}} = \lambda\] which solves to \[N(t) = N_0e^{-\lambda t}\]
+
+Activity is defined to be the number of decays per unit time. \[A(t) = -\frac{\sld{N(t)}}{\sld{t}} = N_0\lambda e^{-\lambda t} = A_0e^{-\lambda t}\]
+
+Half-life is defined to be the time necessary for a sample to decay to half its original number of atoms. \[t_{1/2} = \frac{\ln2}{\lambda}\]
+
+The mean lifetime is given by \(\tau = \lambda^{-1}\).
+\section{Decays}
+\begin{enumerate}
+\item Alpha decay is the process where a nucleus emits an alpha particle to obtain a more stable configuration. It is a strong process, and occurs due to quantum tunnelling. \(\prescript{A}{Z}{X}_N \mathrel\rightarrow{} \prescript{A-4}{Z-2}{X\prime}_{N-2} + \alpha\)
+\item Beta decay is a weak process where a nucleon changes into a proton or vice versa with the capture or emission of an electron. There are three types.
+\begin{itemize}
+    \item beta minus: \(\prescript{A}{Z}{X}_N \mathrel\rightarrow{} \prescript{A}{Z+1}{X\prime}_{N-1} + e^- + \overline{\nu}_e\)
+    \item beta plus: \(\prescript{A}{Z}{X}_N \mathrel\rightarrow{} \prescript{A}{Z-1}{X\prime}_{N+1} + e^+ + \nu_e\)
+    \item electron capture: \(\prescript{A}{Z}{X}_N + e^- \mathrel\rightarrow{} \prescript{A}{Z-1}{X\prime}_{N+1} + \nu_e\)
+\end{itemize}
+\item Gamma decay is an electromagnetic process where an excited nucleus decays into the ground state with the emission of photons. Proton and mass number do not change.
+\end{enumerate}

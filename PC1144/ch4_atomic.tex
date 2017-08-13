@@ -1,0 +1,20 @@
+\chapter{Atomic Structure}
+\restartlist{enumerate}
+\section{Hydrogen atom}
+Solving the three-dimensional Schrodinger equation gives us the energy levels of the hydrogen atom \[E_n=-\frac{1}{(4\pi\varepsilon_0)^2}\frac{m_re^4}{2n^2\hbar^2}=-\frac{\SI{13.60}{\eV}}{n^2} \qquad \left(m_r = \frac{m_em_p}{m_e+m_p}\right)\] where \(n\) is the principal quantum number and \(m_r\) is the reduced mass.
+
+We also get two other quantum numbers, the orbital angular momentum quantum number \(l\) and the magnetic quantum number \(m_l\), where \(0 \leq l < n\) and \(-l \leq m_l \leq l\). The combination of these three numbers gives rise to the familiar orbitals 1s, 2s, 2p\textsubscript{x}, 2p\textsubscript{y}, 2p\textsubscript{z}, and so on, where s represents \(l = 0\) and p represents \(l = 1\) and so on, and \(m_l\) represents the various orbitals in subshells e.g. the 2p\textsubscript{x}, 2p\textsubscript{y} and 2p\textsubscript{z} orbitals.
+\section{Zeeman effect}
+When an atom is placed in a magnetic field of density \(B\), the energy degeneracy of orbitals within each subshell is removed, and they split into different energy levels with \(\Delta E = \mu_BBm_l\) where \(\mu_B = e\hbar/2m\) is the Bohr magneton, a natural unit of magnetic moment.
+
+If the emission spectrum of a gas is obtained with a magnetic field applied through the gas, then the above effect causes the normal spectral lines of each subshell to split further, and this is known as the normal Zeeman effect.
+\section{Spin}
+Electrons also have an intrinsic spin quantum number \(s = \frac{1}{2}\) that results in the magnetic spin quantum number \(m_s = \pm \frac{1}{2}\). This results in further splittings in the spectrum known as the anomalous Zeeman effect.
+
+If we combine orbital angular momentum and spin with \(\mathbf{J} = \mathbf{L} + \mathbf{S}\), we have the total angular momentum quantum number \(-j \leq m_j \leq j\). For electron orbitals, since electrons are spin half, \(j = l \pm \frac{1}{2}\). The total number of splittings is thus \(2j + 1\), which agrees with experimental observations.
+\section{Selection rules for electron transitions}
+From wavefunctions obtained from the Schrodinger equation, we have selection rules for electron transitions that show that some transitions happen with much higher probabilities than others: \begin{align*}
+    \Delta n &= \text{anything}\\
+    \Delta l &= \pm 1\\
+    \Delta m_l &= 0, \pm 1\\
+\end{align*}

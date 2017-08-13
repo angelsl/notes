@@ -1,0 +1,30 @@
+\chapter{Quantum Mechanics}
+\restartlist{enumerate}
+\section{Wavefunctions}
+The time-dependent Schrodinger equation is \[i\hbar\frac{\partial\Psi(x,t)}{\partial t} = -\frac{\hbar^2}{2m}\frac{\partial^2\Psi(x,t)}{\partial x^2} + U(x)\Psi(x,t)\] If we have \(\Psi(x,t) = \psi(x)\phi(t)\) then we have the time-independent Schrodinger equation \[E\psi(x) = -\frac{\hbar^2}{2m}\frac{\mathrm{d}^2\psi(x)}{\sld{x^2}} + U(x)\psi(x)\]
+\begin{enumerate}
+    \item The Schrodinger equation describes quantum systems much like Newton's laws describe classical systems.
+    \item From the wavefunction \(\psi\), the probability density function that weighs all measurements is \(\left|\psi\right|^2 = \psi^*\psi\). The probability of finding a particle between \(x\) and \(x + \sld{x}\) is \(\psi^*\psi\sld{x}\) i.e. \(P(a \leq x \leq b) = \int_a^b\psi^*\psi\sld{x}\).
+    \item A wavefunction is said to be normalised if its integral through all space equals to \(1\) i.e. \(\int^\infty_{-\infty}\psi^*\psi\sld{x} = 1\).
+    \item Physically possible wavefunctions must \begin{slinenum}
+        \item satisfy Schrodinger's equation;
+        \item be finite everywhere;
+        \item be single valued;
+        \item be continuous and have a smooth \(x\)-derivative; and
+        \item be normalised (although this may not always hold)
+    \end{slinenum}.
+    \item The expectation value or mean value of some variable \(x\) is given by \(\langle x\rangle = \int_{-\infty}^{\infty}\psi^*x\psi\sld{x}\). If the wavefunction is not normalised, divide by \(\int_{-\infty}^{\infty}\psi^*\psi\sld{x}\).
+    
+    To find momentum using a wavefunction in position space the momentum operator \(\mathbf{\hat{p}} = -i\hbar\frac{\partial}{\partial x}\) is used.
+    
+    To find energy in position space the energy operator \(\hat{E} = i\hbar\frac{\partial}{\partial t}\) is used.
+    \item The variance of \(x\) \({\sigma_x}^2 = \langle x^2\rangle - \langle x\rangle^2\).
+\end{enumerate}
+\section{Infinite square well}
+A particle trapped in a box can be represented by a potential that is zero within a region and infinite elsewhere, given by \begin{equation*}V(x) = \begin{dcases} \infty &x \leq 0 \vee x \geq L\\0 &0 < x < L\end{dcases}\end{equation*}
+
+When \(V = \infty\) the wavefunction must vanish so \(\psi(x) = 0\). When \(V = 0\), the potential term disappears and we have \begin{equation}\label{scr1}\frac{\mathrm{d}^2\psi}{\sld{x^2}} = -\frac{2mE}{\hbar^2}\psi = -k^2\psi\end{equation} for which a solution is \[\psi(x) = A\sin kx + B\cos kx\]
+
+Setting the boundary conditions \(\psi(x) = 0\) when \(x = 0\) and \(x = L\) results in \(B = 0\). \(A\) cannot also be zero otherwise there is no wavefunction anywhere, so we have \(kL = n\pi\), \(n \in \mathbb{Z}^+\) and so we now have \(\psi_n(x) = A\sin\frac{n\pi x}{L}\), \(n\in\mathbb{Z}^+\). Normalising, we get \[\psi_n(x) = \sqrt{\frac{2}{L}}\sin\frac{n\pi x}{L}\quad n\in\mathbb{Z}^+\]
+
+The energy of the wave satisfies the equation \(2mE/\hbar^2 = k^2\) (from \eqref{scr1}), which gives \[E_n = n^2\frac{\pi^2\hbar^2}{2mL^2}\quad n\in\mathbb{Z}^+\] showing that energy is quantised.
