@@ -1,0 +1,1 @@
+My academic, and other, notes.
