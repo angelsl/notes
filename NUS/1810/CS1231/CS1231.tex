@@ -1,3 +1,230 @@
 \documentclass{slnotes}
+\newcommand{\slnot}{\mathop{\sim}}
+\newcommand{\landor}{\mathbin{{}^\land_\lor}}
+\newcommand{\lorand}{\mathbin{{}^\lor_\land}}
+\DeclareMathOperator{\lcm}{lcm}
+
+% Kindly forgive me for \\
 \begin{document}
+\chapter{Logic}
+\sldef{Epp Thm 2.1.1} Logical equivalences.\\
+Commutative law. \(p \landor q \equiv q \landor p\)\\
+Associative law. \((p \landor q) \landor r \equiv p \landor (q \landor r)\)\\
+Distributive law. \(p \landor (q \lorand r) \equiv (p \landor q) \lorand (p \landor r)\)\\
+Identity law. \(p \landor {}^\mathbf{true}_\mathbf{false} \equiv p\)\\
+Negation law. \(p \landor \slnot p \equiv {}^\mathbf{false}_\mathbf{true}\)\\
+Double negative law. \(\slnot(\slnot p) \equiv p\)\\
+Idempotent law. \(p \landor p \equiv p\)\\
+Universal bound law. \(p \lorand {}^\mathbf{true}_\mathbf{false} \equiv {}^\mathbf{true}_\mathbf{false}\)\\
+De Morgan's law. \(\slnot(p \landor q) \equiv \slnot p \lorand \slnot q\)\\
+Absorption law. \(p \landor (p \lorand q) \equiv p\)\\
+Negation of true and false. \(\slnot{}^\mathbf{true}_\mathbf{false} \equiv {}^\mathbf{false}_\mathbf{true}\)
+
+Implication law. \((p \to q) \equiv (\slnot p \lor q)\)
+
+\sldef{Related statements.} Given \(p \to q\),\\
+Negation. \(\slnot(p \to q) \equiv p \land\slnot q\)\\
+Contrapositive. \(\slnot q \to \slnot p\)\\
+Inverse. \(\slnot p \to \slnot q\)\\
+Converse. \(q \to p\)
+
+\sldef{Argument forms; inferences.}\\
+Modus ponens. \(p \to q\). \(p\). \(\bullet q\).\\
+Modus tollens. \(p \to q\). \(\slnot q\). \(\bullet \slnot p\).\\
+Generalisation. \(p\). \(\bullet p \lor q\).\\
+Specialisation. \(p \land q\). \(\bullet p\).\\
+Conjunction. \(p\). \(q\). \(\bullet p \land q\).\\
+Elimination. \(p \lor q\). \(\slnot q\). \(\bullet p\).\\
+Transitivity. \(p \to q\). \(q \to r\). \(\bullet p \to r\).\\
+Proof by division into cases.\\\(p \lor q\). \(p \to r\). \(q \to r\). \(\bullet r\).\\
+Contradiction. \(\slnot p \to \mathbf{false}\). \(\bullet p\).\\
+Universal modus ponens.\\\(\forall x, P(x) \to Q(x)\). \(P(a)\) for some \(a\). \(\bullet Q(a)\).\\
+Universal modus tollens.\\\(\forall x, P(x) \to Q(x)\). \(\slnot Q(a)\) for some \(a\). \(\bullet \slnot P(a)\).\\
+Universal transitivity.\\\(\forall x, P(x) \to Q(x)\). \(\forall x, Q(x) \to R(x)\).\\\(\bullet \forall x, P(x) \to R(x)\).
+
+\sldef{Fallacies.}\\
+Converse error. \(p \to q\). \(q\). \(\bullet p\).\\
+Inverse error. \(p \to q\). \(\slnot p\). \(\slnot q\).
+
+\chapter{Number theory}
+\sldef{Def 1.3.1} Divisibility. \(d \mid n \Leftrightarrow \exists k \in \mathbb{Z} : n = dk\).
+
+\sldef{Epp Thm 4.1.1}. The sum of any two even integers is even.
+
+\sldef{Epp Thm 4.2.2}. The sum of any two rational numbers is rational.
+
+\sldef{Epp Cor 4.2.3}. The double of a rational number is rational.
+
+\sldef{Thm 4.1.1} Linear combination. \(\forall a, b, c \in \mathbb{Z}, a \mid b \land a \mid c \to \forall x,y \in \mathbb{Z}, a \mid (bx + cy)\).
+
+\sldef{Def 4.2.1} Prime. \(n\) is prime \(\Leftrightarrow \forall r, s \in \mathbb{Z}^+, n = rs \to (r = 1 \land s = n) \lor (r = n \land s = 1)\).
+
+\sldef{Def 4.2.1} Composite. \(n\) is composite \(\Leftrightarrow \exists r, s \in \mathbb{Z}^+ : n = rs \land 1 < r < n \land 1 < s < n\).
+
+\sldef{Prop 4.2.2}. For any 2 primes \(p\) and \(p'\), if \(p \mid p'\) then \(p = p'\).
+
+\sldef{Epp Prop 4.7.3}. For any \(a \in \mathbb{z}\) and any prime \(p\), if \(p \mid a\) then \(p \nmid (a + 1)\).
+
+\sldef{Epp Thm 4.7.4}. The set of primes is infinite.
+
+\sldef{Thm 4.2.3}. If \(p\) is prime and \(x_1, x_2, \cdots, x_n \in \mathbb{Z} : p \mid x_1x_2\cdots x_n\) then \(p \mid x_i\) for some \(x_i\), \(1 \le i \le n\).
+
+\sldef{Epp Thm 4.3.1}. \(\forall a, b \in \mathbb{Z}^+, a \mid b \to a \le b\).
+
+\sldef{Epp Thm 4.3.2}. The only divisors of \(1\) are \(1\) and \(-1\).
+
+\sldef{Epp Thm 4.3.3} Transitivity of divisibility. \(\forall a,b,c \in \mathbb{Z}, a \mid b \land b \mid c \to a \mid c\).
+
+\sldef{Epp Thm 4.3.4}. Any integer \(> 1\) is divisible by a prime number.
+
+\sldef{Epp Thm 4.3.5} Fundamental theorem of arithmetic. Given any integer \(n > 1\), there exists a positive integer \(k\), distinct prime numbers \(p_1, \cdots, p_k\) and positive integers \(e_1, \cdots, e_k\) such that \(n = p_1^{e_1}\cdots p_k^{e_k}\), and any other expression for \(n\) as a product of prime numbers is identical to this except, perhaps, for the order in which the factors are written.
+
+\sldef{Epp Thm 4.4.2}. Any two consecutive integers have opposite parity.
+
+\sldef{Epp Thm 4.4.3}. For all odd \(n\), \(\exists m \in \mathbb{Z} : 8m + 1 = n^2\).
+
+\sldef{Epp Lem 4.4.4}. \(\forall r \in \mathbb{R}, -\lvert r \rvert \le r \le \lvert r \rvert\).
+
+\sldef{Epp Lem 4.4.5}. \(\forall r \in \mathbb{R}, \lvert -r \rvert = \lvert r \rvert\).
+
+\sldef{Epp Thm 4.4.6} Triangle inequality. \(\forall x,y \in \mathbb{R}, \lvert x+y \rvert \leq \lvert x \rvert + \lvert y \rvert\).
+
+\sldef{Epp Thm 4.6.3}. The sum of any rational number and any irrational number is irrational.
+
+\sldef{Epp Prop 4.6.4}. \(\forall n \in \mathbb{Z}\), if \(n^2\) is even, \(n\) is even.
+
+\sldef{Epp Thm 4.7.1}. \(\sqrt{2}\) is irrational.
+
+\sldef{T3Q2}. For all primes \(a, b, c\), \(a^2 + b^2 \neq c^2\).
+
+\sldef{T3Q2L1}. For all primes \(p, q\), \(p - q = 1 \to p = 3 \land q = 2\).
+
+\sldef{T3Q6}. \(\forall n \in \mathbb{Z}^+\), if the sum of its decimal digits is divisible by 9, \(9 \mid n\).
+
+\sldef{Def 4.3.1} Lower bound. An integer \(b\) is said to be a lower bound for a set \(X \subseteq \mathbb{Z}\) if \(b \le x \forall x \in X\).
+
+\sldef{Thm 4.3.2} Well ordering 1. If a non-empty set \(S \subseteq \mathbb{Z}\) has a lower bound, then \(S\) has a least element.
+
+\sldef{Prop 4.3.3} Uniqueness of least element. If a set \(S\) of integers has a least element, then the least element is unique.
+
+\sldef{Thm 4.3.2} Well ordering 1. If a non-empty set \(S \subseteq \mathbb{Z}\) has an upper bound, then \(S\) has a greatest element.
+
+\sldef{Prop 4.3.4} Uniqueness of greatest element. If a set \(S\) of integers has a greatest element, then the greatest element is unique.
+
+\sldef{Epp Thm 4.4.1} Quotient-remainder. Given any integer \(a\) and any positive integer \(b\), there exist unique integers \(q\) and \(r\) such that \(a = bq + r\) and \(0 \le r < b\).
+
+\sldef{T4Q3a}. \(\forall n \in \mathbb{Z}^+, n < 2^n\).
+
+\sldef{T4Q3b}. \(\forall n \in \mathbb{Z}^+, (\exists r, n \in \mathbb{Z} : n = s2^r \land s\) is odd\()\).
+
+\sldef{Def 4.5.1} GCD. Let \(a\) and \(b\) be integers, not both zero. The GCD of \(a\) and \(b\) i.e. \(\gcd(a, b)\) is the integer \(d\) such that \(d \mid a\), \(d \mid b\) and \(\forall c \in \mathbb{Z}\) if \(c \mid a\) and \(c \mid b\) then \(c \le d\).
+
+\sldef{Prop 4.5.2} GCD existence. For any \(a, b \in \mathbb{Z}\) not both zero, their GCD exists and is unique.
+
+\sldef{T4Q4a}. For any \(a, b, c \in \mathbb{Z}\) not all of which are zero, \(\gcd(a, b, c)\) exists.
+
+\sldef{T4Q4b}. For any \(a, b, c \in \mathbb{Z}\) where \(a, b\) are not both zero, \(\gcd(a, b, c) = \gcd(\gcd(a, b), c)\).
+
+\sldef{Thm 4.5.3} Bézout's Identity. \(\forall a, b \in \mathbb{Z} : a \neq 0 \lor b \neq 0, (\exists x, y \in \mathbb{Z} : ax + by = \gcd(a, b))\). This can be extended to more integers.
+
+\sldef{Prop 4.5.5}. For any integers \(a, b\) not both zero, if \(c\) is a common divisor of \(a, b\), then \(c \mid \gcd(a, b)\).
+
+\sldef{Epp Lem 4.8.1}. \(\forall r \in \mathbb{Z}^+ \gcd(r, 0) = r\).
+
+\sldef{Epp Lem 4.8.2}. If \(a, b\) are integers not both zero, and if \(q, r\) are integers such that \(a = bq + r\), \(\gcd(a, b) = \gcd(b, r)\).
+
+\sldef{Def 4.6.1} LCM. Let \(a, b\) be nonzero integers. The LCM of \(a, b\) i.e. \(\lcm(a, b)\) is the integer \(m\) such that \(a \mid m\), \(b \mid m\) and \(\forall c \in \mathbb{Z}^+\) if \(a \mid c\) and \(b \mid c\) then \(m \le c\).
+
+\sldef{Def 4.7.1} Congruence. Let \(m\) and \(n\) be integers, and \(d\) be a positive integer. \(m\) is congruent to \(n\) modulo \(d\) i.e. \(m \equiv n \pmod d \Leftrightarrow d \mid (m - n)\).
+
+\sldef{Epp Thm 8.4.1} Modular equivalences. \(\forall a,b,n \in \mathbb{Z} : n > 1, n \mid (a - b) \Leftrightarrow a \equiv b \pmod n \Leftrightarrow \exists k \in \mathbb{Z} : a = b + kn \Leftrightarrow a \bmod n = b \bmod n \Leftrightarrow a\) and \(b\) have the same non-negative remainder when divided by \(n\).
+
+\sldef{Epp Thm 8.4.3} Modulo arithmetic. \(\forall a,b,c,d,n \in \mathbb{Z} : n > 1 \land a \equiv c \pmod n \land b \equiv d \pmod n, (a \pm b) \equiv (c \pm d) \pmod n \land ab \equiv cd \pmod n \land \forall m \in \mathbb{Z}^+, a^m \equiv c^m\).
+
+\sldef{Epp Cor 8.4.4}. \(\forall a,b,n \in \mathbb{Z} : n > 1, ab \equiv (a\bmod n)(b\bmod n) \pmod n\), and for \(m \in \mathbb{Z}^+, a^m \equiv (a\bmod n)^m \pmod n\).
+
+\sldef{Def 4.7.2} Modular multiplicative inverse. \(\forall a, n \in \mathbb{Z} : n > 1, as \equiv 1 \pmod n \Leftrightarrow\) \(s\) is the multiplicative inverse of \(a\) modulo \(n\) i.e. \(a^{-1}\). \(aa^{-1} = a^{-1}a \equiv 1 \pmod n\).
+
+\sldef{Thm 4.7.3} Existence. For any integer \(a\), its multiplicative inverse modulo \(n\) where \(n > 1\) exists iff \(a\) and \(n\) are coprime.
+
+\sldef{Cor 4.7.4}. If \(n\) is prime, then all integers \(0 < a < p\) have multiplicative inverses modulo \(p\).
+
+\sldef{Epp Thm 8.4.9}. \(\forall a,b,c,n \in \mathbb{Z} : n > 1\) and \(a\) and \(n\) are coprime, \(ab \equiv ac \pmod n \to b \equiv c \pmod n\).
+
+\chapter{Epp \(\mathbb{R}\) properties}
+\(\forall a,b,c,d \in \mathbb{R}\),
+
+\sldef{F1} Commutativity. \(a + b = b + a \land ab = ba\).
+
+\sldef{F2} Associativity.\\\((a + b) + c = a + (b + c) \land (ab)c = a(bc)\).
+
+\sldef{F3} Distributivity. \(a(b + c) = ab + ac \land (b + c)a = ba + ca\).
+
+\sldef{F4} Existence of identity.\\\(0 + a = a + 0 = 0 \land 1 \cdot a = a \cdot 1 = a\).
+
+\sldef{F5} Existence of additive inverse.\\\(a + (-a) = (-a) + a = 0\).
+
+\sldef{F6} Existence of reciprocal. \(a \cdot \left(\frac{1}{a}\right) = \left(\frac{1}{a}\right) \cdot a = 1\).
+
+\sldef{T1}. \(a + b = a + c \to b = c\).
+
+\sldef{T2} Subtraction. Given \(a, b\), there is a unique \(x\) such that \(a + x = b\). \(x = b - a\). \(0 - a\) is the additive inverse of \(a\) i.e. \(-a\).
+
+\sldef{T3}. \(b - a = b + (-a)\).
+
+\sldef{T4}. \(-(-a) = a\).
+
+\sldef{T5}. \(a(b - c) = ab - ac\).
+
+\sldef{T6}. \(0 \cdot a = a \cdot 0 = 0\).
+
+\sldef{T7}. \(ab = ac \land a \neq 0 \to b = c\).
+
+\sldef{T8} Division. Given \(a, b, a \neq 0\), there is a unique \(x\) such that \(ax = b\). \(x = \frac{b}{a}\) and is the \sldef{quotient} of b and a. \(\frac{1}{a}\) is the reciprocal of \(a\).
+
+\sldef{T9}. \(a \neq 0 \to \frac{b}{a} = b \cdot a^{-1}\).
+
+\sldef{T10}. \(a \neq 0 \to (a^{-1})^{-1} = a\).
+
+\sldef{T11}. \(ab = 0 \to a = 0 \lor b = 0\).
+
+\sldef{T12}. \((-a)b = a(-b) = -(ab)\). \((-a)(-b) = ab\). \(-\frac{a}{b} = \frac{-a}{b} = \frac{a}{-b}\).
+
+\sldef{T13}. \(b \neq 0 \land c \neq 0 \to \frac{a}{b} = \frac{ac}{bc}\).
+
+\sldef{T14}. \(b \neq 0 \land d \neq 0 \to \frac{a}{b} + \frac{c}{d} = \frac{ad + bc}{bd}\).
+
+\sldef{T15}. \(b \neq 0 \land d \neq 0 \to \frac{a}{b} \cdot \frac{c}{d} = \frac{ac}{bd}\).
+
+\sldef{T16}. \(b \neq 0 \land c \neq 0 \land d \neq 0 \to \frac{a}{b} \div \frac{c}{d} = \frac{ad}{bc}\).
+
+\sldef{Ord1}. \(a > 0 \land b > 0 \to a + b > 0 \land ab > 0\).
+
+\sldef{Ord2}. \(a \neq 0 \to a > 0 \oplus -a > 0\).
+
+\sldef{Ord3}. \(0\) is not positive.
+
+\sldef{T17} Trichotomy. For \(a, b\), exactly one of \(a < b\), \(b < a\), or \(a = b\) holds.
+
+\sldef{T18} Transitivity. \(a < b \land b < c \to a < c\).
+
+\sldef{T19}. \(a < b \to a + c < b + c\).
+
+\sldef{T20}. \(a < b \land c > 0 \to ac < bc\).
+
+\sldef{T21}. \(a \neq 0 \to a^2 > 0\).
+
+\sldef{T22}. \(1 > 0\).
+
+\sldef{T23}. \(a < b \land c < 0 \to ac > bc\).
+
+\sldef{T24}. \(a < b \to -a > -b\). \(a < 0 \to -a > 0\).
+
+\sldef{T25}. \(ab > 0 \to (a > 0 \land b > 0) \oplus (a < 0 \land b < 0)\).
+
+\sldef{T26}. \(a < c \land b < d \to a + b < c + d\).
+
+\sldef{T27}. \(0 < a < c \land 0 < b < d \to 0 < ab < cd\).
+
+\sldef{LUB}. Any nonempty set \(S\) of real numbers that is bounded above has a least upper bound. That is, if \(B\) is the set of all real numbers \(x\) such that \(x \ge s\) for all \(s\) in \(S\) and if \(B\) has at least one element, then \(B\) has a smallest element. This element is called the \sldef{least upper bound} of \(S\).
 \end{document}
