@@ -151,6 +151,72 @@ Inverse error. \(p \to q\). \(\slnot p\). \(\slnot q\).
 
 \sldef{Epp Thm 8.4.9}. \(\forall a,b,c,n \in \mathbb{Z} : n > 1\) and \(a\) and \(n\) are coprime, \(ab \equiv ac \pmod n \to b \equiv c \pmod n\).
 
+\chapter{Sequences}
+\sldef{Epp Thm 5.1.1}. For real sequences \(a_m\), \(b_m\), integers \(n \ge m\), real \(c\), \(\sum^n_{k=m}a_k + \sum^n_{k=m}b_k = \sum^n_{k=m}(a_k+b_k)\), \(c\cdot\sum^n_{k=m}a_k = \sum^n_{k=m}(c\cdot a_k)\), \(\left(\prod^n_{k=m}a_k\right)\left(\prod^n_{k=m}b_k\right) = \prod^n_{k=m}(a_k\cdot b_k)\).
+
+\sldef{Arithmetic sequences}. \(a_n = a + nd, \forall n \in \mathbb{N}\). The sum of the first \(n\) terms \(S_n = \frac{1}{2}n(2a+(n-1)d), \forall n \in \mathbb{N}, a,d \in \mathbb{R}\).
+
+\sldef{Geometric sequences}. \(a_n = ar^n, \forall n \in \mathbb{N}\). The sum of the first \(n\) terms \(S_n = \frac{a(r^n-1)}{r-1}, \forall n \in \mathbb{N}, a,d \in \mathbb{R}\). The sum to infinity for \(\lvert r \rvert < 1\) \(S_\infty = \frac{a}{1-r}\).
+
+\sldef{Squares}. \(a_n = n^2\), also the sum of the first \(n\) odd numbers.
+
+\sldef{Triangle numbers}. \(a_n = \frac{1}{2}n(n+1)\), also the sum of the first \(n\) natural numbers, and the sum of two consecutive terms is a square number.
+
+\sldef{Fibonacci}. \(\forall n \in \mathbb{N}, F_0 = 0, F_1 = 1, F_n = F_{n-1} + F_{n-2} = \frac{1}{\sqrt 5}(\phi^n - (-\phi)^{-n})\) where \(\phi = \frac{1}{2}(1 + \sqrt5)\).
+
+\sldef{Epp Lem 5.8.1}. A recurrence relation \(a_k = Aa_{k-1} + Ba_{k-2}\) for all integers \(k \ge 2\) is satisfied by the sequence \(1, t, t^2, t^3, \hdots\) where \(t\) is a nonzero real number iff \(t\) satisfies the characteristic equation \(t^2 - At - B = 0\).
+
+\sldef{Epp Thm 5.8.3} Distinct roots theorem. If a recurrence relation \(a_k = Aa_{k-1} + Ba_{k-2}\), \(B \neq 0\) for all integers \(k \ge 2\) has a characteristic equation \(t^2 - At - B = 0\) with two distinct roots \(r\) and \(s\), then the explicit formula is \(a_k = Cr^n + Ds^n\), with the values of \(C\) and \(D\) being determined by \(a_0\) and \(a_1\).
+
+\sldef{Epp Lem 5.8.4}. If a recurrence relation \(a_k = Aa_{k-1} + Ba_{k-2}\) for all integers \(k \ge 2\) has a characteristic equation \(t^2 - At - B = 0\) with one repeated root \(r\), then the sequences \(1, r, r^2, r^3, \hdots\) and \(0, r, 2r^2, 3r^3, \hdots\) both satisfy the recurrence relation for all integers \(k \ge 2\).
+
+\sldef{Epp Thm 5.8.5} Single root theorem. If a recurrence relation \(a_k = Aa_{k-1} + Ba_{k-2}\), \(B \neq 0\) for all integers \(k \ge 2\) has a characteristic equation \(t^2 - At - B = 0\) with one repeated root \(r\), then the explicit formula is \(a_k = Cr^n + Dnr^n\), with the values of \(C\) and \(D\) being determined by \(a_0\) and \(a_1\).
+
+\chapter{Sets}
+\sldef{Def 6.1.1}. \(S\) is a subset of \(T\) i.e. \(S \subseteq T\) if all the elements of \(S\) are elements of \(T\). \(S\) is a proper subset of \(T\) i.e. \(S \subset T \Leftrightarrow S \subseteq T \land \exists x : (x \in T \land x \not\in S)\).
+
+\sldef{Def 6.2.1} Empty set. The empty set \(\varnothing\) has no elements i.e. \(\forall x, x \not\in\varnothing\).
+
+\sldef{Def 6.2.2} Set equality. Two sets are equal iff they have the same elements.
+
+\sldef{Prop 6.2.3}. For sets \(X, Y\), \(X \subseteq Y \land Y \subseteq X \Leftrightarrow X = Y\).
+
+\sldef{Epp Cor 6.2.5}. The empty set is unique.
+
+\sldef{Def 6.2.4} Power set. The power set of a set \(S\) i.e. \(\mathcal{P}(S)\) or \(2^S\) is the set whose elements are all the subsets of \(S\).
+
+\sldef{Def 6.3.1} Union. If \(S\) is a set of sets, then \(T = \bigcup S\) is the union of the sets in \(S\) iff every element of \(T\) belongs to some set in \(S\). For two sets \(A, B\), then we can write \(A \cup B\).
+
+\sldef{Prop 6.3.2}. For sets \(A, B, C\), \(\bigcup\varnothing = \varnothing\); \(\bigcup\{A\}=A\); \(A\cup\varnothing=A\); \(A\cup B=B\cup A\); \(A\cup (B\cup C) = (A\cup B)\cup C\); \(A\cup A = A\); \(A \subseteq B \Leftrightarrow A\cup B = B\).
+
+\sldef{Def 6.3.3} Intersection. If \(S\) is a set of sets, then \(T = \bigcap S\) is the intersection of the sets in \(S\) iff every element of \(T\) belongs to every set in \(S\). For two sets \(A, B\), then we can write \(A \cap B\).
+
+\sldef{Prop 6.3.4}. For sets \(A, B, C\), \(A\cap\varnothing=\varnothing\); \(A\cap B=B\cap A\); \(A\cap (B\cap C) = (A\cap B)\cap C\); \(A\cap A = A\); \(A \subseteq B \Leftrightarrow A\cap B = A\); \(A \cap (B \cup C) = (A \cap B) \cup (A \cap C)\); \(A \cup (B \cap C) = (A \cup B) \cap (A \cup C)\).
+
+\sldef{Def 6.3.5} Disjoint. Sets \(S, T\) are disjoint iff \(S \cap T = \varnothing\).
+
+\sldef{Def 6.3.6} Mutually disjoint. Sets in a set of sets are mutually disjoint iff all pairs of sets are disjoint.
+
+\sldef{Def 6.3.7} Partition. If \(S\) is a set and \(V\) is a set of non-empty subsets of \(S\), \(V\) is a partition of \(S\) iff the sets in \(V\) are mutually disjoint and the union of the sets in \(V\) equals \(S\).
+
+\sldef{Def 6.3.8} Non-symmetric difference. For sets \(S, T\), the non-symmetric difference \(S - T\) is the set of elements belonging to \(S\) but not \(T\).
+
+\sldef{Def 6.3.9} Symmetric difference. For sets \(S, T\), the symmetric difference \(S \oplus T\) is the set of elements belonging to either \(S\) or \(T\) but not both.
+
+\sldef{Def 6.3.10} Complement. For set \(A \subseteq U\), \(U\) being the universal set, the complement of \(A\) \(A^c = U - A\).
+
+\sldef{Epp Thm 6.2.1} Subset relations. For sets \(A, B, C\), \(A \cap B \subseteq A \land A \cap B \subseteq B \land A \subseteq A \cup B \land B \subseteq A \cup B \land (A \subseteq B \land B \subseteq C \implies A \subseteq C)\).
+
+\sldef{Epp Thm 6.2.2} Set identities. See Epp Thm 2.1.1, plus set difference law: for sets \(A, B\), \(A - B = A \cap B^c\).
+
+\sldef{Epp Thm 6.2.3}. For sets \(A, B : A \subseteq B\), \(A \cap B = A\) and \(A \cup B = B\).
+
+\chapter{Relations and functions}
+
+\chapter{Counting and probability}
+
+\chapter{Graph theory}
+
 \chapter{Epp \(\mathbb{R}\) properties}
 \(\forall a,b,c,d \in \mathbb{R}\),
 
