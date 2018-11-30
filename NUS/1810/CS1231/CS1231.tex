@@ -6,6 +6,8 @@
 
 % Kindly forgive me for \\
 \begin{document}
+\chapter{CS1231 conventions}
+\(\mathbb{N} = \{n \in \mathbb{Z} : n \ge 0\}\)
 \chapter{Logic}
 \sldef{Epp Thm 2.1.1} Logical equivalences.\\
 Commutative law. \(p \landor q \equiv q \landor p\)\\
@@ -135,6 +137,8 @@ Inverse error. \(p \to q\). \(\slnot p\). \(\slnot q\).
 
 \sldef{Def 4.6.1} LCM. Let \(a, b\) be nonzero integers. The LCM of \(a, b\) i.e. \(\lcm(a, b)\) is the integer \(m\) such that \(a \mid m\), \(b \mid m\) and \(\forall c \in \mathbb{Z}^+\) if \(a \mid c\) and \(b \mid c\) then \(m \le c\).
 
+\sldef{T5Q7b}. For all positive integers \(a, b\), \(\gcd(a, b)\lcm(a, b) = ab\).
+
 \sldef{Def 4.7.1} Congruence. Let \(m\) and \(n\) be integers, and \(d\) be a positive integer. \(m\) is congruent to \(n\) modulo \(d\) i.e. \(m \equiv n \pmod d \Leftrightarrow d \mid (m - n)\).
 
 \sldef{Epp Thm 8.4.1} Modular equivalences. \(\forall a,b,n \in \mathbb{Z} : n > 1, n \mid (a - b) \Leftrightarrow a \equiv b \pmod n \Leftrightarrow \exists k \in \mathbb{Z} : a = b + kn \Leftrightarrow a \bmod n = b \bmod n \Leftrightarrow a\) and \(b\) have the same non-negative remainder when divided by \(n\).
@@ -145,11 +149,15 @@ Inverse error. \(p \to q\). \(\slnot p\). \(\slnot q\).
 
 \sldef{Def 4.7.2} Modular multiplicative inverse. \(\forall a, n \in \mathbb{Z} : n > 1, as \equiv 1 \pmod n \Leftrightarrow\) \(s\) is the multiplicative inverse of \(a\) modulo \(n\) i.e. \(a^{-1}\). \(aa^{-1} = a^{-1}a \equiv 1 \pmod n\).
 
-\sldef{Thm 4.7.3} Existence. For any integer \(a\), its multiplicative inverse modulo \(n\) where \(n > 1\) exists iff \(a\) and \(n\) are coprime.
+\sldef{Thm 4.7.3/Epp Cor 8.4.7} Existence. For any integer \(a\), its multiplicative inverse modulo \(n\) where \(n > 1\) exists iff \(a\) and \(n\) are coprime.
 
 \sldef{Cor 4.7.4}. If \(n\) is prime, then all integers \(0 < a < p\) have multiplicative inverses modulo \(p\).
 
+\sldef{Epp Thm 8.4.8} Euclid's lemma. \(\forall a,b,c \in \mathbb{Z}\), if \(a\) and \(c\) are coprime and \(a \mid bc\), then \(a \mid b\).
+
 \sldef{Epp Thm 8.4.9}. \(\forall a,b,c,n \in \mathbb{Z} : n > 1\) and \(a\) and \(n\) are coprime, \(ab \equiv ac \pmod n \to b \equiv c \pmod n\).
+
+\sldef{Epp Thm 8.4.10} Fermat's little theorem. If \(p\) is prime and \(a\) is any integer such that \(p \not\mid a\), then \(a^{p-1} \equiv 1 \pmod p\).
 
 \chapter{Sequences}
 \sldef{Epp Thm 5.1.1}. For real sequences \(a_m\), \(b_m\), integers \(n \ge m\), real \(c\), \(\sum^n_{k=m}a_k + \sum^n_{k=m}b_k = \sum^n_{k=m}(a_k+b_k)\), \(c\cdot\sum^n_{k=m}a_k = \sum^n_{k=m}(c\cdot a_k)\), \(\left(\prod^n_{k=m}a_k\right)\left(\prod^n_{k=m}b_k\right) = \prod^n_{k=m}(a_k\cdot b_k)\).
@@ -185,6 +193,8 @@ Inverse error. \(p \to q\). \(\slnot p\). \(\slnot q\).
 
 \sldef{Def 6.2.4} Power set. The power set of a set \(S\) i.e. \(\mathcal{P}(S)\) or \(2^S\) is the set whose elements are all the subsets of \(S\).
 
+\sldef{Epp Thm 6.3.1}. The power set \(\mathcal{P}(S)\) of a set \(S\) with \(n\) elements has \(2^n\) elements i.e. \(N(\mathcal{P}(S)) = 2^{N(S)}\).
+
 \sldef{Def 6.3.1} Union. If \(S\) is a set of sets, then \(T = \bigcup S\) is the union of the sets in \(S\) iff every element of \(T\) belongs to some set in \(S\). For two sets \(A, B\), then we can write \(A \cup B\).
 
 \sldef{Prop 6.3.2}. For sets \(A, B, C\), \(\bigcup\varnothing = \varnothing\); \(\bigcup\{A\}=A\); \(A\cup\varnothing=A\); \(A\cup B=B\cup A\); \(A\cup (B\cup C) = (A\cup B)\cup C\); \(A\cup A = A\); \(A \subseteq B \Leftrightarrow A\cup B = B\).
@@ -205,18 +215,321 @@ Inverse error. \(p \to q\). \(\slnot p\). \(\slnot q\).
 
 \sldef{Def 6.3.10} Complement. For set \(A \subseteq U\), \(U\) being the universal set, the complement of \(A\) \(A^c = U - A\).
 
-\sldef{Epp Thm 6.2.1} Subset relations. For sets \(A, B, C\), \(A \cap B \subseteq A \land A \cap B \subseteq B \land A \subseteq A \cup B \land B \subseteq A \cup B \land (A \subseteq B \land B \subseteq C \implies A \subseteq C)\).
+\sldef{Epp Thm 6.2.1} Subset relations. For sets \(A, B, C\), \(A \cap B \subseteq A \land A \cap B \subseteq B \land A \subseteq A \cup B \land B \subseteq A \cup B \land (A \subseteq B \land B \subseteq C \to A \subseteq C)\).
+
+\sldef{T6Q4}. For sets \(A, B\), if \(A \subseteq B\) then \(A \cap B^c = \varnothing\).
 
 \sldef{Epp Thm 6.2.2} Set identities. See Epp Thm 2.1.1, plus set difference law: for sets \(A, B\), \(A - B = A \cap B^c\).
 
 \sldef{Epp Thm 6.2.3}. For sets \(A, B : A \subseteq B\), \(A \cap B = A\) and \(A \cup B = B\).
 
 \chapter{Relations and functions}
+\sldef{Def 8.1.1}. For a set \(S\) and elements \(x, y \in S\), \((x, y)\) is an ordered pair with first element \(x\) and second \(y\). \((x, y) = (a, b) \Leftrightarrow x = a \land y = b\).
+
+\sldef{Def 8.1.2}. An ordered \(n\)-tuple is the generalisation of a pair, a 2-tuple, to any number of elements.
+
+\sldef{Def 8.1.3}. The cartesian product of two sets \(S, T\) i.e. \(S \times T\) is the set containing all possible pairs of elements from \(S\) and from \(T\) in that order.
+
+\sldef{Def 8.1.4}. The generalised cartesian product of \(n\) sets is the set of all possible ordered \(n\)-tuples of elements from each of the sets in order. It can be denoted as \(\prod_{S\in V}S\) for a set \(V\) of sets.
+
+For 8.2.1 through 8.2.6, \(R\) is a binary relation from sets \(S\) to \(T\).
+
+\sldef{Def 8.2.1}. A binary relation from sets \(S\) to \(T\) \(R\) is a subset of \(S \times T\). \(s \mathrel{R} t \Leftrightarrow (s, t) \in R\); \(s \mathrel{\not R} t \Leftrightarrow (s, t) \not\in R\).
+
+\sldef{Def 8.2.2}. The domain of \(R\) is the subset of \(S\) for which \(\exists t \in T : s \mathrel{R} t\).
+
+\sldef{Def 8.2.4}. The co-domain of \(R\) is \(T\).
+
+\sldef{Def 8.2.3}. The image or range of \(R\) is the subset of \(T\) for which \(\exists s \in S : s \mathrel{R} t\).
+
+\sldef{Prop 8.2.5}. The image is a subset of the co-domain.
+
+\sldef{Def 8.2.6}. The inverse of \(R\) \(R^{-1}\) is the relation from \(T\) to \(S\) such that \(\forall s \in S, \forall t \in T
+\), \((t \mathrel{R^{-1}} s \Leftrightarrow s \mathrel{R} t)\).
+
+\sldef{Def 8.2.8}. For sets \(S, T, U\) and relations \(R \subseteq S \times T, R' \subseteq T \times U\), the composition of \(R\) with \(R'\) i.e. \(R' \circ R\) is the relation from \(S\) to \(U\) such that \(\forall s \in S, \forall u \in U\), \(s \mathrel{R' \circ R} u \Leftrightarrow \exists t \in T : s \mathrel{R} t \land t \mathrel{R'} u\).
+
+\sldef{Prop 8.2.9} Associativity. \(R'' \circ (R' \circ R) = (R'' \circ R') \circ R = R'' \circ R' \circ R\).
+
+\sldef{Prop 8.2.10}. \((R' \circ R)^{-1} = R^{-1} \circ R'^{-1}\).
+
+For 8.3.1 through 8.3.5, \(R\) is a relation on \(A\).
+
+\sldef{Def 8.3.1}. \(R\) is reflexive iff \(\forall a \in A\), \(a \mathrel{R} a\).
+
+\sldef{Def 8.3.2}. \(R\) is symmetric iff \(\forall x, y \in A\), \(x \mathrel{R} y \to y \mathrel{R} x\).
+
+\sldef{Def 8.3.3}. \(R\) is transitive iff \(\forall x, y, z \in A\), \((x \mathrel{R} y \land y \mathrel{R} z) \to x \mathrel{R} z\).
+
+\sldef{Def 8.6.1}. \(R\) is anti-symmetric iff \(\forall x, y \in A\), \(x \mathrel{R} y \land y \mathrel{R} x \to x = y\).
+
+\sldef{Def 8.3.4} Equivalence relation. \(R\) is an equivalence relation iff \(R\) is reflexive, symmetric and transitive.
+
+\sldef{Def 8.3.5}. The equivalence class of \(x \in A\) \([x] = \{y \in A : x \mathrel{R} y\}\).
+
+\sldef{Epp Thm 8.4.2}. Congruence modulo \(n\) is an equivalence relation on \(\mathbb{Z}\).
+
+\sldef{Epp Thm 8.3.1}. Given a partition of a set, there exists an equivalence relation on the set whose equivalence classes make up precisely that partition.
+
+\sldef{Epp Lem 8.3.2}. For an equivalence relation \(R\), \(a \mathrel{R} b\) then \([a] = [b]\).
+
+\sldef{Epp Lem 8.3.3}. For an equivalence relation \(R\) on \(A\), for \(a, b \in A\), either \([a] \cap [b] = \varnothing\) or \([a] = [b]\).
+
+\sldef{Epp Thm 8.3.4}. The set of distinct equivalence classes of an equivalence relation on a set form a partition of the set.
+
+\sldef{Def 8.5.1}. For a relation \(R\) on a set \(A\), the transitive closure of \(R\) \(R^t\) is such that it is transitive, \(R \subseteq R^t\), and if \(S\) is any other transitive relation such that \(R \subseteq S\), then \(R^t \subseteq S\).
+
+Analogous definitions follow for the reflexive and symmetric closure of a relation.
+
+\sldef{Repeated composition}. \(R^1 = R\), \(R^2 = R \circ R\), \(R^3 = R \circ R \circ R\), and so on.
+
+\sldef{Prop 8.5.2}. For a relation \(R\) on a set \(A\), \(R^t = \bigcup^\infty_{i=1}R^i\).
+
+\sldef{Def 8.6.2} Partial order. A relation \(R\) on a set \(A\) is a partial order iff it is reflexive, anti-symmetric and transitive.
+
+\sldef{Relations (Part 2) 32}. The subset relation \(\subseteq\) on sets is a partial order.
+
+\sldef{Relations (Part 2) 33}. \(\le\) on \(\mathbb{R}\) is a partial order.
+
+\sldef{Relations (Part 2) 35}. \(\mid\) on \(\mathbb{Z}\) is a partial order.
+
+\sldef{Epp Thm 8.5.1} Lexicographic order. Let \(A\) be a set with a partial order relation \(R\) and \(S\) be a set of strings over \(A\). Define a relation \(\preceq\) on \(S\) as follows. For any two strings in \(S\) \(X = a_1\hdots a_m\) and \(Y = b_1\hdots b_m\) where \(m\) and \(n\) are positive integers, if \(m \le n\) and \(a_i = b_i\) for all \(i = 1, \hdots, m\), then \(X \preceq Y\). If for some \(k \in \mathbb{Z} : k \le m \land k \le n \land k \ge 1\), \(a_i = b_i\) for all \(i = 1, \hdots, k - 1\) and \(a_k \neq b_k\) but \(a_k \mathrel{R} b_k\) then \(X \preceq Y\). Also, \(\epsilon \preceq s\) where \(\epsilon\) is the empty string and \(s\) is any string in \(S\).
+
+\sldef{Hasse diagram}. A Hasse diagram is a representation of a partial order that removes all reflexive arrows, arrows implied by transitivity, and the direction of arrows by always drawing images vertically above preimages.
+
+\sldef{Def 8.6.3} Comparable. For a partial order \(\preceq\) on a set \(A\), elements \(a, b \in A\) are comparable iff \(a \preceq b \lor b \preceq a\). Otherwise, they are noncomparable.
+
+\sldef{Def 8.6.4} Total order. A partial order \(\preceq\) on a set \(A\) is a total order iff \(\forall x, y \in A\), \(x \preceq y \lor y \preceq x\).
+
+\sldef{Relations (Part 2) 37}. \(\le\) on \(\mathbb{Z}\) is a total order.
+
+For 8.6.5 through 8.6.8, \(\preceq\) is a partial order on \(A\).
+
+\sldef{Def 8.6.5} Maximal. An element \(x\) is a maximal element iff for all \(y \in A\), \(x \preceq y \to x = y\).
+
+\sldef{Def 8.6.6} Maximum. An element \(\top\) is the maximum element iff for all \(x \in A\), \(x \preceq \top\).
+
+\sldef{Def 8.6.7} Minimal. An element \(x\) is a minimal element iff for all \(y \in A\), \(y \preceq x \to x = y\).
+
+\sldef{Def 8.6.8} Minimum. An element \(\bot\) is the minimum element iff for all \(x \in A\), \(\bot \preceq x\).
+
+\sldef{Def 8.6.9} Well ordered. For a total order \(\preceq\) on a set \(A\), \(A\) is well ordered iff every non-empty subset of \(A\) contains a minimum element.
+
+\sldef{Def 7.1.1} Function. A relation \(f \subseteq S \times T\) is a function from \(S\) to \(T\) \(f : S \to T\) iff for all \(x \in S\), there exists a unique \(y \in T\) such that \(x \mathrel{f} y\) i.e. \(f(x) = y\). In other words, every value in \(S\) must have exactly one image in \(T\).
+
+\sldef{Def 7.1.2}. If \(f(x) = y\), then \(x\) is a pre-image of \(y\). \sldef{Def 7.1.3}. The inverse image of \(y\) is the set of all its pre-images. \sldef{Def 7.1.4}. For \(f : S \to T\) and \(U \subseteq T\), the inverse image of \(U\) is the set of all the pre-images of elements of \(U\).
+
+\sldef{Def 7.1.5}. For \(f : S \to T\) and \(U \subseteq S\), the restriction of \(f\) to \(U\) is the set \(\{(x, y) \in U \times T : f(x) = y\}\) i.e. the restriction of the domain of \(f\) to \(U\).
+
+\sldef{Def 7.2.1} Injective. \(f : S \to T\) is injective or one-to-one iff for all \(y \in T\) and for all \(x_1, x_2 \in S\), \((f(x_1) = y \land f(x_2) = y) \to x_1 = x_2\). In other words, every element in \(T\) has at most one pre-image in \(S\).
+
+\sldef{Def 7.2.2} Surjective. \(f : S \to T\) is surjective or onto iff for all \(y \in T\), there exists \(x \in S : f(x) = y\). In other words, every element in \(T\) has at least one pre-image in \(S\).
+
+\sldef{Def 7.2.3} Bijective. \(f\) is bijective or is a bijection if it is injective and surjective.
+
+\sldef{T7Q7b}. For \(f : X \to Y\), \(g : Y \to Z\), if \(g \circ f\) is injective, then \(f\) is injective.
+
+\sldef{T7Q7c}. For \(f : X \to Y\), \(g : Y \to Z\), if \(g \circ f\) is surjective, then \(g\) is surjective.
+
+\sldef{Prop 7.2.4} Inverse. For \(f : S \to T\) and its inverse relation \(f^{-1}\) from \(T\) to \(S\), \(f\) is bijective iff \(f^{-1}\) is a function.
+
+\sldef{Prop 7.3.1} Composition. For \(f : S \to T\) and \(g : T \to U\), \(g \circ f\) is a function from \(S\) to \(U\). \((g \circ f)(x) = g(f(x))\).
+
+\sldef{Def 7.3.2} Identity. For set \(A\), we can define an identity function \(I_A : A \to A\) by \(\forall x \in A\), \(I_A(x) = x\).
+
+\sldef{Prop 7.3.3}. For \(f : A \to A\), if \(f\) is injective, \(f^{-1} \circ f = I_A\). Also, \(f \circ f^{-1}\) iff \(f^{-1}\) is a function.
 
 \chapter{Counting and probability}
+\sldef{Epp Thm 9.2.1} Multiplication rule. If an operation consists of \(k\) steps, the first step can be performed in \(n_1\) ways, and the \(k\)th step can be performed in \(n_k\) ways, then the entire operation can be performed in \(\prod^k_{i=1} n_i\) ways.
+
+\sldef{Epp Thm 9.2.2} Permutations. The number of permutations of a set with \(n\) elements is \(n!\).
+
+\sldef{Epp Thm 9.2.3} \(r\)-permutations. For \(1 \le r \le n\), the number of \(r\)-permutations of a set of \(n\) elements is \(P(n, r) = \frac{n!}{(n-r)!}\).
+
+\sldef{Epp Thm 9.3.1} Addition rule. The number of elements in a union of mutually disjoint finite sets equals the sum of the number of elements in each of the component sets.
+
+\sldef{Epp Thm 9.3.2} Difference rule. If \(A\) is a finite set and \(B \subseteq A\), then \(N(A - B) = N(A) - N(B)\).
+
+\sldef{Epp Thm 9.3.3} Inclusion-exclusion for 2 or 3 sets. If \(A, B, C\) are finite sets, then \(N(A \cup B) = N(A) + N(B) - N(A \cap B)\) and \(N(A \cup B \cup C) = N(A) + N(B) + N(C) - N(A \cap B) - N(A \cap C) - N(B \cap C) + N(A \cap B \cap C)\).
+
+\sldef{Epp Thm 9.4.1} Pigeonhole principle. A function from one finite set to a smaller finite set cannot be one-to-one: there must be at least 2 elements in the domain that have the same image in the co-domain.
+
+Alternative statement. For any function \(f\) from a finite set \(X\) with \(n\) elements to a finite set \(Y\) with \(m\) elements, if \(n > m\), then \(f\) is not one-to-one.
+
+\sldef{Epp Thm 9.4.2}. Let \(X\) and \(Y\) be finite sets with the same number of elements and suppose \(f\) is a function from \(X\) to \(Y\). Then \(f\) is one-to-one iff \(f\) is onto.
+
+\sldef{Generalised pigeonhole princple}. For any function \(f\) from a finite set \(X\) with \(n\) elements to a finite set \(Y\) with \(m\) elements and for any positive integer \(k\), if \(k < \frac{n}{m}\), then there is some \(y \in Y\) such that \(y\) is the image of at least \(k + 1\) distinct elements of X.
+
+Contrapositive. For any function \(f\) from a finite set \(X\) with \(n\) elements to a finite set \(Y\) with \(m\) elements and for any positive integer \(k\), if for each \(y\in Y\), \(f^{–1}(y)\) has at most \(k\) elements, then \(X\) has at most \(km\) elements; in other words, \(n \le km\).
+
+\sldef{\(r\)-combinations}. An \(r\)-combination of a set of \(n\) elements is a subset of \(r\) of the \(n\) elements.
+
+\sldef{Epp Thm 9.5.1}. The number of \(r\)-combinations that can be chosen from a set of \(n\) is \(\binom{n}{r} = \frac{P(n, r)}{r!} = \frac{n!}{r!(n-r)!}\).
+
+\sldef{Epp Thm 9.5.2}. When permuting \(n\) objects of which \(m\) are indistinguishable i.e. two permutations that differ only in that some of these \(m\) have exchanged positions are considered the same permutation, then the number of permutations is divided by \(m!\) i.e. \(\frac{n!}{m!}\).
+
+\sldef{\(r\)-combinations with repetition}. An \(r\)-combination with repetition allowed, or multiset of size \(r\), chosen from a set \(X\) of \(n\) elements is an unordered selection of elements taken from \(X\) with repetition allowed. If \(X = \{x_1, \hdots, x_n\}\), we write an \(r\)-combination with repetition allowed, or multiset of size r, as \([x_{i_1}, \hdots, x_{i_r}]\) where each \(x_{i_j}\) is in \(X\) and some of the \(x_{i_j}\) may equal each other.
+
+\sldef{Epp Thm 9.6.1}. The number of \(r\)-combinations with repetition allowed (multisets of size \(r\)) that can be selected from a set of \(n\) elements is \(\binom{r+n-1}{r}\).
+
+Summary of choosing \(k\) from \(n\). If repetition is allowed: if order matters, \(n^k\), else \(\binom{k+n-1}{k}\). Otherwise, if order matters, \(P(n, k)\), else \(\binom{n}{k}\).
+
+\sldef{Epp Thm 9.7.1} Pascal's formula. For \(n, r \in \mathbb{Z}^+\) and \(r \le n\), \(\binom{n+1}{r} = \binom{n}{r-1} + \binom{n}{r}\).
+
+\sldef{Epp Thm 9.7.2} Binomial theorem. For \(a, b \in \mathbb{R}\) and \(n \in \mathbb{N}\), \((a+b)^n = \sum^n_{k=0}\binom{n}{k}a^{n-k}b^k = a^n + \binom{n}{1}a^{n-1}b^1 + \binom{n}{2}a^{n-2}b^2 + \cdots + \binom{n}{n-1}a^1b^{n-1}+b^n\).
+
+\sldef{Probability axioms}. Let \(S\) be a sample space, \(A\) probability function \(P\) from the set of all events in \(S\) to the set of real numbers satisfies the following three axioms: for all events \(A\) and \(B\) in \(S\), \(0 \le P(A) \le 1\), \(P(\varnothing) = 0\), \(P(S) = 1\), and if \(A\) and \(B\) are disjoint, then \(P(A \cup B) = P(A) + P(B)\).
+
+\sldef{Complement}. \(P(A^c) = 1 - P(A)\).
+
+\sldef{Union}. \(P(A \cup B) = P(A) + P(B) - P(A \cap B)\).
+
+\sldef{Expected value}. Suppose the possible outcomes of an experiment, or random process, are real numbers \(a_1, \hdots, a_n\), which occur with probabilities \(p_1, \hdots, p_n\). The
+expected value of the process is \(\sum^n_{k=1}a_kp_k\).
+
+\sldef{Conditional probability}. Let \(A\) and \(B\) be events in a sample space \(S\). If \(P(A) = 0\), then the conditional probability of \(B\) given \(A\) \(P(B \mid A) = \frac{P(A \cap B)}{P(A)}\).
+
+\sldef{Epp Thm 9.9.1} Bayes' theorem. Suppose that a sample space \(S\) is a union of mutually disjoint events \(B_1, \hdots, B_n\), \(A\) is an event in \(S\), and \(A\) and all the \(B_i\) have nonzero probabilities. For \(1 \le k \le n\), \(P(B_k \mid A) = \frac{P(A \mid B_k)P(B_k)}{P(A \mid B_1)P(B_1) + \cdots + P(A \mid B_n)P(B_n)}\).
+
+\sldef{Independent events}. Two events are independent iff \(P(A \cap B) = P(A)P(B)\).
+
+\sldef{Pairwise independence}. Three events are pairwise independent iff all three pairs of events are independent.
+
+\sldef{Mutual independence}. Three events are mutually independent iff they are pairwise independent and \(P(A \cap B \cap C) = P(A)P(B)P(C)\). Generalisable.
 
 \chapter{Graph theory}
+\sldef{Graph}. A graph \(G\) is a nonempty set \(V(G)\) of vertices and a set \(E(G)\) of edges, where each edge is a set consisting of either one or two vertices called its endpoints. An edge connects its endpoints, and two vertices connected by an edge are adjacent (possibly to itself). An edge is incident on its endpoints, and two edges incident on the same endpoint are adjacent endpoints.
 
+\sldef{Digraph}. A directed graph \(G\) is a nonempty set \(V(G)\) of vertices and a set \(D(G)\) of directed edges, where each edge is an ordered pair of vertices called its endpoints.
+
+\sldef{Simple graph}. A simple graph is an undirected graph that does not have any self-loops or parallel edges.
+
+\sldef{Complete graph}. A complete graph on \(n\) vertices \(K_n\) is a simple graph with \(n\) vertices and exactly one edge connecting each pair of distinct vertices.
+
+\sldef{Complete bipartite graph}. A complete bipartite graph on \((m, n)\) vertices where \(m, n > 0\) \(K_{m,n}\) is a simple graph with distinct vertices \(v_1, \hdots, v_m\) and \(w_1, \hdots, w_m\) such that for all \(i, k = 1, \hdots, m\) and for all \(j, l = 1, \hdots, n\), there is an edge from each vertex \(v_i\) to each vertex \(w_j\), there is no edge from any vertex \(v_i\) to any other vertex \(v_k\) or \(w_j\) to \(w_l\).
+
+\sldef{Subgraph}. A graph is a subgraph of another iff every vertex and edge in the former is also a vertex or edge in the latter, and every edge in the former has the same endpoints as in the latter.
+
+\sldef{Degree}. The degree of a vertex is the number of edges incident on it, with a self-loop counted twice. The total degree of a graph is the sum of all the degrees of the graph's vertices.
+
+\sldef{Epp Thm 10.1.1} Handshake theorem. The total degree of a graph is twice the number of edges of the graph.
+
+\sldef{Epp Cor 10.1.2}. The total degree of a graph is even.
+
+\sldef{Epp Prop 10.1.3}. In any graph there is an even number of odd-degreed vertices.
+
+\sldef{T10Q3}. Every simple graph with at least two vertices has at least two vertices of the same degree.
+
+\sldef{Walk}. A walk from \(v\) to \(w\) in \(G\) is a finite alternating sequence of adjacent vertices and edges of \(G\) starting with \(v\) and ending with \(w\). The trivial walk from \(v\) to \(v\) consists of \(v\) only.
+
+\sldef{Trail}. A trail is a walk that does not contain a repeated edge.
+
+\sldef{Path}. A path is a trail that does not contain a repeated vertex.
+
+\sldef{Closed walk}. A closed walk is a walk that starts and ends at the same vertex.
+
+\sldef{Circuit/cycle}. A circuit is a closed walk that contains at least one edge and does not contain a repeated edge.
+
+\sldef{Simple circuit/cycle}. A simple circuit is a circuit that does not have any other repeated vertex except the first and last.
+
+\sldef{Connectedness}. Two vertices are connected iff there is a walk between them. A graph is connected iff all pairs of two vertices from the graph are connected.
+
+\sldef{Epp Lem 10.2.1}. In a connected graph, any two distinct vertices can be connected by a path. If two vertices are part of a circuit in a graph, and one edge is removed from the circuit, a trail still exists between the two vertices. In a connected graph containing a circuit, an edge of the circuit can be removed without disconnecting the graph.
+
+\sldef{T10Q5}. Any two longest paths in a connected simple graph have a vertex in common.
+
+\sldef{Connected component}. A graph \(H\) is a connected component of a graph \(G\) iff \(H\) is a subgraph of \(G\), \(H\) is connected, and no connected subgraph of \(G\) has \(H\) as a subgraph and contains vertices or edges not in \(H\).
+
+\sldef{Euler circuit}. An Euler circuit is one that contains every vertex and edge of a graph. An Eulerian graph is one that contains an Euler circuit.
+
+\sldef{Epp Thm 10.2.2}. If a graph has an Euler circuit, then every vertex of the graph has positive even degree.
+
+Contrapositive. If some vertex of a graph has odd degree, then the graph does not have an Euler circuit.
+
+\sldef{Epp Thm 10.2.3}. If a graph is connected and the degree of every vertex is a positive even integer, then the graph has an Euler circuit.
+
+\sldef{Epp Thm 10.2.4}. A graph has an Euler circuit iff it is connected and every vertex has positive even degree.
+
+\sldef{Euler path}. An Euler path between two vertices is a sequence of adjacent edges and vertices that starts at one vertex and ends at the other, and passes through every vertex and edge of the graph exactly once.
+
+\sldef{Epp Cor 10.2.5}. There is an Euler path between two vertices iff the graph is connected, the two nodes have odd degree, and all other vertices of the graph have positive even degree.
+
+\sldef{Hamiltonian circuit}. A Hamiltonian circuit is a simple circuit containing every vertex of a graph. A Hamiltonian graph is one that contains such a circuit.
+
+\sldef{Epp Prop 10.2.6}. A Hamiltonian graph has a subgraph that is connected, ontains every vertex in the graph, has the same number of edges as vertices, and has vertices all of degree 2.
+
+\sldef{T10Q6b}. Any complete graph on at least 3 vertices has a Hamiltonian cycle.
+
+\sldef{Adjacency matrix}. The adjacency matrix of \(G\) with \(n\) vertices \(v_i\) is the \(n \times n\) matrix \(\mathbf{A} = a_{ij}\) such that \(a_{ij}\) is the number of edges from \(v_i\) to \(v_j\) for all \(i, j = 1, \hdots, n\). For an undirected graph, it is just the number of edges between the two vertices.
+
+\sldef{Symmetric matrix}. A \(n \times n\) square matrix is symmetric iff for all \(i, j = 1, \hdots, n\), \(a_{ij} = a_{ji}\).
+
+The adjacency matrix of an undirected graph is always symmetric.
+
+\sldef{Epp Thm 10.3.1}. A graph \(G\) with connected components \(G_1, \hdots, G_n\) that have \(n_i\) vertices each has an adjacency matrix of the form \[\begin{bmatrix}
+A_1 & 0 & \cdots & 0 \\
+0 & A_2 & \ddots & \vdots \\
+\vdots & \ddots & \ddots & 0 \\
+0 & \cdots & 0 & A_n
+\end{bmatrix}\] if the vertices are numbered consecutively, each \(A_i\) is the \(n_i \times n_i\) adjacency matrix of \(G_i\), and zeros represent matrices whose entries are all zeroes.
+
+Matrix multiplication is associative, where the products are defined, but not commutative. Multiply rows with columns.
+
+\sldef{Identity matrix}. The identity matrix \(\mathbf{I}_n\) is the \(n \times n\) matrix that is all zero except for the main diagonal that is all one.
+
+\sldef{Matrix powers}. \(\mathbf{A}^0 = \mathbf{I}\). \(\mathbf{A}^n = \mathbf{AA}^{n-1}\), for positive \(n\).
+
+\sldef{Epp Thm 10.3.2}. The \(ij\) entry of \(\mathbf{A}^n\) where \(\mathbf{A}\) is the adjacency matrix of a graph is the number of walks of length \(n\) from \(v_i\) to \(v_j\).
+
+\sldef{Isomorphism}. Two graphs are isomorphic iff there are one-to-one correspondences between the vertices and edges of the two graphs, \(g\) and \(h\) respectively, such that if \(v\) is an endpoint of \(e\), then \(g(v)\) is an endpoint of \(h(e)\).
+
+\sldef{Epp Thm 10.4.1}. Graph isomorphism is an equivalence relation.
+
+\sldef{Epp Thm 10.4.2}. Of a graph, its connectedness, number of vertices, number of edges, number of vertices of a given degree and number of simple circuits of a given length are invariant under isomorphism, as are the presence of a circuit of a given length in the graph, the presence of an Euler circuit and the presence of a Hamiltonian circuit.
+
+\sldef{Planar graph}. A planar graph is one that can be drawn on a 2D plane without edges crossing.
+
+\sldef{Euler's formula}. A connected planar simple graph has number of faces \(f = e - v + 2\) where \(e\) is the number of edges and \(v\) is the number of vertices.
+
+\sldef{Tree}. A tree is a graph that is circuit-free and connected. A trivial tree is a graph of only one vertex.
+
+\sldef{Forest}. A forest is a graph that is circuit-free but not connected.
+
+\sldef{Epp Lem 10.5.1}. A non-trivial tree has at least one vertex of degree one.
+
+\sldef{T11Q4}. A non-trivial tree has at least two vertices of degree one.
+
+\sldef{Terminal vertex}. A terminal vertex or leaf is any vertex of degree 0 or 1 in a tree. An internal vertex is one of degree greater than 1.
+
+\sldef{Epp Thm 10.5.2}. Any tree with \(n\) vertices has \(n-1\) edges.
+
+\sldef{Epp Lem 10.5.3}. If any edge in a circuit in a connected graph is removed, the resulting graph is still connected.
+
+\sldef{Epp Thm 10.5.4}. A connected graph with \(n\) vertices and \(n-1\) edges is a tree.
+
+\sldef{Rooted tree}. A rooted tree is a tree in which one vertex is designated as a root. The \sldef{level} of a vertex is the number of edges along the unique path between it and the root. The \sldef{height} of a rooted tree is the maximum level of any vertex in the tree. The \sldef{children} of a vertex are all vertices adjacent to the vertex that are further from the root. If one vertex is a child of another, then the latter is the \sldef{parent} of the former. Vertices sharing the same parent are \sldef{siblings}. Given two distinct vertices, if one lies on the unique path between the root and the other, then the former is an \sldef{ancestor} of the latter, and the latter is a \sldef{descendant} of the former.
+
+\sldef{Binary tree}. A binary tree is one in which every parent has at most two children, each child is either a left or right child (but not both), and every parent has at most one left and one right child. A \sldef{full binary tree} is one in which each parent has exactly two children. The \sldef{left subtree} of a parent in a binary tree is the binary tree whose root is the left child of the parent, and similarly for the \sldef{right subtree}.
+
+\sldef{Epp Thm 10.6.1}. A full binary tree with \(k\) internal vertices has \(2k+1\) total vertices and \(k+1\) terminal vertices.
+
+\sldef{Epp Thm 10.6.2}. Any binary tree of height \(h\) has at most \(2^h\) terminal vertices.
+
+\sldef{Breadth-first search}. A breadth-first search visits the root, followed by all nodes adjacent to the root, followed by all nodes adjacent to the nodes adjacent to the root, and so on.
+
+\sldef{Depth-first search}. A depth-first search can be pre-order, in-order, and post-order. A pre-order depth-first search visits the root, followed by the left subtree, followed by the right subtree. An in-order search visits left, root, then right. A post-order search visits left, right, then root.
+
+\sldef{Spanning tree}. A spanning tree for a graph is a subgraph that contains every vertex of the graph and is a tree.
+
+\sldef{Epp Prop 10.7.1}. Every connected graph has a spanning tree, and any two spanning trees for a graph have the same number of edges.
+
+\sldef{Weighted graph}. A weighted graph is one for which each edge has a positive real number weight. The sum of the weight of all edges is the total weight of the graph.
+
+\sldef{Minimum spanning tree}. A minimum spanning tree is one that has the least possible total weight compared to all other spanning trees of the graph.
+
+\sldef{Kruskal's algorithm}. Add to the result the edge of least weight that is not yet in the result and does not create a circuit in the result until the result is a (minimum) spanning tree.
+
+\sldef{Prim's algorithm}. Start with any vertex. Add to the result the edge of least weight that connects a vertex already in the result to a vertex not yet in the result, until the result is a (minimum) spanning tree.
 \chapter{Epp \(\mathbb{R}\) properties}
 \(\forall a,b,c,d \in \mathbb{R}\),
 
