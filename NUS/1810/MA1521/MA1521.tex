@@ -1,31 +1,95 @@
 \documentclass{slnotes}
 \DeclarePairedDelimiter\abs{\lvert}{\rvert}%
 
+\usepackage{luacode}
+\begin{luacode}
+function suppl_math_kerning(s)
+  s = s:gsub("([f])%s-_%s-(%b%{%})"  , "%1_{\\mkern-1.25mu %2}")
+  s = s:gsub("([f])%s-_%s-(%w)"    , "%1_{\\mkern-1.25mu %2}")
+  return s
+end
+\end{luacode}
+\directlua{luatexbase.add_to_callback("process_input_buffer", suppl_math_kerning, "suppl_math_kerning")}
+
 \begin{document}
 \chapter{Differentiation, Integration}
 \section{Limits}
 If \(L = \lim f(x) \land M = \lim g(x)\) then \begin{itemize}
-\item \(\lim (f(x) \pm g(x)) = L \pm M\)
+\item \(\lim kf(x) = kL\); \(\lim (f(x) \pm g(x)) = L \pm M\)
 \item \(\lim f(x)g(x) = LM\)
 \item \(\lim f(x)/g(x) = L/M\) if \(M \neq 0\)
-\item \(\lim kf(x) = kL\)
 \end{itemize}
+
+\sldef{L'Hôpital's rule}. For functions \(f, g\) differentiable on an open interval \(I\) except possibly at a point \(c \in I\), if \(\lim f(x) = \lim g(x) = 0\) or \(\pm\infty\), and \(g'(x) \neq 0\) for all \(x \in I\), \(x \neq c\), and \(\lim f'(x)/g'(x)\) exists, then \(\lim f(x)/g(x) = \lim f'(x)/g'(x)\).
 
 \section{Derivatives}
 \begin{itemize}
-\item \((e^x)' = e^x\)
-\item \((\ln x)' = 1/x\)
-\item \((\sin x)' = \cos x\)
-\item \((\cos x)' = -\sin x\)
-\item \((\tan x)' = \sec^2 x\)
-\item \((\csc x)' = -\csc x \cot x\)
-\item \((\sec x)' = \sec x \tan x\)
-\item \((\cot x)' = -\csc^2 x\)
-\item \((\sin^{-1} x)' = 1/\sqrt{1-x^2}\)
-\item \((\cos^{-1} x)' = -1/\sqrt{1-x^2}\)
-\item \((\tan^{-1} x)' = 1/(1+x^2)\)
-\item \((\csc^{-1} x)' = -1/\abs{x}\sqrt{x^2-1}\)
-\item \((\sec^{-1} x)' = 1/\abs{x}\sqrt{x^2-1}\)
-\item \((\cot^{-1} x)' = -1/(1+x^2)\)
+\item \((kf(x))' = kf'(x)\); \((f(x) \pm g(x))' = f'(x) \pm g'(x)\)
+\item \((f(x)g(x))' = f'(x)g(x) + f(x)g'(x)\)
+\item \((f(x)/g(x))' = (f'(x)g(x)-f(x)g'(x))/((g(x))^2)\)
+\item \(\sldd{y}{x} = \sldd{y}{u} \cdot \sldd{u}{x} = \sldd{y}{t}/\sldd{x}{t}\)
+\item \((e^x)' = e^x\); \((\ln x)' = 1/x\)
+\item \((\sin x)' = \cos x\); \((\sin^{-1} x)' = 1/\sqrt{1-x^2}\)
+\item \((\cos x)' = -\sin x\); \((\cos^{-1} x)' = -1/\sqrt{1-x^2}\)
+\item \((\tan x)' = \sec^2 x\); \((\tan^{-1} x)' = 1/(1+x^2)\)
+\item \((\csc x)' = -\csc x \cot x\); \((\csc^{-1} x)' = -1/\abs{x}\sqrt{x^2-1}\)
+\item \((\sec x)' = \sec x \tan x\); \((\sec^{-1} x)' = 1/\abs{x}\sqrt{x^2-1}\)
+\item \((\cot x)' = -\csc^2 x\); \((\cot^{-1} x)' = -1/(1+x^2)\)
+\item \(f_x = \frac{\partial}{\partial x} f(x, \hdots)\); \(f_{xx} = \frac{\partial^2}{\partial x^2} f(x, \hdots)\); and so on
+\item For \(z(t) = f(x(t), y(t))\),\\\(\sldd{}{t} z(t) = f_x \sldd{}{t} x(t) + f_y \sldd{}{t} y(t)\)
+\item For \(z(s, t) = f(x(s, t), y(s, t))\), \(z_s = f_xx_s + f_yy_s\) and \(z_t = f_xx_t + f_yy_t\)
+\item \(\nabla f = f_x\mathbf{i} + f_y\mathbf{j}\); \(D_{\mathbf{u}}f(a, b) = \nabla f(a, b)\cdot\mathbf{u}\)
+\item In MA1521, \(f_{xy} = f_{yx}\)
 \end{itemize}
+
+\section{Integrals}
+\begin{itemize}
+\item \(\frac{\sld}{\sld{x}}\int^x_a f(t)\sld t = f(x)\)
+\item \(\int^b_a f(x)\sld{x} = F(b) - F(a)\) where \(F\) is an antiderivative of \(f\) on \([a, b]\)
+\item \(\int^b_a f(g(x))g'(x)\sld{x} = \int^{g(b)}_{g(a)}f(u)\sld u\), provided \(g' \ge 0\) or \(g' \le 0\) in \([a, b]\).
+\item \(\int u \sld v = uv - \int v \sld u\); choose \(u\) as the harder-to-integrate function: \(\log\), \(\sin^{-1}\) et al., algebraic, \(\sin\) et al., and exponential, in decreasing order.
+\item Volume about \(x\)-axis \(= \pi\int^b_a[f(x)]^2\sld x\)
+\item Volume about \(y\)-axis \(= 2\pi\int^b_a x\lvert f(x) \rvert\sld x\)
+\end{itemize}
+
+\sldef{Extreme values} occur at interior points where \(f'(x) = 0\) or does not exist, and domain endpoints. \sldef{Critical points} are interior points where \(f'(x) = 0\) or does not exist, and where \(f_x(a, b) = f_y(a, b) = 0\), or either \(f_x(a, b)\) or \(f_y(a, b)\) does not exist.
+
+A graph is \sldef{concave down} on an interval if its shape looks like the graph of \(y = -x^2\) i.e. \(y'' < 0\), and \sldef{concave up} if it looks like \(y = x^2\) i.e. \(y'' > 0\). \sldef{Points of inflection} are points where \(f\) is continuous and its concavity changes.
+
+\sldef{First derivative test}. If \(f'(x) > 0\) for \(x \in (a, c)\) and \(f'(x) < 0\) for \(x \in (c, b)\) then \(f(c)\) is a local maximum. If \(f'(x) < 0\) for \(x \in (a, c)\) and \(f'(x) > 0\) for \(x \in (c, b)\) then \(f(c)\) is a local minimum.
+
+\sldef{Second derivative test}. If \(f'(c) = 0 \land f''(c) < 0\), then \(f\) has a local maximum at \(x = c\). If \(f'(c) = 0 \land f''(c) > 0\), then \(f\) has a local minimum at \(x = c\).
+
+For functions of two variables, let \(D = f_{xx}(a,b)f_{yy}(a,b) - f_{xy}(a,b)^2\). If \(D > 0 \land f_{xx}(a, b) > 0\), the point is a local minimum. If \(D > 0 \land f_{xx}(a, b) < 0\), it is a local maximum. If \(D < 0\), it is a saddle point. If \(D = 0\), there is no conclusion.
+
+\(f\) is \sldef{increasing} on an interval \(I\) if for any two points \(x_1, x_2\) in \(I\), \(x_2 > x_1 \implies f(x_2) > f(x_1)\). If \(x_2 > x_1 \implies f(x_2) < f(x_1)\), then \(f\) is \sldef{decreasing} on \(I\).
+
+\sldef{Tests}. \(f\) is increasing on \(I\) when \(f'(x) > 0\) for all \(x \in I\). \(f\) is decreasing on \(I\) when \(f'(x) < 0\) for all \(x \in I\).
+
+\chapter{Differential equations}
+\sldef{Separable equations} are those of the form \(M(x)\sld x = N(y)\sld y\). They can be integrated directly.
+
+Equations of the form \(y' = g(y/x)\) can be made separable by \(u = y/x\) and substituting \(y = ux\), \(y' = u+xu'\) to get \((g(u) - u)^{-1}\sld u = x^{-1}\sld x\).
+
+Equations of the form \(y' = f(ax + by + c)\) where \(f\) is continuous and \(b \neq 0\) can be solved by substituting \(u = ax + by + c\).
+
+Equations of the form \(\sldd{y}{x} + P(x)y = Q(x)\) have general solution \(y = R^{-1}\int RQ\sld x\) where \(R = \exp \int P\sld x\).
+
+Equations of the form \(y' + P(x)y = Q(x)y^n\) can be reduced to the previous form by substituting \(z = y^{1-n}\) to get \(z' + (1-n)P(x)z = (1-n)Q(x)\).
+
+\section{Second order DEs}
+An equation of the form \(y'' + ay' + by = 0\) has a characteristic equation \(\lambda^2 + a\lambda + b = 0\) with roots \(\lambda_1, \lambda_2\).
+
+If \(\lambda_1, \lambda_2\) are distinct and real, then the solution is\\\(y = c_1\exp(\lambda_1x)+c_2\exp(\lambda_2x)\).
+
+If the roots are repeated, then the solution is\\\(y = (c_1+c_2x)\exp(-\frac{1}{2}ax)\).
+
+If the roots are complex, then if \(\lambda_1 = \alpha+\beta i\), \(\lambda_2 = \alpha-\beta i\), the solution is\\\(y = c_1\exp(\alpha x)\cos(\beta x)+c_2\exp(\alpha x)\sin(\beta x)\).
+
+\section{Modelling}
+The Malthus model states that \(N' = (B-D)N\) i.e. \(N = N_0\exp((B-D)t)\) where \(N\) is the population, \(B\) is the birth rate and \(D\) is the death rate.
+
+The logistic model states that \(D = sN \implies N' = BN - sN^2\) i.e. \[\frac{1}{N} = \frac{s}{B} + (\frac{1}{N_0} - \frac{s}{B})e^{-Bt}\] and the long-term equilibrium population is \(B/s\).
+
+The harvesting model states that \(N' = (B - sN)N - E\). If \(E > B^2/4s\) the population will go towards zero.
 \end{document}
