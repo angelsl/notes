@@ -1,16 +1,6 @@
 \documentclass{slnotes}
 \DeclarePairedDelimiter\abs{\lvert}{\rvert}%
 
-\usepackage{luacode}
-\begin{luacode}
-function suppl_math_kerning(s)
-  s = s:gsub("([f])%s-_%s-(%b%{%})"  , "%1_{\\mkern-1.25mu %2}")
-  s = s:gsub("([f])%s-_%s-(%w)"    , "%1_{\\mkern-1.25mu %2}")
-  return s
-end
-\end{luacode}
-\directlua{luatexbase.add_to_callback("process_input_buffer", suppl_math_kerning, "suppl_math_kerning")}
-
 \begin{document}
 \chapter{Differentiation, Integration}
 \section{Limits}

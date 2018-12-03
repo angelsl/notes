@@ -42,10 +42,10 @@
 
 \usetikzlibrary{arrows.meta}
 
-\setmainfont[Ligatures=TeX]{Palatino Linotype}
+\setmainfont[Ligatures=TeX]{TeX Gyre Pagella}
 \setsansfont[Ligatures=TeX]{Source Sans Pro}
-\setmathfont{Cambria Math}
-\newfontfamily\mffamily{Cambria}
+\setmathfont{TeX Gyre Pagella Math}
+\newfontfamily\mffamily{TeX Gyre Pagella}
 \DeclareTextFontCommand{\slmf}{\mffamily\itshape}
 
 \def\ttl@mkchap@i#1#2#3#4#5#6#7{%
