@@ -25,21 +25,28 @@ If \(L = \lim f(x) \land M = \lim g(x)\) then \begin{itemize}
 \item \((\csc x)' = -\csc x \cot x\); \((\csc^{-1} x)' = -1/\abs{x}\sqrt{x^2-1}\)
 \item \((\sec x)' = \sec x \tan x\); \((\sec^{-1} x)' = 1/\abs{x}\sqrt{x^2-1}\)
 \item \((\cot x)' = -\csc^2 x\); \((\cot^{-1} x)' = -1/(1+x^2)\)
+\item \((x\ln x - x)' = \ln x\); \((-\ln\cos x)' = \tan x\)
+\item \((x\sin^{-1}x + \sqrt{1-x^2})' = \sin^{-1}x\)
+\item \((x\cos^{-1}x - \sqrt{1-x^2})' = \cos^{-1}x\)
+\item \((x\tan^{-1}x-\frac{1}{2}\ln(1+x^2))' = \tan^{-1}x\)
+\item \((\ln(\cos\frac{x}{2} + \sin\frac{x}{2}) - \ln(\cos\frac{x}{2} - \sin\frac{x}{2}))' = \sec x\)
+\item \((\ln\sin\frac{x}{2} - \ln\cos\frac{x}{2})' = \csc x\)
+\item \((\ln\sin x)' = \cot x\)
 \item \(f_x = \frac{\partial}{\partial x} f(x, \hdots)\); \(f_{xx} = \frac{\partial^2}{\partial x^2} f(x, \hdots)\); and so on
 \item For \(z(t) = f(x(t), y(t))\),\\\(\sldd{}{t} z(t) = f_x \sldd{}{t} x(t) + f_y \sldd{}{t} y(t)\)
 \item For \(z(s, t) = f(x(s, t), y(s, t))\), \(z_s = f_xx_s + f_yy_s\) and \(z_t = f_xx_t + f_yy_t\)
-\item \(\nabla f = f_x\mathbf{i} + f_y\mathbf{j}\); \(D_{\mathbf{u}}f(a, b) = \nabla f(a, b)\cdot\mathbf{u}\)
+\item \(\nabla f = f_x\mathbf{i} + f_y\mathbf{j} + f_z\mathbf{k}\); \(D_{\mathbf{u}}f(a, b) = \nabla f(a, b)\cdot\mathbf{u}\)
 \item In MA1521, \(f_{xy} = f_{yx}\)
 \end{itemize}
 
 \section{Integrals}
 \begin{itemize}
-\item \(\frac{\sld}{\sld{x}}\int^x_a f(t)\sld t = f(x)\)
-\item \(\int^b_a f(x)\sld{x} = F(b) - F(a)\) where \(F\) is an antiderivative of \(f\) on \([a, b]\)
-\item \(\int^b_a f(g(x))g'(x)\sld{x} = \int^{g(b)}_{g(a)}f(u)\sld u\), provided \(g' \ge 0\) or \(g' \le 0\) in \([a, b]\).
-\item \(\int u \sld v = uv - \int v \sld u\); choose \(u\) as the harder-to-integrate function: \(\log\), \(\sin^{-1}\) et al., algebraic, \(\sin\) et al., and exponential, in decreasing order.
-\item Volume about \(x\)-axis \(= \pi\int^b_a[f(x)]^2\sld x\)
-\item Volume about \(y\)-axis \(= 2\pi\int^b_a x\lvert f(x) \rvert\sld x\)
+\item \(\frac{\sld}{\sld x}\int^x_a f(t)\,\sld t = f(x)\)
+\item \(\int^b_a f(x)\,\sld x = F(b) - F(a)\) where \(F\) is an antiderivative of \(f\) on \([a, b]\)
+\item \(\int^b_a f(g(x))g'(x)\,\sld x = \int^{g(b)}_{g(a)}f(u)\,\sld u\), provided \(g' \ge 0\) or \(g' \le 0\) in \([a, b]\).
+\item \(\int u\,\sld v = uv - \int v\,\sld u\); choose \(u\) as the harder-to-integrate function: \(\log\), \(\sin^{-1}\) et al., algebraic, \(\sin\) et al., and exponential, in decreasing order.
+\item Volume about \(x\)-axis \(= \pi\int^b_a[f(x)]^2\,\sld x\)
+\item Volume about \(y\)-axis \(= 2\pi\int^b_a x\lvert f(x) \rvert\,\sld x\)
 \end{itemize}
 
 \sldef{Extreme values} occur at interior points where \(f'(x) = 0\) or does not exist, and domain endpoints. \sldef{Critical points} are interior points where \(f'(x) = 0\) or does not exist, and where \(f_x(a, b) = f_y(a, b) = 0\), or either \(f_x(a, b)\) or \(f_y(a, b)\) does not exist.
@@ -63,7 +70,7 @@ Equations of the form \(y' = g(y/x)\) can be made separable by \(u = y/x\) and s
 
 Equations of the form \(y' = f(ax + by + c)\) where \(f\) is continuous and \(b \neq 0\) can be solved by substituting \(u = ax + by + c\).
 
-Equations of the form \(\sldd{y}{x} + P(x)y = Q(x)\) have general solution \(y = R^{-1}\int RQ\sld x\) where \(R = \exp \int P\sld x\).
+Equations of the form \(\sldd{y}{x} + P(x)y = Q(x)\) have general solution \(y = R^{-1}\int RQ\,\sld x\) where \(R = \exp \int P\,\sld x\).
 
 Equations of the form \(y' + P(x)y = Q(x)y^n\) can be reduced to the previous form by substituting \(z = y^{1-n}\) to get \(z' + (1-n)P(x)z = (1-n)Q(x)\).
 
@@ -79,7 +86,30 @@ If the roots are complex, then if \(\lambda_1 = \alpha+\beta i\), \(\lambda_2 = 
 \section{Modelling}
 The Malthus model states that \(N' = (B-D)N\) i.e. \(N = N_0\exp((B-D)t)\) where \(N\) is the population, \(B\) is the birth rate and \(D\) is the death rate.
 
-The logistic model states that \(D = sN \implies N' = BN - sN^2\) i.e. \[\frac{1}{N} = \frac{s}{B} + (\frac{1}{N_0} - \frac{s}{B})e^{-Bt}\] and the long-term equilibrium population is \(B/s\).
+The logistic model states that \(D = sN\), so we have \(N' = BN - sN^2\) i.e. \[\frac{1}{N} = \frac{s}{B} + (\frac{1}{N_0} - \frac{s}{B})e^{-Bt}\] and the long-term equilibrium population is \(B/s\).
 
-The harvesting model states that \(N' = (B - sN)N - E\). If \(E > B^2/4s\) the population will go towards zero.
+The harvesting model states that \(N' = (B - sN)N - E\). To analyse this, consider \(N'' = (B-2sN)(BN-sN^2-E) = -s(B-2sN)(N-\beta_1)(N-\beta_2)\) where \(\beta_1 \le \beta_2\). If \(E > B^2/4s\), \(N\) will go towards zero. If \(0 < E < B^2/4s\), if \(N_0 < \beta_1\), \(N\) will go towards zero in \(T = \int^{N_0}_0 (sN^2-BN+E)^{-1}\,\sld N\), or if \(N_0 > \beta_1\), \(N\) will go towards \(\beta_2\). If \(E = B^2/4s\), if \(N_0 > B/2s\), \(N\) will tend towards the latter, else it will go towards 0.
+
+\chapter{Series}
+An expression of the form \(a_1 + a_2 + \cdots + a_n + \cdots\) is an \sldef{infinite series}. \(a_n\) is the \(n\)th term. The sequence \(s_1 = a_1\), \(s_2 = a_1 + a_2\), \(s_n = \sum^n_{k=1}a_k\) is the sequence of \sldef{partial sums} of the series, and \(s_n\) is the \(n\)th partial sum. If the sequence of partial sums converges to a limit \(L\), the series is convergent and its sum is \(L\).
+
+A \sldef{geometric series} is one of the form \(a + ar + ar^2 + \cdots = \sum^\infty_{n=1}ar^{n-1}\) and its \(n\)th partial sum \(s_n = a(1-r^n)/(1-r)\). If \(\lvert r \rvert < 1\) then the series converges and its sum is \(a/(1-r)\).
+
+A \sldef{power series} is one of the form \(c_0 + c_1x + c_2x^2 + \cdots = \sum^\infty_{n=0}c_nx^n\). Such a series can be said to converge for all \(x \in (a - h, a + h)\) and diverges elsewhere except possibly at \(x = a - h\) or \(x = a + h\); \(h\) could be zero, in which case the series converges only at \(x = a\), or \(h\) could be \(\infty\), in which case the series converges everywhere. \(h\) is known as the radius of convergence.
+
+A power series is a function with the domain being the values of \(x\) for which the series converes. This function can be differentiated or integrated term-by-term.
+
+\sldef{Ratio test}. Let \(\rho = \lim_{n\to\infty}\lvert a_{n+1}/a_n \rvert\). If \(\rho < 1\), the series converges; \(\rho > 1\), the series diverges; \(\rho = 1\), there is no conclusion.
+
+\section{Taylor series}
+\begin{itemize}
+\item \(f(x) = f(a) + f'(a)(x-a) + \cdots = \sum^\infty_{k=0}\frac{f^{(k)}(a)}{k!}(x-a)^k\)
+\item \(1/(1-x) = 1 + x + x^2 + \cdots  = \sum^\infty_{n=0}x^n\) for \(\lvert x\rvert<1\)
+\item \(1/(1+x) = 1 - x + x^2 - \cdots = \sum^\infty_{n=0}(-1)^nx^n\) for \(\lvert x\rvert<1\)
+\item \(e^x = 1 + x + x^2/2! + \cdots = \sum^\infty_{n=0}(x^n/n!)\) for all \(x\)
+\item \(\sin x = x - x^3/3! + x^5/5! - \cdots\)\\\(= \sum^\infty_{n=0} (-1)^n x^{2n+1} / (2n+1)!\) for all \(x\)
+\item \(\cos x = 1 - x^2/2! + x^4/4! - \cdots = \sum^\infty_{n=0}(-1)^nx^{2n}/(2n)!\) for all \(x\)
+\item \(\ln(1+x) = x - x^2/2 + x^3/3 - \cdots = \sum^\infty_{n=1}(-1)^{n-1}x^n/n\) for \(-1 < x \le 1\)
+\item \(\tan^{-1}x = x - x^3/3 + x^5/5 - \cdots\)\\\(= \sum^\infty_{n=0} (-1)^n x^{2n+1} / (2n+1)\) for \(\lvert x\rvert\le1\)
+\end{itemize}
 \end{document}
