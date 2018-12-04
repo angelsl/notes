@@ -9,8 +9,7 @@ If \(L = \lim f(x) \land M = \lim g(x)\) then \begin{itemize}
 \item \(\lim f(x)g(x) = LM\)
 \item \(\lim f(x)/g(x) = L/M\) if \(M \neq 0\)
 \item \(\lim_{x\to0} (\sin x)/x = 1\)
-\item \(\sum^\infty_{n=0} 1/n! = e\)
-\item \(\lim_{n\to\infty} (1+1/n)^n = e\)
+\item \(\sum^\infty_{n=0} 1/n! = e\); \(\lim_{n\to\infty} (1+1/n)^n = e\)
 \end{itemize}
 
 \sldef{L'Hôpital's rule}. For functions \(f, g\) differentiable on an open interval \(I\) except possibly at a point \(c \in I\), if \(\lim f(x) = \lim g(x) = 0\) or \(\pm\infty\), and \(g'(x) \neq 0\) for all \(x \in I\), \(x \neq c\), and \(\lim f'(x)/g'(x)\) exists, then \(\lim f(x)/g(x) = \lim f'(x)/g'(x)\).
@@ -36,7 +35,7 @@ If \(L = \lim f(x) \land M = \lim g(x)\) then \begin{itemize}
 \item \((-\ln(\csc x + \cot x))' = \csc x\)
 \item \((\ln\sin x)' = \cot x\)
 \item \(f_x = \frac{\partial}{\partial x} f(x, \hdots)\); \(f_{xx} = \frac{\partial^2}{\partial x^2} f(x, \hdots)\); and so on
-\item For \(z(t) = f(x(t), y(t))\),\\\(\sldd{}{t} z(t) = f_x \sldd{}{t} x(t) + f_y \sldd{}{t} y(t)\)
+\item For \(z(t) = f(x(t), y(t))\), \(\sldd{}{t} z(t) = f_x \sldd{}{t} x(t) + f_y \sldd{}{t} y(t)\)
 \item For \(z(s, t) = f(x(s, t), y(s, t))\), \(z_s = f_xx_s + f_yy_s\) and \(z_t = f_xx_t + f_yy_t\)
 \item \(\nabla f = f_x\mathbf{i} + f_y\mathbf{j} + f_z\mathbf{k}\); \(D_{\mathbf{u}}f(a, b) = \nabla f(a, b)\cdot\mathbf{u}\)
 \item In MA1521, \(f_{xy} = f_{yx}\)
@@ -44,8 +43,7 @@ If \(L = \lim f(x) \land M = \lim g(x)\) then \begin{itemize}
 
 \section{Integrals}
 \begin{itemize}
-\item \(\frac{\sld}{\sld x}\int^x_a f(t)\,\sld t = f(x)\)
-\item \(\int^b_a f(x)\,\sld x = F(b) - F(a)\) where \(F\) is an antiderivative of \(f\) on \([a, b]\)
+\item \(\frac{\sld}{\sld x}\int^x_a f(t)\,\sld t = f(x)\); \(\int^b_a f(x)\,\sld x = F(b) - F(a)\) where \(F\) is an antiderivative of \(f\) on \([a, b]\)
 \item \(\int^b_a f(g(x))g'(x)\,\sld x = \int^{g(b)}_{g(a)}f(u)\,\sld u\), provided \(g' \ge 0\) or \(g' \le 0\) in \([a, b]\).
 \item \(\int u\,\sld v = uv - \int v\,\sld u\); choose \(u\) as the harder-to-integrate function: \(\log\), \(\sin^{-1}\) et al., algebraic, \(\sin\) et al., and exponential, in decreasing order.
 \item Volume about \(x\)-axis \(= \pi\int^b_a[f(x)]^2\,\sld x\)
@@ -105,16 +103,17 @@ A power series is a function with the domain being the values of \(x\) for which
 \sldef{Ratio test}. Let \(\rho = \lim_{n\to\infty}\lvert a_{n+1}/a_n \rvert\). If \(\rho < 1\), the series converges; \(\rho > 1\), the series diverges; \(\rho = 1\), there is no conclusion.
 
 \section{Taylor series}
-Taylor expansions at \(x = a\), for all \(x\) u.o.s.
+At \(x = a\), for \(x \in (x - r, x + r)\), \(r = \infty\) u.o.s.
 \begin{itemize}
 \item \(f(x) = f(a) + f'(a)(x-a) + \cdots = \sum^\infty_{k=0}\frac{f^{(k)}(a)}{k!}(x-a)^k\)
-\item \(1/(1-x) = 1/(1-a) + (x-a)/(1-a)^2 + (x-a)^2/(1-a)^3 + \cdots = \sum^\infty_{n=0}(1/(1-a)^{n+1})(x-a)^n\) for \(\lvert x\rvert<1\)
-\item \(1/(1+x) = 1/(1-a) - (x-a)/(1-a)^2 + (x-a)^2/(1-a)^3 - \cdots = \sum^\infty_{n=0}((-1)^n/(1-a)^{n+1})(x-a)^n\) for \(\lvert x\rvert<1\)
+\item \(1/x = \frac{1}{a} - \frac{x - a}{a^2} + \frac{(x-a)^2}{a^3} - \cdots\)\\\(= \sum^\infty_{n=0}((-1)^n/a^{n+1})(x-a)^n\)
+\item \(\frac{1}{1-cx} = \frac{1}{1-ac} + \frac{c(x-a)}{(1-ac)^2} + \frac{c^2(x-a)^2}{(1-ac)^3} + \cdots\)\\\(= \sum^\infty_{n=0}(c^n/(1-ac)^{n+1})(x-a)^n\), \(r = 1\)
+\item \(\frac{1}{1+cx} = \frac{1}{1+ac} - \frac{c(x-a)}{(1+ac)^2} + \frac{c^2(x-a)^2}{(1+ac)^3} - \cdots\)\\\(= \sum^\infty_{n=0}((-c)^n/(1+ac)^{n+1})(x-a)^n\), \(r = 1\)
 \item \(e^x = e^a(1 + (x-a) + (x-a)^2/2! + \cdots)\)\\\(= \sum^\infty_{n=0}(e^a/n!)(x-a)^n\)
 \item \(\sin x = \sin a + \cos a(x-a) - \sin a(x-a)^2/2! - \cos a(x-a)^3/3! - \cdots = \sum^\infty_{n=0} (\sin(a+n\pi/2)/n!)(x-a)^n\)
 \item \(\cos x = \cos a - \sin a(x-a) - \cos a(x-a)^2/2! + \sin a(x-a)^3/3! + \cdots = \sum^\infty_{n=0} (\cos(a+n\pi/2)/n!)(x-a)^n\)
-\item \(\ln(1+x) = \ln(1+a) + (x-a)/(1-a) - (x-a)^2/2(1+a)^2 + (x-a)^3/3(1+a)^3 - \cdots = \ln(1+a) + \sum^\infty_{n=1} ((-1)^{n+1}/(n(1+a)^n))(x-a)^n\) for \(-1 < x \le 1\)
-\item \(\tan^{-1}x = x - x^3/3 + x^5/5 - \cdots\)\\\(= \sum^\infty_{n=0} (-1)^n x^{2n+1} / (2n+1)\) for \(\lvert x\rvert\le1\) at \(x = 0\)
+\item \(\ln x = \ln a + (x-a)/a - (x-a)^2/2a^2 + (x-a)^3/3a^3 - \cdots = \ln a + \sum^\infty_{n=1} ((-1)^{n+1}/(na^n))(x-a)^n\), \(r = 1\)
+\item \(\tan^{-1}x = x - x^3/3 + x^5/5 - \cdots\)\\\(= \sum^\infty_{n=0} (-1)^n x^{2n+1} / (2n+1)\), \(r = 1\) at \(x = 0\)
 \end{itemize}
 
 \chapter{Identities}
