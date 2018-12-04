@@ -103,17 +103,17 @@ A power series is a function with the domain being the values of \(x\) for which
 \sldef{Ratio test}. Let \(\rho = \lim_{n\to\infty}\lvert a_{n+1}/a_n \rvert\). If \(\rho < 1\), the series converges; \(\rho > 1\), the series diverges; \(\rho = 1\), there is no conclusion.
 
 \section{Taylor series}
-At \(x = a\), for \(x \in (x - r, x + r)\), \(r = \infty\) u.o.s.
+At \(x = a\), for all \(x\) u.o.s.
 \begin{itemize}
 \item \(f(x) = f(a) + f'(a)(x-a) + \cdots = \sum^\infty_{k=0}\frac{f^{(k)}(a)}{k!}(x-a)^k\)
-\item \(1/x = \frac{1}{a} - \frac{x - a}{a^2} + \frac{(x-a)^2}{a^3} - \cdots\)\\\(= \sum^\infty_{n=0}((-1)^n/a^{n+1})(x-a)^n\)
-\item \(\frac{1}{1-cx} = \frac{1}{1-ac} + \frac{c(x-a)}{(1-ac)^2} + \frac{c^2(x-a)^2}{(1-ac)^3} + \cdots\)\\\(= \sum^\infty_{n=0}(c^n/(1-ac)^{n+1})(x-a)^n\), \(r = 1\)
-\item \(\frac{1}{1+cx} = \frac{1}{1+ac} - \frac{c(x-a)}{(1+ac)^2} + \frac{c^2(x-a)^2}{(1+ac)^3} - \cdots\)\\\(= \sum^\infty_{n=0}((-c)^n/(1+ac)^{n+1})(x-a)^n\), \(r = 1\)
+\item \(1/x = \frac{1}{a} - \frac{x - a}{a^2} + \frac{(x-a)^2}{a^3} - \cdots\)\\\(= \sum^\infty_{n=0}((-1)^n/a^{n+1})(x-a)^n\) for \(\lvert 1-x/a \rvert < 1\)
+\item \(\frac{1}{1-cx} = \frac{1}{1-ac} + \frac{c(x-a)}{(1-ac)^2} + \frac{c^2(x-a)^2}{(1-ac)^3} + \cdots\)\\\(= \sum^\infty_{n=0}(c^n/(1-ac)^{n+1})(x-a)^n\)\\for \(\lvert c(a-x)/(ac-1)\rvert < 1\)
+\item \(\frac{1}{1+cx} = \frac{1}{1+ac} - \frac{c(x-a)}{(1+ac)^2} + \frac{c^2(x-a)^2}{(1+ac)^3} - \cdots\)\\\(= \sum^\infty_{n=0}((-c)^n/(1+ac)^{n+1})(x-a)^n\)\\for \(\lvert c(a-x)/(ac+1)\rvert < 1\)
 \item \(e^{cx} = e^{ac}(1 + c(x-a) + c^2(x-a)^2/2! + \cdots)\)\\\(= \sum^\infty_{n=0}(e^{ac}c^n/n!)(x-a)^n\)
-\item \(\sin x = \sin a + \cos a(x-a) - \sin a(x-a)^2/2! - \cos a(x-a)^3/3! - \cdots = \sum^\infty_{n=0} (\sin(a+n\pi/2)/n!)(x-a)^n\)
-\item \(\cos x = \cos a - \sin a(x-a) - \cos a(x-a)^2/2! + \sin a(x-a)^3/3! + \cdots = \sum^\infty_{n=0} (\cos(a+n\pi/2)/n!)(x-a)^n\)
-\item \(\ln x = \ln a + (x-a)/a - (x-a)^2/2a^2 + (x-a)^3/3a^3 - \cdots = \ln a + \sum^\infty_{n=1} ((-1)^{n+1}/(na^n))(x-a)^n\), \(r = 1\)
-\item \(\tan^{-1}x = x - x^3/3 + x^5/5 - \cdots\)\\\(= \sum^\infty_{n=0} (-1)^n x^{2n+1} / (2n+1)\), \(r = 1\) at \(x = 0\)
+\item \(\sin cx = \sin ac + c(\cos ac)(x-a) - c^2(\sin ac)(x-a)^2/2! - c^3(\cos ac)(x-a)^3/3! - \cdots = \sum^\infty_{n=0} (c^n\sin(ac+n\pi/2)/n!)(x-a)^n\)
+\item \(\cos cx = \cos ac - c(\sin ac)(x-a) - c^2(\cos ac)(x-a)^2/2! + c^3(\sin ac)(x-a)^3/3! + \cdots = \sum^\infty_{n=0} (c^n\cos(ac+n\pi/2)/n!)(x-a)^n\)
+\item \(\ln x = \ln a + (x-a)/a - (x-a)^2/2a^2 + (x-a)^3/3a^3 - \cdots = \ln a + \sum^\infty_{n=1} ((-1)^{n+1}/(na^n))(x-a)^n\)\\for \(\lvert 1-x/a \rvert < 1\)
+\item \(\tan^{-1}x = x - x^3/3 + x^5/5 - \cdots\)\\\(= \sum^\infty_{n=0} (-1)^n x^{2n+1} / (2n+1)\) for \(\lvert x\rvert < 1\) at \(x = 0\)
 \end{itemize}
 
 \chapter{Identities}
