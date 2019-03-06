@@ -1,0 +1,64 @@
+\documentclass{slnotes}
+\DeclareMathOperator*{\adj}{\mathbf{adj}}
+\newcommand*{\TT}{\mathrm{T}}
+\begin{document}
+\chapter{Basic definitions}
+The \sldef{elementary row operations} are multiplying a row by a nonzero constant, interchanging two rows, and adding a multiple of one row to another row. Two matrices are \sldef{row-equivalent} if they can be obtained from one another by elementary row operations. Two systems that have row-equivalent augmented matrices have the same solution set.
+
+A matrix is in \sldef{row-echelon form} (REF) if all zero rows are at the bottom, and leading entries in lower rows are strictly to the right of those in higher rows. A column is called a pivot column if it contains a pivot point or leading entry. A matrix is in \sldef{reduced row-echelon form} (RREF) if it is in REF, and the leading entry of every nonzero row is 1, and every pivot column is all-zero except for the pivot point. RREFs are \sldef{unique}.
+
+\sldef{Gaussian elimination}. Locate the leftmost non-zero column. Swap the top row with another row so that the first row in the column is non-zero. Add a multiple of this row to all rows below so that all entries below the leading entry in this row are zero. Repeat this process, ignoring the top row. \sldef{Gauss-Jordan elimination}. Scale each row so the leading entry is 1. Then add a multiple of each row to rows above that row so that entries above the leading entry are zero.
+
+\sldef{Transposition}. The transpose of \(\mathbf{A}\) is the matrix \(\mathbf{A}^{\TT}\) with columns and rows interchanged. \((\mathbf{A}^{\TT})^{\TT} = \mathbf{A}\). \((\mathbf{A} + \mathbf{B})^{\TT} = \mathbf{A}^{\TT} + \mathbf{B}^{\TT}\). \((c\mathbf{A})^{\TT} = c\mathbf{A}^{\TT}\). \((\mathbf{AB})^{\TT} = \mathbf{B}^{\TT}\mathbf{A}^{\TT}\).
+
+\sldef{Symmetricity}. A square matrix is symmetric if it is identical to its transpose.
+
+\sldef{Invertibility}. A square matrix \(\mathbf{A}\) is invertible if there exists a matrix of the same order such that the product of the two in either order results in the identity matrix. A square matrix is singular otherwise. The inverse of a matrix is unique, and so denoted \(\mathbf{A}^{-1}\).
+
+If \(\mathbf{A}\) and \(\mathbf{B}\) are invertible matrices of the same order, then \(c\mathbf{A}\), \(\mathbf{A}^{\TT}\), \(\mathbf{A}^{-1}\), and \(\mathbf{AB}\) are all invertible, and \((c\mathbf{A})^{-1} = (1/c)\mathbf{A}^{-1}\), \((\mathbf{A}^{\TT})^{-1} = (\mathbf{A}^{-1})^{\TT}\), \((\mathbf{A}^{-1})^{-1} = \mathbf{A}\), and \((\mathbf{AB})^{-1} = \mathbf{B}^{-1}\mathbf{A}^{-1}\).
+
+If \(\mathbf{A}\) is invertible, then if \(\mathbf{AB}_1 = \mathbf{AB}_2\) or \(\mathbf{B}_1\mathbf{A} = \mathbf{B}_2\mathbf{A}\), \(\mathbf{B}_1 = \mathbf{B}_2\). If \(\mathbf{A}\) is not invertible, this may not hold.
+
+\chapter{Elementary matrices}
+A square matrix is an \sldef{elementary matrix} if it can be obtained from an identity matrix by performing a single elementary row operation. All elementary matrices are invertible, and their inverses are also elementary matrices describing the reverse row operation. Pre-multiplying an elementary matrix to a matrix is equivalent to doing an elementary row operation. Post-multiplying an elementary matrix is equivalent to doing an elementary column operation.
+
+For a square matrix \(\mathbf{A}\), \(\mathbf{A}\) is invertible \(\Leftrightarrow\) \(\mathbf{Ax} = \mathbf{0}\) has only the trivial solution \(\Leftrightarrow\) its RREF is an identity matrix \(\Leftrightarrow\) it can be expressed as a product of elementary matrices.
+
+For square matrices \(\mathbf{A}\), \(\mathbf{B}\) of the same order, if \(\mathbf{AB} = \mathbf{I}\), then \(\mathbf{A}\), \(\mathbf{B}\) are both invertible, \(\mathbf{A}^{-1} = \mathbf{B}\), \(\mathbf{B}^{-1} = \mathbf{A}\), and \(\mathbf{BA} = \mathbf{I}\).
+
+For square matrices \(\mathbf{A}\), \(\mathbf{B}\) of the same order, if either are singular, then the product in any order is singular.
+
+\chapter{Determinants}
+Let \(\mathbf{A} = (a_{ij})\) be an \(n \times n\) matrix. Let \(\mathbf{M}_{ij}\) be an \((n-1) \times (n-1)\) matrix obtained by deleting the \(i\)th row and \(j\)th column. Then the determinant of \(\mathbf{A}\)
+\begin{align*}
+\det(\mathbf{A}) &= a_{i1}A_{i1} + a_{i2}A_{i2} + \cdots + a_{in}A_{in}\\
+&= a_{1j}A_{1j} + a_{2j}A_{2j} + \cdots + a_{nj}A_{nj}
+\end{align*}
+where \(A_{ij} = (-1)^{i+j}\det(\mathbf{M}_{ij})\), the \((i,j)\)-cofactor of \(\mathbf{A}\). The first line is the cofactor expansion along the \(i\)th row; the second is that along the \(j\)th column.
+
+The determinant of a triangular matrix is equal to the product of its diagonal entries.
+
+Transposition does not change the determinant.
+
+\sldef{Effects of row operations}. Multiplying one row by \(k\) multiplies the determinant by \(k\). Interchanging two rows negates the determinant. Adding a multiple of a row to another does not change the determinant. The same applies for elementary column operations.
+
+A square matrix \(\mathbf{A}\) is invertible \(\Leftrightarrow \det(\mathbf{A}) \ne 0\).
+
+For a square matrix \(\mathbf{A}\) of order \(n\), its \sldef{adjoint}
+\[\adj(\mathbf{A}) = \begin{bmatrix}
+A_{11} & \cdots & A_{1n}\\
+\vdots & & \vdots\\
+A_{n1} & \cdots & A_{nn}\\
+\end{bmatrix}^{\TT} =
+\begin{bmatrix}
+A_{11} & \cdots & A_{n1}\\
+\vdots & & \vdots\\
+A_{1n} & \cdots & A_{nn}\\
+\end{bmatrix}\]
+
+For square matrices \(\mathbf{A}\), \(\mathbf{B}\) of order \(n\) and a scalar \(c\), \(\det(c\mathbf{A}) = c^n\mathbf{A}\), and \(\det(\mathbf{AB}) = \det(\mathbf{A})\det(\mathbf{B})\). If \(\mathbf{A}\) is invertible, \(\det(\mathbf{A}^{-1}) = 1/\det(\mathbf{A})\), and \(\mathbf{A}^{-1} = (1/\det(\mathbf{A}))\adj(\mathbf{A})\).
+
+\sldef{Cramer's rule}. For the system \(\mathbf{Ax} = \mathbf{b}\), if \(\mathbf{A}\) is invertible, then the system has only one solution \(\mathbf{x} = (1/\det(\mathbf{A}))(\det(\mathbf{A_1}), \hdots, \det(\mathbf{A_n}))\), where \(\mathbf{A}_i\) is \(\mathbf{A}\) with its \(i\)th column replaced by \(\mathbf{b}\).
+
+The determinant of a square matrix of order 2 is \(ad - bc\), where entries are lettered left-to-right, top-down. That of one of order 3 is \(aei + bfg + cdh - ceg - afh - bdi\).
+\end{document}
