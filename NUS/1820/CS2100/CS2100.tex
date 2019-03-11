@@ -1,0 +1,40 @@
+\documentclass{slnotes}
+
+\begin{document}
+\chapter{Powers of 2}
+\begin{tabular}{llll}
+\toprule
+\(n\) & \(2^n\) & \(n\) & \(2^n\) \tabularnewline
+\midrule
+-10 & 0.0009765625 & 1 & 2 \tabularnewline
+-9  & 0.001953125  & 2 & 4 \tabularnewline
+-8  & 0.00390625   & 3 & 8 \tabularnewline
+-7  & 0.0078125    & 4 & 16 \tabularnewline
+-6  & 0.015625     & 5 & 32 \tabularnewline
+-5  & 0.03125      & 6 & 64 \tabularnewline
+-4  & 0.0625       & 7 & 128 \tabularnewline
+-3  & 0.125        & 8 & 256 \tabularnewline
+-2  & 0.25         & 9 & 512 \tabularnewline
+-1  & 0.5          & 10 & 1024 \tabularnewline
+15 & 32768         & 16 & 65536 \tabularnewline
+20 & 1048576       & 30 & 1073741824 \tabularnewline
+31 & 2147483648    & 32 & 4294967296 \tabularnewline
+\bottomrule
+\end{tabular}
+\chapter{Number systems}
+\(n\) bits can represent \(2^n\) values.
+
+To convert a decimal to binary, divide by 2 repeatedly; the remainders form the answer, with the first being the LSB. To convert a fraction to binary, multiply by 2 repeatedly; the carries form the answer, with the first being the MSB.
+
+\sldef{Sign-and-magnitude}. One bit for sign, remaining bits for magnitude. Range is \([-(2^{n-1}-1), 2^{n-1}-1]\). Two zeroes. To negate, flip sign bit.
+
+\sldef{1's complement}. MSB is sign. Range is same as above. Two zeroes. To negate, flip all bits: \(-x = 2^n - x - 1\). When adding, if there is a carry out of MSB, add 1 to the result.
+
+\sldef{2's complement}. MSB is sign. Range is \([-2^{n-1}, 2^{n-1}-1]\). Only one zero. To negate, flip all bits and add 1: \(-x = 2^n - x\). When adding, ignore carry out of MSB.
+
+Overflow has occurred if the operands have the same sign but the result has a different sign.
+
+\sldef{Excess}. Excess-\(n\) means \(-n\) is represented as 0, etc.
+
+\sldef{IEEE-754}. 32-bit: 1-bit sign, 8-bit exponent (excess-127), 23-bit mantissa. 64-bit: 1-bit sign, 11-bit exponent (excess-1023), 52-bit mantissa. When the exponent field is all 0, the mantissa is denormalised, and the actual exponent is the bias plus 1 (i.e. \(-126\) for 32-bit).
+\end{document}
