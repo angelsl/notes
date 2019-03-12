@@ -64,4 +64,23 @@ Overflow has occurred if the operands have the same sign but the result has a di
 To NOT \code{\$x}: \code{nor \$x, \$x, \$zero}.
 
 XOR is R-format, \code{R[rd] = R[rs] \^{} R[rt]}, opcode 0, function 0x26.
+
+\sldef{Control}. 1: \code{Reg\-Dst}, 2: \code{ALU\-Src}, 3: \code{Mem\-To\-Reg}, 4: \code{Reg\-Write}, 5: \code{Mem\-Read}, 6: \code{Mem\-Write}, 7: \code{Branch}, 8: \code{ALU\-op}.
+
+\begin{tabular}{lllllllll}
+\toprule
+&1&2&3&4&5&6&7&8\tabularnewline
+\midrule
+R-type & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 10 \tabularnewline
+\code{lw} & 0 & 1 & 1 & 1 & 1 & 0 & 0 & 00 \tabularnewline
+\code{sw} & X & 1 & X & 0 & 0 & 1 & 0 & 00 \tabularnewline
+\code{beq} & X & 0 & X & 0 & 0 & 0 & 1 & 01 \tabularnewline
+\bottomrule
+\end{tabular}
+
+\sldef{ALU control}. And: 0000. Or: 0001. Add: 0010. Subtract: 0110. SLT: 0111. NOR: 1100.
+
+\onecolumn
+\chapter{Datapath}
+\includegraphics[width=\textwidth]{simple-mips-datapath.pdf}
 \end{document}
