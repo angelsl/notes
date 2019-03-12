@@ -13,11 +13,10 @@
 \RequirePackage{thmtools}
 \RequirePackage{mathtools}
 \RequirePackage[bf,sf,small,compact]{titlesec}
-\RequirePackage{longtable}
 \RequirePackage{booktabs}
 \RequirePackage{array}
 \RequirePackage{tabularx}
-\RequirePackage{ltablex}
+\RequirePackage{xtab}
 \RequirePackage{varwidth}
 %\RequirePackage{multirow}
 \RequirePackage[math-style=ISO]{unicode-math}
@@ -35,6 +34,8 @@
 \RequirePackage{subfiles}
 \if@slchemformula\RequirePackage{chemformula}\fi
 \if@slchem
+    \RequirePackage{longtable}
+    \RequirePackage{ltablex}
     \RequirePackage[synchronize=true]{chemmacros}
     \RequirePackage{chemfig}
     \RequirePackage[level]{fmtcount}
@@ -45,6 +46,7 @@
 \setmainfont[Ligatures=TeX]{TeX Gyre Pagella}
 \setsansfont[Ligatures=TeX]{Source Sans Pro}
 \setmathfont{TeX Gyre Pagella Math}
+\setmonofont{Consolas}
 \newfontfamily\mffamily{TeX Gyre Pagella}
 \DeclareTextFontCommand{\slmf}{\mffamily\itshape}
 
@@ -59,18 +61,24 @@
   \ttl@finmarks  % Outside the box!
   \@ifundefined{ttlp@#6}{}{\ttlp@write{#6}}}
 
-% Fucking people like their space a lot
-\def\LT@makecaption#1#2#3{%
-  \LT@mcol\LT@cols c{\hbox to\z@{\hss\parbox[t]\LTcapwidth{%
-    \sbox\@tempboxa{#1{#2: }#3}%
-    \ifdim\wd\@tempboxa>\hsize
-      #1{#2: }#3%
-    \else
-      \hbox to\hsize{\hfil\box\@tempboxa\hfil}%
-    \fi
-    \endgraf}%\vskip\baselineskip}%
-  \hss}}}
-\setcounter{LTchunksize}{100}
+\if@slchem
+    % Fucking people like their space a lot
+    \def\LT@makecaption#1#2#3{%
+      \LT@mcol\LT@cols c{\hbox to\z@{\hss\parbox[t]\LTcapwidth{%
+        \sbox\@tempboxa{#1{#2: }#3}%
+        \ifdim\wd\@tempboxa>\hsize
+          #1{#2: }#3%
+        \else
+          \hbox to\hsize{\hfil\box\@tempboxa\hfil}%
+        \fi
+        \endgraf}%\vskip\baselineskip}%
+      \hss}}}
+    \setcounter{LTchunksize}{100}
+    \g@addto@macro\normalsize{%
+\LTpre=\the\slskip%
+\LTpost=\the\slskip%
+\LTcapwidth=\textwidth}
+\fi
 
 \titleformat{\chapter}[hang]{\Large\sffamily\bfseries}{\thechapter}{1em}{}
 \titleformat{\part}[hang]{\LARGE\sffamily\bfseries}{\thepart}{1em}{}
@@ -98,6 +106,7 @@
 \DeclareMathOperator*{\argmax}{arg\,max}
 \newcommand*{\solid}{\relax}
 \let\solid\sld\let\sld\undefined
+\newcommand*{\code}{\texttt}
 \newcommand*{\sld}[1][]{\symup{d}#1}
 \newcommand*{\sldd}[2]{\frac{\symup{d}#1}{\symup{d}#2}}
 \newcommand*{\slid}{\,\symup{d}}
@@ -126,10 +135,7 @@
 \abovecaptionskip=\the\slskip%
 \abovedisplayskip=\the\slskip%
 \belowdisplayskip=\the\slskip%
-\LTpre=\the\slskip%
-\LTpost=\the\slskip%
-\fboxsep=1pt%
-\LTcapwidth=\textwidth}
+\fboxsep=1pt}
 
 \if@slchemformula
     \setchemformula{format=\mffamily}

@@ -38,4 +38,30 @@ Overflow has occurred if the operands have the same sign but the result has a di
 \sldef{Excess}. Excess-\(n\) means \(-n\) is represented as 0, etc.
 
 \sldef{IEEE-754}. 32-bit: 1-bit sign, 8-bit exponent (excess-127), 23-bit mantissa. 64-bit: 1-bit sign, 11-bit exponent (excess-1023), 52-bit mantissa. When the exponent field is all 0, the mantissa is denormalised, and the actual exponent is the bias plus 1 (i.e. \(-126\) for 32-bit).
+\chapter{MIPS}
+\tablehead{\toprule Pseudo & Realised\tabularnewline}
+\begin{xtabular}{ll}
+\midrule
+\code{move \$x, \$y} & \code{add \$x, \$y, \$zero}\tabularnewline
+\midrule
+\code{li \$x, 0xXXXXYYYY} & \begin{tabular}{@{}l@{}}\code{lui \$at, 0xXXXX} \tabularnewline
+\code{ori \$x, \$at, 0xYYYY}\end{tabular}\tabularnewline
+\midrule
+\code{blt \$x, \$y, z} & \begin{tabular}{@{}l@{}}\code{slt \$t, \$x, \$y} \tabularnewline
+\code{bne \$t, \$zero, z}\end{tabular}\tabularnewline
+\midrule
+\code{bgt \$x, \$y, z} & \begin{tabular}{@{}l@{}}\code{slt \$t, \$y, \$x} \tabularnewline
+\code{bne \$t, \$zero, z}\end{tabular}\tabularnewline
+\midrule
+\code{ble \$x, \$y, z} & \begin{tabular}{@{}l@{}}\code{slt \$t, \$y, \$x} \tabularnewline
+\code{beq \$t, \$zero, z}\end{tabular}\tabularnewline
+\midrule
+\code{bge \$x, \$y, z} & \begin{tabular}{@{}l@{}}\code{slt \$t, \$x, \$y} \tabularnewline
+\code{beq \$t, \$zero, z}\end{tabular}\tabularnewline
+\bottomrule
+\end{xtabular}
+
+To NOT \code{\$x}: \code{nor \$x, \$x, \$zero}.
+
+XOR is R-format, \code{R[rd] = R[rs] \^{} R[rt]}, opcode 0, function 0x26.
 \end{document}
