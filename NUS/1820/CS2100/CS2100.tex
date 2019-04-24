@@ -1,27 +1,30 @@
 \documentclass{slnotes}
 
+\newcommand{\cdotplus}{\mathbin{\substack{\cdot\\+}}}
+\newcommand{\pluscdot}{\mathbin{\substack{+\\\cdot}}}
+
 \begin{document}
-\chapter{Powers of 2}
-\begin{tabular}{llll}
-\toprule
-\(n\) & \(2^n\) & \(n\) & \(2^n\) \tabularnewline
-\midrule
--10 & 0.0009765625 & 1 & 2 \tabularnewline
--9  & 0.001953125  & 2 & 4 \tabularnewline
--8  & 0.00390625   & 3 & 8 \tabularnewline
--7  & 0.0078125    & 4 & 16 \tabularnewline
--6  & 0.015625     & 5 & 32 \tabularnewline
--5  & 0.03125      & 6 & 64 \tabularnewline
--4  & 0.0625       & 7 & 128 \tabularnewline
--3  & 0.125        & 8 & 256 \tabularnewline
--2  & 0.25         & 9 & 512 \tabularnewline
--1  & 0.5          & 10 & 1024 \tabularnewline
-15 & 32768         & 16 & 65536 \tabularnewline
-20 & 1048576       & 24 & 16777216 \tabularnewline
-30 & 1073741824 \tabularnewline
-31 & 2147483648    & 32 & 4294967296 \tabularnewline
-\bottomrule
-\end{tabular}
+%\chapter{Powers of 2}
+%\begin{tabular}{llll}
+%\toprule
+%\(n\) & \(2^n\) & \(n\) & \(2^n\) \tabularnewline
+%\midrule
+%-10 & 0.0009765625 & 1 & 2 \tabularnewline
+%-9  & 0.001953125  & 2 & 4 \tabularnewline
+%-8  & 0.00390625   & 3 & 8 \tabularnewline
+%-7  & 0.0078125    & 4 & 16 \tabularnewline
+%-6  & 0.015625     & 5 & 32 \tabularnewline
+%-5  & 0.03125      & 6 & 64 \tabularnewline
+%-4  & 0.0625       & 7 & 128 \tabularnewline
+%-3  & 0.125        & 8 & 256 \tabularnewline
+%-2  & 0.25         & 9 & 512 \tabularnewline
+%-1  & 0.5          & 10 & 1024 \tabularnewline
+%15 & 32768         & 16 & 65536 \tabularnewline
+%20 & 1048576       & 24 & 16777216 \tabularnewline
+%30 & 1073741824 \tabularnewline
+%31 & 2147483648    & 32 & 4294967296 \tabularnewline
+%\bottomrule
+%\end{tabular}
 \chapter{Number systems}
 \(n\) bits can represent \(2^n\) values.
 
@@ -80,7 +83,30 @@ R-type & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 10 \tabularnewline
 
 \sldef{ALU control}. And: 0000. Or: 0001. Add: 0010. Subtract: 0110. SLT: 0111. NOR: 1100.
 
-\onecolumn
-\chapter{Datapath}
-\includegraphics[width=\textwidth]{simple-mips-datapath.pdf}
+\chapter{Boolean algebra}
+\sldef{Identity}. \(A + 0 = A \cdot 1 = A\). \sldef{Inverse/complement}. \(A + A' = 1\). \(A \cdot A' = 0\). \sldef{Commutative}. \(A \cdotplus B = B \cdotplus A\). \sldef{Associative}. \(A \cdotplus (B \cdotplus C) = (A \cdotplus B) \cdotplus C\). \sldef{Distributive}. \(A \cdotplus (B \pluscdot C) = (A \cdotplus B) \pluscdot (A \cdotplus C)\).
+
+\sldef{Idempotency}. \(X \pluscdot X = X\). \sldef{One/Zero}. \(X + 1 = 1\). \(X \cdot 0 = 0\). \sldef{Involution}. \((X')' = X\). \sldef{Absorption}. \(X \pluscdot (X \cdotplus Y) = X\). \(X \pluscdot (X' \cdotplus Y) = X \pluscdot Y\). \sldef{De Morgan's}. \((X \pluscdot Y)' = X' \cdotplus Y'\). \sldef{Consensus}. \((X \cdotplus Y) \pluscdot (X' \cdotplus Z) \pluscdot (Y \cdotplus Z) = (X \cdotplus Y) \pluscdot (X' \cdotplus Z)\).
+
+\sldef{Duality}. Switching AND and OR, and 0 and 1 in a valid equation results in another valid equation.
+
+On 2 variables, maxterm M0 is \(A + B\) and M3 is \(A' + B'\). Minterm m0 is \(A' \cdot B'\) and m3 is \(A \cdot B\). The minterm is the complement of the maxterm.
+
+A function's sum-of-minterms is the sum of minterms where output is 1; product-of-maxterms is the product of maxterms where output is 0. To convert, \(\sum \mathrm m(1,4,5,6,7) = \prod \mathrm M(0, 2, 3)\).
+
+\chapter{Logic circuits and simplification}
+\sldef{NAND logic}. Where \(\uparrow\) is NAND, \(x \uparrow x = x'\). \((x \uparrow y) \uparrow (x \uparrow y) = x \cdot y\). \((x \uparrow x) \uparrow (y \uparrow y) = x + y\). \sldef{NOR logic}. Where \(\downarrow\) is NOR, \(x \downarrow x = x'\). \((x \downarrow x) \downarrow (y \downarrow y) = x \cdot y\). \((x \downarrow y) \downarrow (x \downarrow y) = x + y\).
+
+\sldef{Gray code}. 0: 0000, 1: 0001, 2: 0011, 3: 0010, 4: 0110, 5: 0111, 6: 0101, 7: 0100, 8: 1100, 9: 1101, 10: 1111, 11: 1110, 12: 1010, 13: 1011, 14: 1001, 15: 1000.
+
+\sldef{K-map}. Adjacent squares are minterms that differ by one literal. Wrap-around on parallel edges. Groups must be powers of 2. \sldef{Prime implicants} are product terms formed by combining the maximum possible minterms. \sldef{Essential ~} are those that include at least one minterm not covered by any other.
+
+\sldef{Half adder}. \(C = X \cdot Y\). \(S = X' \cdot Y + X \cdot Y' = X \oplus Y\). \sldef{Full adder}. \(C = X \cdot Y + X \cdot Z + Y \cdot Z = X \cdot Y + (X \oplus Y) \cdot Z\). \(S = X' \cdot Y' \cdot Z + X' \cdot Y \cdot Z' + X \cdot Y' \cdot Z' + X \cdot Y \cdot Z = X \oplus (Y \oplus Z)\). Can be made from two half-adders.
+
+\sldef{Decoder}. Convert binary information from \(n\) inputs to \(2^n\) outputs; the \(n\)th output is high and the rest are low. Larger decoders can be made from smaller ones. \sldef{Encoder}. Convert from \(2^n\) outputs of whioch exactly 1 is high to \(n\) outputs (the code corresponding to the high input). \sldef{Priority ~}. If more than one, the highest priority takes precedence.
+
+\sldef{Demux}. Given outputs and selectors, direct 1 input to selected output. Identical to decoder with enable. \sldef{Mux}. Given inputs and selectors, direct selected input to 1 output. Larger muxes can be made from smaller ones.
+%\onecolumn
+%\chapter{Datapath}
+%\includegraphics[width=\textwidth]{simple-mips-datapath.pdf}
 \end{document}
