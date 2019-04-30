@@ -84,13 +84,15 @@ For 2 row-equivalent matrices \(\mathbf A\) and \(\mathbf B\), \sldef{Thm 4.1.7}
 \chapter{Orthogonality}
 \sldef{Def 5.2.1}. Two vectors \(\mathbf{u}, \mathbf{v} \in \mathbb{R}^n\) are \sldef{orthogonal} if \(\mathbf{u} \cdot \mathbf{v} = 0\); a set \(S \subseteq \mathbb{R}^n\) is orthogonal if every pair of distinct vectors in \(S\) are orthogonal; and \(S\) is orthonormal if it is orthogonal and every vector in it is a unit vector.
 
+\sldef{Thm 5.2.4}. An orthogonal set of nonzero vectors in a vector space is l. indep.
+
 \sldef{Thm 5.2.8}. If \(S = \{\mathbf{u}_1, \hdots, \mathbf{u}_k\}\) is an orthogonal basis for a vector space \(V\), then for \(\mathbf{w} \in V\),\[\mathbf{w} = \frac{\mathbf{w}\cdot\mathbf{u}_1}{\mathbf{u}_1\cdot\mathbf{u}_1}\mathbf{u}_1 + \cdots + \frac{\mathbf{w}\cdot\mathbf{u}_k}{\mathbf{u}_k\cdot\mathbf{u}_k}\mathbf{u}_k\] i.e. \((\mathbf w)_S = \left(\frac{\mathbf{w}\cdot\mathbf{u}_1}{\mathbf{u}_1\cdot\mathbf{u}_1}, \hdots, \frac{\mathbf{w}\cdot\mathbf{u}_k}{\mathbf{u}_k\cdot\mathbf{u}_k}\right)\).
 
 \sldef{Def 5.2.10}. For subspace \(V \subseteq \mathbb{R}^n\), a vector \(\mathbf{u} \in \mathbb{R}^n\) is orthogonal to \(V\) if \(\mathbf{U}\) is orthogonal to all vectors in \(V\).
 
 \sldef{Def 5.2.13}. For subspace \(V \subseteq \mathbb{R}^n\), every vector \(\mathbf{u} \in \mathbb{R}^n\) can be written uniquely as \(\mathbf{u} = \mathbf{n} + \mathbf{p}\) where \(\mathbf{n}\) is orthogonal to \(V\) and \(\mathbf{p} \in V\); \(\mathbf{p}\) is the \sldef{projection} of \(\mathbf{u}\) onto \(V\).
 
-\sldef{Thm 5.2.15}. If \(S = \{\mathbf{u}_1, \hdots, \mathbf{u}_k\}\) is an orthogonal basis for a vector space \(V\), then the projection of \(\mathbf{w} \in \mathbb{R}^n\) onto \(V\) is \[\frac{\mathbf{w}\cdot\mathbf{u}_1}{\mathbf{u}_1\cdot\mathbf{u}_1}\mathbf{u}_1 + \cdots + \frac{\mathbf{w}\cdot\mathbf{u}_k}{\mathbf{u}_k\cdot\mathbf{u}_k}\mathbf{u}_k\]
+\sldef{Thm 5.2.15}. If \(\{\mathbf{u}_1, \hdots, \mathbf{u}_k\}\) is an orthogonal basis for a vector space \(V\), then the projection of \(\mathbf{w} \in \mathbb{R}^n\) onto \(V\) \[\text{projection} = \frac{\mathbf{w}\cdot\mathbf{u}_1}{\mathbf{u}_1\cdot\mathbf{u}_1}\mathbf{u}_1 + \cdots + \frac{\mathbf{w}\cdot\mathbf{u}_k}{\mathbf{u}_k\cdot\mathbf{u}_k}\mathbf{u}_k\]
 
 \sldef{Thm 5.2.19}. If \(\{\mathbf{u}_1, \hdots, \mathbf{u}_k\}\) is a basis for a vector space \(V\), then an orthogonal basis for \(V\) is \(\{\mathbf{v}_1, \hdots, \mathbf{v}_k\}\) where \begin{align*}
 \mathbf{v}_1 &= \mathbf{u}_1, \mathbf{v}_2 = \mathbf{u}_2 - \frac{\mathbf{u}_2 \cdot \mathbf{v}_1}{\mathbf{v}_1 \cdot \mathbf{v}_1}\mathbf{v}_1\\
@@ -101,6 +103,8 @@ Normalising the above results in an orthonormal basis.
 \sldef{Thm 5.3.10}. For \(\mathbf{Ax} = \mathbf{b}\), \(\mathbf{u}\) is a \sldef{least squares} solution iff \(\mathbf{u}\) is a solution to \(\mathbf{A}^\TT\mathbf{Ax} = \mathbf{A}^\TT\mathbf{b}\).
 
 \sldef{Def 5.4.3}. Square matrix \(\mathbf A\) is orthogonal if \(\mathbf{A}^{-1} = \mathbf{A}^\TT\). \sldef{Thm 5.4.6}. A square matrix is orthogonal iff its rows, and columns, form an orthonormal basis for \(\mathbb R^n\).
+
+\sldef{Thm 5.4.7}. For two orthonormal bases \(S, T\) and transition matrix \(\mathbf P\) from \(S\) to \(T\), \(\mathbf P\) is orthogonal and \(\mathbf P^\TT\) is the transition matrix from \(T\) to \(S\).
 
 \chapter{Eigenvalues and diagonalisation}
 \sldef{Def 6.1.3}. For square matrix \(\mathbf A\) of order \(n\), a nonzero column vector \(\mathbf u \in \mathbb{R}^n\) is an \sldef{eigenvector} of \(\mathbf A\) if \(\mathbf{Au} = \lambda\mathbf{u}\) for some scalar \(\lambda\), which is an \sldef{eigenvalue} of \(\mathbf A\) associated with \(\mathbf u\).
@@ -125,13 +129,11 @@ Normalising the above results in an orthonormal basis.
 
 \sldef{Def 6.2.1}. A square matrix \(\mathbf A\) is \sldef{diagonalisable} if there exists an invertible matrix \(\mathbf P\) such that \(\mathbf P^{-1}\mathbf{AP}\) is a diagonal matrix; \(\mathbf P\) diagonalises \(\mathbf A\).
 
-\sldef{Thm 6.2.3}. A square matrix \(\mathbf A\) of order \(n\) is diagonalisable iff it has \(n\) l. indep. eigenvectors. \sldef{Thm 6.2.7}. \(\mathbf A\) is diagonalisable if it has \(n\) distinct eigenvalues (converse untrue).
+\sldef{Thm 6.2.3}. A square matrix \(\mathbf A\) of order \(n\) is diagonalisable iff it has \(n\) l. indep. eigenvectors. \sldef{Thm 6.2.7}. \(\mathbf A\) is diagonalisable if it has \(n\) distinct eigenvalues (\(\not\to\)).
 
 \sldef{Rem 6.2.5.2}. \(\dim(E_\lambda)\) of a square matrix \(\mathbf A\) is at most the multiplicity of \(\lambda\) in \(\mathbf{A}\)'s characteristic polynomial. \(\mathbf A\) is diagonalisable iff \(\dim\) of each eigenspace of \(\mathbf A\) is equal to the multiplicity of its associated eigenvalue.
 
-\sldef{Thm 6.3.2}. A square matrix \(\mathbf A\) is \sldef{orthogonally diagonalisable} if there exists an orthogonal matrix \(\mathbf P\) such that \(\mathbf P^\TT\mathbf{AP}\) is a diagonal matrix; \(\mathbf P\) orthogonally diagonalises \(\mathbf A\).
-
-\sldef{Thm 6.3.4}. \(\mathbf A\) is orthogonally diagonalisable iff it is symmetric.
+\sldef{Thm 6.3.2}. A square matrix \(\mathbf A\) is \sldef{orthogonally diagonalisable} if there exists an orthogonal matrix \(\mathbf P\) such that \(\mathbf P^\TT\mathbf{AP}\) is a diagonal matrix; \(\mathbf P\) orthogonally diagonalises \(\mathbf A\). \sldef{Thm 6.3.4}. \(\mathbf A\) is orthogonally diagonalisable iff it is symmetric.
 
 \chapter{Linear transformations}
 \sldef{Def 7.1.1}. A \sldef{linear transformation} is a mapping \(T : \mathbb{R}^n \to \mathbb{R}^m\) of the form
@@ -140,7 +142,7 @@ a_{11}x_1 + \cdots + a_{1n}x_n\\
 \vdots\\
 a_{m1}x_1 + \cdots + a_{mn}x_n
 \end{pmatrix}\]
-If \(m = n\), \(T\) is a \sldef{linear operator} on \(\mathbb R^n\). \(T\) can be rewritten as
+If \(m = n\), \(T\) is a \sldef{linear operator} on \(\mathbb R^n\). \(T\) can be
 \[T(\mathbf A) = \begin{pmatrix}
 a_{11} & \cdots & a_{1n}\\
 &\vdots&\\
@@ -149,9 +151,9 @@ a_{m1} & \cdots & a_{mn}
 
 \sldef{Def 7.1.10}. For linear transformations \(S : \mathbb R^n \to \mathbb R^m\), \(T : \mathbb R^m \to \mathbb R^k\), the \sldef{composition} of \(T\) with \(S\) is \(T \circ S : \mathbb R^n \to \mathbb R^k\) such that \((T \circ S)(\mathbf u) = T(S(\mathbf u))\) for \(\mathbf u \in \mathbb R^n\).
 
-\sldef{Def 7.2.1}. For linear transformation \(T : \mathbb R^n \to \mathbb R^m\) with standard matrix \(\mathbf A\), its \sldef{range} \(\Range(T)\) is the set of images of \(T\). \sldef{Thm 7.2.4}. \(\Range(T) = \text{the columnspace of \(\mathbf{A}\)}\), which is a subspace of \(\mathbb R^m\). \sldef{Def 7.2.5}. The \sldef{rank} of \(T\), \(\rank(T) = \dim(\Range(T)) = \rank(\mathbf A)\).
+\sldef{Def 7.2.1}. For linear transformation \(T : \mathbb R^n \to \mathbb R^m\) with standard matrix \(\mathbf A\), its \sldef{range} \(\Range(T)\) is the set of images of \(T\). \sldef{Thm 7.2.4}. \(\Range(T) = \text{the columnspace of \(\mathbf{A}\)}\), which is a subspace of \(\mathbb R^m\). \sldef{Def 7.2.5}. \(\rank(T) = \dim(\Range(T)) = \rank(\mathbf A)\).
 
-\sldef{Def 7.2.7}. For linear transformation \(T : \mathbb R^n \to \mathbb R^m\) with standard matrix \(\mathbf A\), its \sldef{kernel} \(\Ker(T)\) is the set of vectors in \(\mathbb R^n\) whose image is the zero vector in \(\mathbb R^m\). \sldef{Thm 7.2.9}. \(\Ker(T) = \text{the nullspace of \(\mathbf{A}\)}\). \sldef{Def 7.2.10}. The \sldef{nullity} of \(T\), \(\nullity(T) = \dim(\Ker(T)) = \nullity(\mathbf A)\).
+\sldef{Def 7.2.7}. For linear transformation \(T : \mathbb R^n \to \mathbb R^m\) with standard matrix \(\mathbf A\), its \sldef{kernel} \(\Ker(T)\) is the set of vectors in \(\mathbb R^n\) whose image is the zero vector in \(\mathbb R^m\). \sldef{Thm 7.2.9}. \(\Ker(T) =\) the nullspace of \(\mathbf{A}\). \sldef{Def 7.2.10}. \(\nullity(T) = \dim(\Ker(T)) = \nullity(\mathbf A)\).
 
 \sldef{Thm 7.2.12}. For linear transformation \(T : \mathbb R^n \to \mathbb R^m\), \(\rank(T) + \nullity(T) = n\).
 \end{document}
