@@ -8,6 +8,14 @@
 \newcommand*{\TT}{\mathrm{T}}
 \begin{document}
 \chapter{Matrices}
+\sldef{Transposition}. The transpose of \(\mathbf{A}\) is the matrix \(\mathbf{A}^{\TT}\) with columns and rows interchanged. \((\mathbf{A}^{\TT})^{\TT} = \mathbf{A}\). \((\mathbf{A} + \mathbf{B})^{\TT} = \mathbf{A}^{\TT} + \mathbf{B}^{\TT}\). \((c\mathbf{A})^{\TT} = c\mathbf{A}^{\TT}\). \((\mathbf{AB})^{\TT} = \mathbf{B}^{\TT}\mathbf{A}^{\TT}\).
+
+\sldef{Invertibility}. A square matrix \(\mathbf{A}\) is invertible if there exists a matrix \(\mathbf{A}^{-1}\) of the same order such that \(\mathbf{AA}^{-1} = \mathbf{A}^{-1}\mathbf{A} = \mathbf I\). A square matrix is singular otherwise. The inverse of a matrix is unique.
+
+If \(\mathbf{A}\) and \(\mathbf{B}\) are invertible matrices of the same order, then \(c\mathbf{A}\), \(\mathbf{A}^{\TT}\), \(\mathbf{A}^{-1}\), and \(\mathbf{AB}\) are all invertible, and \((c\mathbf{A})^{-1} = (1/c)\mathbf{A}^{-1}\), \((\mathbf{A}^{\TT})^{-1} = (\mathbf{A}^{-1})^{\TT}\), \((\mathbf{A}^{-1})^{-1} = \mathbf{A}\), and \((\mathbf{AB})^{-1} = \mathbf{B}^{-1}\mathbf{A}^{-1}\).
+
+If \(\mathbf{A}\) is invertible, then if \(\mathbf{AB}_1 = \mathbf{AB}_2\) or \(\mathbf{B}_1\mathbf{A} = \mathbf{B}_2\mathbf{A}\), \(\mathbf{B}_1 = \mathbf{B}_2\). If \(\mathbf{A}\) is not invertible, this may not hold.
+
 \sldef{Def 2.5.2}. Let \(\mathbf{A} = (a_{ij})\) be an \(n \times n\) matrix, and \(\mathbf{M}_{ij}\) be an \((n - 1)\times(n - 1)\) matrix from \(\mathbf{A}\), deleting the \(i\)th row and the \(j\)th column. Then the \sldef{determinant} of \(\mathbf{A}\)\[\det(\mathbf A) = a_{11}A_{11} + \cdots + a_{1n}A_{1n}\]where \(A_{ij} = (-1)^{i+j}\det(\mathbf{M}_{ij})\). The number \(A_{ij}\) is called the \sldef{\((i, j)\)-cofactor} of \(\mathbf{A}\).
 
 \sldef{Thm 2.5.8}. The determinant of a triangular matrix is equal to the product of its diagonal entries.
@@ -71,7 +79,7 @@ For 2 row-equivalent matrices \(\mathbf A\) and \(\mathbf B\), \sldef{Thm 4.1.7}
 
 \sldef{Thm 4.3.4}. For a matrix \(\mathbf A\) with \(n\) columns, \(\rank(\mathbf A) + \nullity(\mathbf A) = n\).
 
-\sldef{Thm 4.3.6}. Suppose \(\mathbf{Ax} = \mathbf{b}\) has a solution \(v\). Then the solution set \(M = \{\mathbf{u} + \mathbf{v} \mid \mathbf{u} \in \text{nullspace of \(\mathbf{A}\)}\}\).
+\sldef{Thm 4.3.6}. Suppose \(\mathbf{Ax} = \mathbf{b}\) has a solution \(\mathbf v\). Then the solution set \(M = \{\mathbf{u} + \mathbf{v} \mid \mathbf{u} \in \text{nullspace of \(\mathbf{A}\)}\}\).
 
 \chapter{Orthogonality}
 \sldef{Def 5.2.1}. Two vectors \(\mathbf{u}, \mathbf{v} \in \mathbb{R}^n\) are \sldef{orthogonal} if \(\mathbf{u} \cdot \mathbf{v} = 0\); a set \(S \subseteq \mathbb{R}^n\) is orthogonal if every pair of distinct vectors in \(S\) are orthogonal; and \(S\) is orthonormal if it is orthogonal and every vector in it is a unit vector.
@@ -92,7 +100,7 @@ Normalising the above results in an orthonormal basis.
 
 \sldef{Thm 5.3.10}. For \(\mathbf{Ax} = \mathbf{b}\), \(\mathbf{u}\) is a \sldef{least squares} solution iff \(\mathbf{u}\) is a solution to \(\mathbf{A}^\TT\mathbf{Ax} = \mathbf{A}^\TT\mathbf{b}\).
 
-\sldef{Def 5.4.3}. Square matrix \(\mathbf A\) is orthogonal if \(\mathbf{A}^{-1} = \mathbf{A}^\TT\).
+\sldef{Def 5.4.3}. Square matrix \(\mathbf A\) is orthogonal if \(\mathbf{A}^{-1} = \mathbf{A}^\TT\). \sldef{Thm 5.4.6}. A square matrix is orthogonal iff its rows, and columns, form an orthonormal basis for \(\mathbb R^n\).
 
 \chapter{Eigenvalues and diagonalisation}
 \sldef{Def 6.1.3}. For square matrix \(\mathbf A\) of order \(n\), a nonzero column vector \(\mathbf u \in \mathbb{R}^n\) is an \sldef{eigenvector} of \(\mathbf A\) if \(\mathbf{Au} = \lambda\mathbf{u}\) for some scalar \(\lambda\), which is an \sldef{eigenvalue} of \(\mathbf A\) associated with \(\mathbf u\).
@@ -117,7 +125,7 @@ Normalising the above results in an orthonormal basis.
 
 \sldef{Def 6.2.1}. A square matrix \(\mathbf A\) is \sldef{diagonalisable} if there exists an invertible matrix \(\mathbf P\) such that \(\mathbf P^{-1}\mathbf{AP}\) is a diagonal matrix; \(\mathbf P\) diagonalises \(\mathbf A\).
 
-\sldef{Thm 6.2.3}. A square matrix \(\mathbf A\) of order \(n\) is diagonalisable iff it has \(n\) l. indep. eigenvectors. \sldef{Thm 6.2.7}. \(\mathbf A\) is diagonalisable iff it has \(n\) distinct eigenvalues.
+\sldef{Thm 6.2.3}. A square matrix \(\mathbf A\) of order \(n\) is diagonalisable iff it has \(n\) l. indep. eigenvectors. \sldef{Thm 6.2.7}. \(\mathbf A\) is diagonalisable if it has \(n\) distinct eigenvalues (converse untrue).
 
 \sldef{Rem 6.2.5.2}. \(\dim(E_\lambda)\) of a square matrix \(\mathbf A\) is at most the multiplicity of \(\lambda\) in \(\mathbf{A}\)'s characteristic polynomial. \(\mathbf A\) is diagonalisable iff \(\dim\) of each eigenspace of \(\mathbf A\) is equal to the multiplicity of its associated eigenvalue.
 
@@ -145,5 +153,5 @@ a_{m1} & \cdots & a_{mn}
 
 \sldef{Def 7.2.7}. For linear transformation \(T : \mathbb R^n \to \mathbb R^m\) with standard matrix \(\mathbf A\), its \sldef{kernel} \(\Ker(T)\) is the set of vectors in \(\mathbb R^n\) whose image is the zero vector in \(\mathbb R^m\). \sldef{Thm 7.2.9}. \(\Ker(T) = \text{the nullspace of \(\mathbf{A}\)}\). \sldef{Def 7.2.10}. The \sldef{nullity} of \(T\), \(\nullity(T) = \dim(\Ker(T)) = \nullity(\mathbf A)\).
 
-\sldef{Thm 7.2.13}. For linear transformation \(T : \mathbb R^n \to \mathbb R^m\), \(\rank(T) + \nullity(T) = n\).
+\sldef{Thm 7.2.12}. For linear transformation \(T : \mathbb R^n \to \mathbb R^m\), \(\rank(T) + \nullity(T) = n\).
 \end{document}
