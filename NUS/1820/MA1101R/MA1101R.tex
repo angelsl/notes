@@ -1,64 +1,149 @@
 \documentclass{slnotes}
 \DeclareMathOperator*{\adj}{\mathbf{adj}}
+\DeclareMathOperator*{\laspan}{span}
+\DeclareMathOperator*{\rank}{rank}
+\DeclareMathOperator*{\nullity}{nullity}
+\DeclareMathOperator*{\Range}{R}
+\DeclareMathOperator*{\Ker}{Ker}
 \newcommand*{\TT}{\mathrm{T}}
 \begin{document}
-\chapter{Basic definitions}
-The \sldef{elementary row operations} are multiplying a row by a nonzero constant, interchanging two rows, and adding a multiple of one row to another row. Two matrices are \sldef{row-equivalent} if they can be obtained from one another by elementary row operations. Two systems that have row-equivalent augmented matrices have the same solution set.
+\chapter{Matrices}
+\sldef{Def 2.5.2}. Let \(\mathbf{A} = (a_{ij})\) be an \(n \times n\) matrix, and \(\mathbf{M}_{ij}\) be an \((n - 1)\times(n - 1)\) matrix from \(\mathbf{A}\), deleting the \(i\)th row and the \(j\)th column. Then the \sldef{determinant} of \(\mathbf{A}\)\[\det(\mathbf A) = a_{11}A_{11} + \cdots + a_{1n}A_{1n}\]where \(A_{ij} = (-1)^{i+j}\det(\mathbf{M}_{ij})\). The number \(A_{ij}\) is called the \sldef{\((i, j)\)-cofactor} of \(\mathbf{A}\).
 
-A matrix is in \sldef{row-echelon form} (REF) if all zero rows are at the bottom, and leading entries in lower rows are strictly to the right of those in higher rows. A column is called a pivot column if it contains a pivot point or leading entry. A matrix is in \sldef{reduced row-echelon form} (RREF) if it is in REF, and the leading entry of every nonzero row is 1, and every pivot column is all-zero except for the pivot point. RREFs are \sldef{unique}.
+\sldef{Thm 2.5.8}. The determinant of a triangular matrix is equal to the product of its diagonal entries.
 
-\sldef{Gaussian elimination}. Locate the leftmost non-zero column. Swap the top row with another row so that the first row in the column is non-zero. Add a multiple of this row to all rows below so that all entries below the leading entry in this row are zero. Repeat this process, ignoring the top row. \sldef{Gauss-Jordan elimination}. Scale each row so the leading entry is 1. Then add a multiple of each row to rows above that row so that entries above the leading entry are zero.
+\sldef{Thm 2.5.15}. Let \(\mathbf{A}\) be a square matrix. \(\det(\mathbf B)\) is
+\begin{slinenum}
+\item \(k\det(\mathbf A)\), if \(\mathbf{B}\) is obtained from \(\mathbf{A}\) by multiplying one row of \(\mathbf{A}\) by a constant \(k\)
+\item \(-\det(\mathbf A)\), if by interchanging two rows
+\item \(\det(\mathbf A)\), if by adding a multiple of a row of \(\mathbf{A}\).
+\end{slinenum}
 
-\sldef{Transposition}. The transpose of \(\mathbf{A}\) is the matrix \(\mathbf{A}^{\TT}\) with columns and rows interchanged. \((\mathbf{A}^{\TT})^{\TT} = \mathbf{A}\). \((\mathbf{A} + \mathbf{B})^{\TT} = \mathbf{A}^{\TT} + \mathbf{B}^{\TT}\). \((c\mathbf{A})^{\TT} = c\mathbf{A}^{\TT}\). \((\mathbf{AB})^{\TT} = \mathbf{B}^{\TT}\mathbf{A}^{\TT}\).
+For an elementary matrix \(\mathbf E\) of the same size as \(\mathbf A\), then \(\det(\mathbf{EA}) = \det(\mathbf E)\det(\mathbf A)\).
 
-\sldef{Symmetricity}. A square matrix is symmetric if it is identical to its transpose.
+\sldef{Thm 2.5.25}. If \(\mathbf A\) is inv., then \(\mathbf A^{-1} = \frac{1}{\det(\mathbf A)}\adj(\mathbf A)\).
 
-\sldef{Invertibility}. A square matrix \(\mathbf{A}\) is invertible if there exists a matrix of the same order such that the product of the two in either order results in the identity matrix. A square matrix is singular otherwise. The inverse of a matrix is unique, and so denoted \(\mathbf{A}^{-1}\).
+\sldef{Thm 2.5.27} Cramer's. Suppose \(\mathbf{Ax} = \mathbf b\) is a linear system where \(\mathbf A\) is an \(n \times n\) matrix. Let \(\mathbf{A}_i\) be the matrix obtained from \(\mathbf A\) by replacing the \(i\)th column of \(\mathbf A\) by \(\mathbf b\). If \(\mathbf A\) is inv., then the system has only one solution\[\mathbf{x} = \frac{1}{\det(\mathbf A)}\begin{pmatrix}\det(\mathbf A_1)\\\vdots\\\det(\mathbf A_n)\end{pmatrix}\]
 
-If \(\mathbf{A}\) and \(\mathbf{B}\) are invertible matrices of the same order, then \(c\mathbf{A}\), \(\mathbf{A}^{\TT}\), \(\mathbf{A}^{-1}\), and \(\mathbf{AB}\) are all invertible, and \((c\mathbf{A})^{-1} = (1/c)\mathbf{A}^{-1}\), \((\mathbf{A}^{\TT})^{-1} = (\mathbf{A}^{-1})^{\TT}\), \((\mathbf{A}^{-1})^{-1} = \mathbf{A}\), and \((\mathbf{AB})^{-1} = \mathbf{B}^{-1}\mathbf{A}^{-1}\).
+\sldef{Def 2.5.24}. Let \(\mathbf A\) be a square matrix of order \(n\). Then the \sldef{(classical) adjoint} of \(\mathbf A\) is the \(n \times n\) matrix \(\adj(\mathbf A) = (A_{ij})^\TT_{n \times n}\), where \(A_{ij}\) is the \((i, j)\)-cofactor of \(\mathbf A\).
 
-If \(\mathbf{A}\) is invertible, then if \(\mathbf{AB}_1 = \mathbf{AB}_2\) or \(\mathbf{B}_1\mathbf{A} = \mathbf{B}_2\mathbf{A}\), \(\mathbf{B}_1 = \mathbf{B}_2\). If \(\mathbf{A}\) is not invertible, this may not hold.
+\chapter{Euclidean spaces}
+\sldef{Def 3.2.3}. Let \(S = \{\mathbf{u}_1, \hdots, \mathbf{u}_k\}\) be a set of vectors in \(\mathbb{R}^n\). Then the set of all linear combinations of the vectors in \(S\) is called its \sldef{linear span}, denoted \(\laspan(S)\) or \(\laspan\{\hdots\}\).
 
-\chapter{Elementary matrices}
-A square matrix is an \sldef{elementary matrix} if it can be obtained from an identity matrix by performing a single elementary row operation. All elementary matrices are invertible, and their inverses are also elementary matrices describing the reverse row operation. Pre-multiplying an elementary matrix to a matrix is equivalent to doing an elementary row operation. Post-multiplying an elementary matrix is equivalent to doing an elementary column operation.
+\sldef{Thm 3.2.10}. Let \(S_1 = \{\mathbf{u}_1, \hdots, \mathbf{u}_k\}, S_2 = \{\hdots, \mathbf{v}_k\} \subseteq \mathbb{R}^n\). Then \(\laspan(S_1) \subseteq \laspan(S_2)\) iff each \(\mathbf{u}_i\) is a linear combination of the vectors in \(S_2\).
 
-For a square matrix \(\mathbf{A}\), \(\mathbf{A}\) is invertible \(\Leftrightarrow\) \(\mathbf{Ax} = \mathbf{0}\) has only the trivial solution \(\Leftrightarrow\) its RREF is an identity matrix \(\Leftrightarrow\) it can be expressed as a product of elementary matrices.
+\sldef{Def 3.3.2}. Let \(V \subseteq \mathbb{R}^n\). Then \(V\) is a \sldef{subspace} of \(\mathbb{R}^n\) iff \(V = \laspan(S)\) where \(S \subseteq \mathbb{R}^n\). In that case, \(V\) is the subspace spanned by \(S\), or \(S\) spans the subspace \(V\).
 
-For square matrices \(\mathbf{A}\), \(\mathbf{B}\) of the same order, if \(\mathbf{AB} = \mathbf{I}\), then \(\mathbf{A}\), \(\mathbf{B}\) are both invertible, \(\mathbf{A}^{-1} = \mathbf{B}\), \(\mathbf{B}^{-1} = \mathbf{A}\), and \(\mathbf{BA} = \mathbf{I}\).
+\sldef{Rem 3.3.8}. Let \(V \subseteq \mathbb{R}^n, V \neq \emptyset\). Then \(V\) is a subspace of \(\mathbb{R}^n\) iff for all \(\mathbf{u}, \mathbf{v} \in V\) and \(c, d \in \mathbb{R}\), \(c\mathbf{u} + d\mathbf{v} \in V\).
 
-For square matrices \(\mathbf{A}\), \(\mathbf{B}\) of the same order, if either are singular, then the product in any order is singular.
+\sldef{Def 3.4.2}. Let \(S = \{\mathbf{u}_1, \hdots, \mathbf{u}_k\} \subseteq \mathbb{R}^n\). Consider the equation \(c_1\mathbf{u}_1 + \cdots + c_k\mathbf{u}_k = \mathbf{0}\), \(c_1, \hdots, c_k \in \mathbb{R}\). The equation has only the trivial solution iff \(S\) is l. indep.
 
-\chapter{Determinants}
-Let \(\mathbf{A} = (a_{ij})\) be an \(n \times n\) matrix. Let \(\mathbf{M}_{ij}\) be an \((n-1) \times (n-1)\) matrix obtained by deleting the \(i\)th row and \(j\)th column. Then the determinant of \(\mathbf{A}\)
-\begin{align*}
-\det(\mathbf{A}) &= a_{i1}A_{i1} + a_{i2}A_{i2} + \cdots + a_{in}A_{in}\\
-&= a_{1j}A_{1j} + a_{2j}A_{2j} + \cdots + a_{nj}A_{nj}
+\sldef{Def 3.5.4}. Let \(S \subseteq V\) where \(V\) is a subspace of \(\mathbb{R}^n\). \(S\) is a \sldef{basis} for \(V\) iff \(S\) is l. indep. and \(S\) spans \(V\).
+
+\sldef{Def 3.5.8}. Let \(S\) be a basis for vector space \(V\), and \(\mathbf{v} \in V\). Then \(\mathbf{v}\) can be expressed uniquely as a linear combination of the vectors in \(S\), and the coefficients are called its \sldef{coordinates} relative to the basis \(S\). The row vector \((\mathbf{v})_S \in \mathbb{R}^{\lvert S \rvert}\) of the coefficients is called the \sldef{coordinate vector} of \(\mathbf{v}\) relative to \(S\). The column vector \([\mathbf{v}]_S\) is also the coordinate vector.
+
+\sldef{Def 3.6.3}. The \sldef{dimension} of a vector space \(V\) \(\dim(V)\) is the number of vectors in a basis for \(V\). The dimension of the zero space is 0.
+
+\sldef{Thm 3.6.1}. If \(V\) is a vector space which has a basis with dimension \(k\), then a subset of \(V\) with more than \(k\) vectors is always linearly dependent, and one with less than \(k\) cannot span \(V\).
+
+\sldef{Thm 3.6.7}. For vector space \(V\) with \(\dim(V) = k\), and \(S \subseteq V\), these are equivalent: \begin{slinenum}
+\item \(S\) is a basis for \(V\)
+\item \(S\) is l. indep. and \(\lvert S \rvert = k\)
+\item \(S\) spans \(V\) and \(\lvert S \rvert = k\).
+\end{slinenum}
+
+\sldef{Def 3.7.3}. Let \(S = \{\mathbf{u}_1, \hdots, \mathbf{u}_k\}\) and \(T\) be two bases for a vector space. The \sldef{transition matrix} from \(S\) to \(T\) is the square matrix \(\begin{pmatrix}[\mathbf{u}_1]_T & \cdots & [\mathbf{u}_k]_T\end{pmatrix}\).
+
+\chapter{Row/column/nullspaces}
+\sldef{Def 4.1.2}. For a \(m \times n\) matrix \(\mathbf A\), its \sldef{rowspace} is the subspace of \(\mathbb{R}^n\) spanned by its rows, and its \sldef{columnspace} is the subspace of \(\mathbb{R}^m\) spanned by its columns.
+
+For 2 row-equivalent matrices \(\mathbf A\) and \(\mathbf B\), \sldef{Thm 4.1.7}. They have the same rowspace. \sldef{Thm 4.1.11}. Any set of columns of \(\mathbf A\) is l. indep. iff the corresponding ones in \(\mathbf B\) are also l. indep. Any set of columns of \(\mathbf A\) form a basis for \(\mathbf{A}\)'s columnspace iff the corresponding ones in \(\mathbf B\) do for \(\mathbf{B}\).
+
+\sldef{Thm 4.1.16}. The system \(\mathbf{Ax} = \mathbf b\) is consistent iff \(\mathbf b\) is in the columnspace of \(\mathbf A\).
+
+\sldef{Thm 4.2.1}. The rowspace and columnspace of a matrix have the same dimension.
+
+\sldef{Def 4.2.3}. The \sldef{rank} of \(\mathbf A\), \(\rank(\mathbf A)\) is the dimension of its row/columnspace, and is the number of nonzero rows and the number of pivot colums in a REF of \(\mathbf A\).
+
+\sldef{Thm 4.2.8}. For \(m \times n\) matrix \(\mathbf A\) and \(n \times p\) matrix \(\mathbf B\), \(\rank(\mathbf{AB}) \le \min\{\rank(\mathbf A), \rank(\mathbf B)\}\).
+
+\sldef{Def 4.3.1}. For \(m \times n\) matrix \(\mathbf A\), the solution space of \(\mathbf{Ax} = \mathbf{0}\) is its \sldef{nullspace} \(\subseteq \mathbb{R}^n\), and the dimension of the nullspace is its \sldef{nullity}, \(\nullity(\mathbf A) \le n\).
+
+\sldef{Thm 4.3.4}. For a matrix \(\mathbf A\) with \(n\) columns, \(\rank(\mathbf A) + \nullity(\mathbf A) = n\).
+
+\sldef{Thm 4.3.6}. Suppose \(\mathbf{Ax} = \mathbf{b}\) has a solution \(v\). Then the solution set \(M = \{\mathbf{u} + \mathbf{v} \mid \mathbf{u} \in \text{nullspace of \(\mathbf{A}\)}\}\).
+
+\chapter{Orthogonality}
+\sldef{Def 5.2.1}. Two vectors \(\mathbf{u}, \mathbf{v} \in \mathbb{R}^n\) are \sldef{orthogonal} if \(\mathbf{u} \cdot \mathbf{v} = 0\); a set \(S \subseteq \mathbb{R}^n\) is orthogonal if every pair of distinct vectors in \(S\) are orthogonal; and \(S\) is orthonormal if it is orthogonal and every vector in it is a unit vector.
+
+\sldef{Thm 5.2.8}. If \(S = \{\mathbf{u}_1, \hdots, \mathbf{u}_k\}\) is an orthogonal basis for a vector space \(V\), then for \(\mathbf{w} \in V\),\[\mathbf{w} = \frac{\mathbf{w}\cdot\mathbf{u}_1}{\mathbf{u}_1\cdot\mathbf{u}_1}\mathbf{u}_1 + \cdots + \frac{\mathbf{w}\cdot\mathbf{u}_k}{\mathbf{u}_k\cdot\mathbf{u}_k}\mathbf{u}_k\] i.e. \((\mathbf w)_S = \left(\frac{\mathbf{w}\cdot\mathbf{u}_1}{\mathbf{u}_1\cdot\mathbf{u}_1}, \hdots, \frac{\mathbf{w}\cdot\mathbf{u}_k}{\mathbf{u}_k\cdot\mathbf{u}_k}\right)\).
+
+\sldef{Def 5.2.10}. For subspace \(V \subseteq \mathbb{R}^n\), a vector \(\mathbf{u} \in \mathbb{R}^n\) is orthogonal to \(V\) if \(\mathbf{U}\) is orthogonal to all vectors in \(V\).
+
+\sldef{Def 5.2.13}. For subspace \(V \subseteq \mathbb{R}^n\), every vector \(\mathbf{u} \in \mathbb{R}^n\) can be written uniquely as \(\mathbf{u} = \mathbf{n} + \mathbf{p}\) where \(\mathbf{n}\) is orthogonal to \(V\) and \(\mathbf{p} \in V\); \(\mathbf{p}\) is the \sldef{projection} of \(\mathbf{u}\) onto \(V\).
+
+\sldef{Thm 5.2.15}. If \(S = \{\mathbf{u}_1, \hdots, \mathbf{u}_k\}\) is an orthogonal basis for a vector space \(V\), then the projection of \(\mathbf{w} \in \mathbb{R}^n\) onto \(V\) is \[\frac{\mathbf{w}\cdot\mathbf{u}_1}{\mathbf{u}_1\cdot\mathbf{u}_1}\mathbf{u}_1 + \cdots + \frac{\mathbf{w}\cdot\mathbf{u}_k}{\mathbf{u}_k\cdot\mathbf{u}_k}\mathbf{u}_k\]
+
+\sldef{Thm 5.2.19}. If \(\{\mathbf{u}_1, \hdots, \mathbf{u}_k\}\) is a basis for a vector space \(V\), then an orthogonal basis for \(V\) is \(\{\mathbf{v}_1, \hdots, \mathbf{v}_k\}\) where \begin{align*}
+\mathbf{v}_1 &= \mathbf{u}_1, \mathbf{v}_2 = \mathbf{u}_2 - \frac{\mathbf{u}_2 \cdot \mathbf{v}_1}{\mathbf{v}_1 \cdot \mathbf{v}_1}\mathbf{v}_1\\
+\mathbf{v}_k &= \mathbf{u}_k - \frac{\mathbf{u}_k \cdot \mathbf{v}_1}{\mathbf{v}_1 \cdot \mathbf{v}_1}\mathbf{v}_1 - \cdots - \frac{\mathbf{u}_k \cdot \mathbf{v}_{k-1}}{\mathbf{v}_{k-1} \cdot \mathbf{v}_{k-1}}\mathbf{v}_{k-1}
 \end{align*}
-where \(A_{ij} = (-1)^{i+j}\det(\mathbf{M}_{ij})\), the \((i,j)\)-cofactor of \(\mathbf{A}\). The first line is the cofactor expansion along the \(i\)th row; the second is that along the \(j\)th column.
+Normalising the above results in an orthonormal basis.
 
-The determinant of a triangular matrix is equal to the product of its diagonal entries.
+\sldef{Thm 5.3.10}. For \(\mathbf{Ax} = \mathbf{b}\), \(\mathbf{u}\) is a \sldef{least squares} solution iff \(\mathbf{u}\) is a solution to \(\mathbf{A}^\TT\mathbf{Ax} = \mathbf{A}^\TT\mathbf{b}\).
 
-Transposition does not change the determinant.
+\sldef{Def 5.4.3}. Square matrix \(\mathbf A\) is orthogonal if \(\mathbf{A}^{-1} = \mathbf{A}^\TT\).
 
-\sldef{Effects of row operations}. Multiplying one row by \(k\) multiplies the determinant by \(k\). Interchanging two rows negates the determinant. Adding a multiple of a row to another does not change the determinant. The same applies for elementary column operations.
+\chapter{Eigenvalues and diagonalisation}
+\sldef{Def 6.1.3}. For square matrix \(\mathbf A\) of order \(n\), a nonzero column vector \(\mathbf u \in \mathbb{R}^n\) is an \sldef{eigenvector} of \(\mathbf A\) if \(\mathbf{Au} = \lambda\mathbf{u}\) for some scalar \(\lambda\), which is an \sldef{eigenvalue} of \(\mathbf A\) associated with \(\mathbf u\).
 
-A square matrix \(\mathbf{A}\) is invertible \(\Leftrightarrow \det(\mathbf{A}) \ne 0\).
+\sldef{Def 6.1.6}. For square matrix \(\mathbf A\), \(\det(\lambda\mathbf I - \mathbf A)\) is its \sldef{characteristic polynomial}, and \(\det(\lambda\mathbf I - \mathbf A) = 0\) is its \sldef{characteristic equation}.
 
-For a square matrix \(\mathbf{A}\) of order \(n\), its \sldef{adjoint}
-\[\adj(\mathbf{A}) = \begin{bmatrix}
-A_{11} & \cdots & A_{1n}\\
-\vdots & & \vdots\\
-A_{n1} & \cdots & A_{nn}\\
-\end{bmatrix}^{\TT} =
-\begin{bmatrix}
-A_{11} & \cdots & A_{n1}\\
-\vdots & & \vdots\\
-A_{1n} & \cdots & A_{nn}\\
-\end{bmatrix}\]
+\sldef{Def 6.1.8}. For square matrix \(\mathbf A\) of order \(n\), these are equivalent:
+\begin{slinenum}
+\item \(\mathbf A\) is invertible
+\item \(\mathbf{Ax} = \mathbf{0}\) has only the trivial solution
+\item the RREF of \(\mathbf A\) is \(\mathbf I\)
+\item \(A\) can be expressed as a product of elementary matrices
+\item \(\det(\mathbf A) \ne 0\)
+\item its rows, and columns, both form a basis for \(\mathbb{R}^n\)
+\item \(\rank(\mathbf A) = n\)
+\item \(0\) is not an eigenvalue for \(\mathbf A\).
+\end{slinenum}
 
-For square matrices \(\mathbf{A}\), \(\mathbf{B}\) of order \(n\) and a scalar \(c\), \(\det(c\mathbf{A}) = c^n\mathbf{A}\), and \(\det(\mathbf{AB}) = \det(\mathbf{A})\det(\mathbf{B})\). If \(\mathbf{A}\) is invertible, \(\det(\mathbf{A}^{-1}) = 1/\det(\mathbf{A})\), and \(\mathbf{A}^{-1} = (1/\det(\mathbf{A}))\adj(\mathbf{A})\).
+\sldef{Thm 6.1.9}. The eigenvalues of a triangular matrix are its diagonal entries.
 
-\sldef{Cramer's rule}. For the system \(\mathbf{Ax} = \mathbf{b}\), if \(\mathbf{A}\) is invertible, then the system has only one solution \(\mathbf{x} = (1/\det(\mathbf{A}))(\det(\mathbf{A_1}), \hdots, \det(\mathbf{A_n}))\), where \(\mathbf{A}_i\) is \(\mathbf{A}\) with its \(i\)th column replaced by \(\mathbf{b}\).
+\sldef{Def 6.1.11}. For square matrix \(\mathbf A\) of order \(n\), and \(\lambda\) an eigenvalue of \(\mathbf A\), the solution space of \((\lambda\mathbf I - \mathbf A)\mathbf x = \mathbf 0\) is the \sldef{eigenspace} of \(\mathbf A\) associated with the eigenvalue \(\lambda\) and is denoted \(E_\lambda\). All nonzero vectors in \(E_\lambda\) are eigenvectors of \(\mathbf A\) associated with the eigenvalue \(\lambda\).
 
-The determinant of a square matrix of order 2 is \(ad - bc\), where entries are lettered left-to-right, top-down. That of one of order 3 is \(aei + bfg + cdh - ceg - afh - bdi\).
+\sldef{Def 6.2.1}. A square matrix \(\mathbf A\) is \sldef{diagonalisable} if there exists an invertible matrix \(\mathbf P\) such that \(\mathbf P^{-1}\mathbf{AP}\) is a diagonal matrix; \(\mathbf P\) diagonalises \(\mathbf A\).
+
+\sldef{Thm 6.2.3}. A square matrix \(\mathbf A\) of order \(n\) is diagonalisable iff it has \(n\) l. indep. eigenvectors. \sldef{Thm 6.2.7}. \(\mathbf A\) is diagonalisable iff it has \(n\) distinct eigenvalues.
+
+\sldef{Rem 6.2.5.2}. \(\dim(E_\lambda)\) of a square matrix \(\mathbf A\) is at most the multiplicity of \(\lambda\) in \(\mathbf{A}\)'s characteristic polynomial. \(\mathbf A\) is diagonalisable iff \(\dim\) of each eigenspace of \(\mathbf A\) is equal to the multiplicity of its associated eigenvalue.
+
+\sldef{Thm 6.3.2}. A square matrix \(\mathbf A\) is \sldef{orthogonally diagonalisable} if there exists an orthogonal matrix \(\mathbf P\) such that \(\mathbf P^\TT\mathbf{AP}\) is a diagonal matrix; \(\mathbf P\) orthogonally diagonalises \(\mathbf A\).
+
+\sldef{Thm 6.3.4}. \(\mathbf A\) is orthogonally diagonalisable iff it is symmetric.
+
+\chapter{Linear transformations}
+\sldef{Def 7.1.1}. A \sldef{linear transformation} is a mapping \(T : \mathbb{R}^n \to \mathbb{R}^m\) of the form
+\[T\left(\begin{pmatrix}x_1\\\vdots\\x_n\end{pmatrix}\right) = \begin{pmatrix}
+a_{11}x_1 + \cdots + a_{1n}x_n\\
+\vdots\\
+a_{m1}x_1 + \cdots + a_{mn}x_n
+\end{pmatrix}\]
+If \(m = n\), \(T\) is a \sldef{linear operator} on \(\mathbb R^n\). \(T\) can be rewritten as
+\[T(\mathbf A) = \begin{pmatrix}
+a_{11} & \cdots & a_{1n}\\
+&\vdots&\\
+a_{m1} & \cdots & a_{mn}
+\end{pmatrix}\mathbf{A}\] and this matrix is known as the \sldef{standard matrix} for \(T\).
+
+\sldef{Def 7.1.10}. For linear transformations \(S : \mathbb R^n \to \mathbb R^m\), \(T : \mathbb R^m \to \mathbb R^k\), the \sldef{composition} of \(T\) with \(S\) is \(T \circ S : \mathbb R^n \to \mathbb R^k\) such that \((T \circ S)(\mathbf u) = T(S(\mathbf u))\) for \(\mathbf u \in \mathbb R^n\).
+
+\sldef{Def 7.2.1}. For linear transformation \(T : \mathbb R^n \to \mathbb R^m\) with standard matrix \(\mathbf A\), its \sldef{range} \(\Range(T)\) is the set of images of \(T\). \sldef{Thm 7.2.4}. \(\Range(T) = \text{the columnspace of \(\mathbf{A}\)}\), which is a subspace of \(\mathbb R^m\). \sldef{Def 7.2.5}. The \sldef{rank} of \(T\), \(\rank(T) = \dim(\Range(T)) = \rank(\mathbf A)\).
+
+\sldef{Def 7.2.7}. For linear transformation \(T : \mathbb R^n \to \mathbb R^m\) with standard matrix \(\mathbf A\), its \sldef{kernel} \(\Ker(T)\) is the set of vectors in \(\mathbb R^n\) whose image is the zero vector in \(\mathbb R^m\). \sldef{Thm 7.2.9}. \(\Ker(T) = \text{the nullspace of \(\mathbf{A}\)}\). \sldef{Def 7.2.10}. The \sldef{nullity} of \(T\), \(\nullity(T) = \dim(\Ker(T)) = \nullity(\mathbf A)\).
+
+\sldef{Thm 7.2.13}. For linear transformation \(T : \mathbb R^n \to \mathbb R^m\), \(\rank(T) + \nullity(T) = n\).
 \end{document}
