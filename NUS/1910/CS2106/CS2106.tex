@@ -1,0 +1,23 @@
+\documentclass[10pt]{slnotes}
+\newcommand\sltilde{\char`~}
+\begin{document}
+\chapter{CS2106: Basic ideas}
+The first computers did not have OSes. Rudimentary OSes like batch OSes that executed programs one at a time developed in the 1960s. Time-sharing OSes came in the 1970s.
+
+OSes abstract away hardware, manage resources, control program execution and provide security and protection.
+
+\sldef{Monolithic kernels} are kernels where the entire kernel runs in kernel mode. This design is well understood and tends to have better performance, but components tend to be more coupled and usually have complicated internal structures. Most Unices are largely monolithic.
+
+\sldef{Microkernels} are kernels where the kernel is very small and handles only basic services like IPC, interrupt handling, and memory and task management. Higher level services run in user space, built on top of the basic facilities. This usually leads to a more robust kernel with better isolation, but performance tends to be lower.
+
+\sldef{Layered systems} are generalisations of monolithic kernels that could be seen as a cross between microkernels and monolithic kernels: most services still run in kernel mode, but they are divided into layers, with the lowest being the hardware abstraction layer, and higher layers making use of lower layers. NT is generally seen as a layered system.
+
+The \sldef{client-server model} is a variation of a microkernel. Servers are built on top of the microkernel and client processes request services from servers. Client and server processes can be on separate machines.
+
+\sldef{Virtualisation} is used to run multiple OSes on the same hardware, or to debug an OS. Using a \sldef{hypervisor}, underlying hardware is virtualised. A \sldef{type 1} \sltilde{} is one that runs directly on hardware; a \sldef{type 2} \sltilde{} runs on a host OS.
+
+\chapter{Processes}
+A \sldef{process}/task/job is an abstraction to represent a program in execution.
+
+Each \sltilde{} is represented in the system process table by a \sldef{process control block} which contains the register state (PC, SP, FP, GPRs, etc.), memory region information, PID, process state, etc.
+\end{document}

@@ -5,9 +5,10 @@
 \newif\if@slchemformula\@slchemformulafalse
 \DeclareOption{chemformula}{\@slchemformulatrue}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
+\ExecuteOptions{11pt}
 \ProcessOptions\relax
 %
-\LoadClass[a4paper,11pt,twocolumn]{report}
+\LoadClass[a4paper,twocolumn]{report}
 \RequirePackage{amsmath}
 \RequirePackage{amsthm}
 \RequirePackage{thmtools}
@@ -23,7 +24,7 @@
 \RequirePackage{fontspec}
 \RequirePackage{siunitx}
 \RequirePackage[inline]{enumitem}
-\RequirePackage[margin=0.5in,footskip=0.25in]{geometry}
+\RequirePackage[margin=1cm,footskip=0.5cm]{geometry}
 \RequirePackage{ifxetex}
 \ifxetex
     \RequirePackage[protrusion={true,nocompatibility},final,factor=1100]{microtype}
