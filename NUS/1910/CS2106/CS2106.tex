@@ -20,4 +20,36 @@ The \sldef{client-server model} is a variation of a microkernel. Servers are bui
 A \sldef{process}/task/job is an abstraction to represent a program in execution.
 
 Each \sltilde{} is represented in the system process table by a \sldef{process control block} which contains the register state (PC, SP, FP, GPRs, etc.), memory region information, PID, process state, etc.
+
+CS2106 models processes as having 5 states: new, ready, running, blocked, and terminated.
+
+\includegraphics[width=\columnwidth]{pstates.pdf}
+
+A \sldef{system call} is a request by a program for the system to do something. A change from user to kernel mode needs to happen. The general mechanism is \begin{slinenum}
+\item program calls library
+\item library performs syscall convention e.g. syscall no. in register, then execute special instruction
+\item syscall entry dispatches to correct handler
+\item syscall is executed
+\item returns to user mode
+\item library returns
+\end{slinenum}.
+
+An \sldef{exception} is a synchronous event caused by program execution e.g. arithmetic errors or segmentation faults; an exception handler (in the kernel) is executed. An \sldef{interrupt} is an external event e.g. timers or mouse/keyboard events; they are asynchronous and occur independently of program execution; program execution is suspended and an interrupt handler is executed.
+
+Each task has a \sldef{stack} that keeps track of e.g. return address, function arguments, local variables, saved registers (register spilling when GPRs are exhausted).
+
+A \sldef{calling convention} determines what the caller and callee does to set up the stack frame, how to pass arguments, what registers are saved by who, etc.
+
+\section{Unix process abstraction}
+\texttt{int fork()} creates a child process by duplicating the current process. Linux has \texttt{clone()} that allows more fine-grained control.
+
+The \texttt{exec} family replaces the currently running program with a new one.
+
+\texttt{void \_exit(int status)} ends the current process with the given status.
+
+\texttt{pid\_t wait(int *wstatus)} waits for a child process to terminate; \texttt{pid\_t waitpid(pid\_t pid, int *wstatus, int options)} waits for (possibly) a specific child process; \texttt{waitid} waits for any child to change status.
+
+When a process exits, it becomes a zombie process until its parent \texttt{wait()}s on it. If a process exits before child processes exit, the children will be inherited by \texttt{init}.
+
+Linux process states: ready, running, stopped, suspended/sleeping, zombie.
 \end{document}

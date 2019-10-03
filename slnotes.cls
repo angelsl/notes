@@ -47,7 +47,7 @@
 \setmainfont[Ligatures=TeX]{TeX Gyre Pagella}
 \setsansfont[Ligatures=TeX]{Source Sans Pro}
 \setmathfont{TeX Gyre Pagella Math}
-\setmonofont{Consolas}
+\setmonofont{Source Code Pro}
 \newfontfamily\mffamily{TeX Gyre Pagella}
 \DeclareTextFontCommand{\slmf}{\mffamily\itshape}
 
