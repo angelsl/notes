@@ -88,8 +88,8 @@
 \LTcapwidth=\textwidth}
 \fi
 
-\titleformat{\chapter}[hang]{\Large\sffamily\bfseries}{\thechapter}{1em}{}
-\titleformat{\part}[hang]{\LARGE\sffamily\bfseries}{\thepart}{1em}{}
+\titleformat{\chapter}[hang]{\large\sffamily\bfseries}{\thechapter}{1em}{}
+\titleformat{\part}[hang]{\Large\sffamily\bfseries}{\thepart}{1em}{}
 \titleclass{\part}{straight}
 \titleclass{\chapter}{straight}
 \titlespacing{\part}{0pt}{0pt}{0pt}
@@ -131,7 +131,7 @@
 \declaretheorem[name=Derivation,style=slthm,numbered=no]{slderiv}
 
 \newlength{\slskip}
-\slskip=4pt plus 1pt minus 1pt
+\slskip=2pt plus 1pt minus 1pt
 
 \g@addto@macro\normalsize{%
 \overfullrule=2cm%

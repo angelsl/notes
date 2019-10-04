@@ -1,4 +1,5 @@
-\documentclass[10pt]{slnotes}
+\documentclass[fontsize=9pt]{slnotes}
+\usepackage{wrapfig}
 \newcommand\sltilde{\char`~}
 \begin{document}
 \chapter{CS2106: Basic ideas}
@@ -23,9 +24,11 @@ Each \sltilde{} is represented in the system process table by a \sldef{process c
 
 CS2106 models processes as having 5 states: new, ready, running, blocked, and terminated.
 
-\includegraphics[width=\columnwidth]{pstates.pdf}
+\begin{wrapfigure}{l}{0.5\columnwidth}
+\includegraphics[width=0.5\columnwidth]{pstates.pdf}
+\end{wrapfigure}
 
-A \sldef{system call} is a request by a program for the system to do something. A change from user to kernel mode needs to happen. The general mechanism is \begin{slinenum}
+A \sldef{syscall} is a request by a program for the system to do something. A change from user to kernel mode needs to happen. The general mechanism is \begin{slinenum}
 \item program calls library
 \item library performs syscall convention e.g. syscall no. in register, then execute special instruction
 \item syscall entry dispatches to correct handler
@@ -52,4 +55,161 @@ The \texttt{exec} family replaces the currently running program with a new one.
 When a process exits, it becomes a zombie process until its parent \texttt{wait()}s on it. If a process exits before child processes exit, the children will be inherited by \texttt{init}.
 
 Linux process states: ready, running, stopped, suspended/sleeping, zombie.
+
+\chapter{Scheduling}
+\sldef{Concurrency} could be virtual i.e. pseudoparallelism, or physical: multi- or multicore CPUs. CS2106 does not really distinguish.
+
+\sldef{Scheduling problem}: if there are more ready processes than CPUs, which should run?
+
+3 categories of processing environments: batch i.e. no user so no need to be responsive, interactive/multiprogramming i.e. with user interaction so should be responsive, and realtime i.e. have hard deadline.
+
+All \sltilde{} should have \begin{slinenum}
+\item fairness i.e. each process/user gets a fair share of CPU and no starvation
+\item balance i.e. all parts of the system should be used
+\end{slinenum}
+
+Two types of multitasking: \begin{slinenum}
+\item \sldef{cooperative/non-preemptive}: processes run until blocked or voluntarily yield
+\item \sldef{preemptive}: processes have fixed time quota (still can block or yield) and are scheduled out when quota is used
+\end{slinenum}.
+
+Process scheduling: \begin{slinenumthen}
+\item scheduler triggered
+\item context switch occurs if needed
+\item scheduling algorithm picks process to run
+\item process's context is set up
+\item process runs
+\end{slinenumthen}
+
+\section{Batch processing scheduling}
+Criteria: \begin{slinenum}
+\item turnaround time: total time from submission to completion
+\item throughput: rate of task completion
+\item CPU utilitisation: \% of time CPU is working on a task
+\end{slinenum}.
+
+\sldef{FCFS}: arriving tasks are enqueued in a simple FIFO queue, and the head of the queue is run until done/block/yield. Guaranteed to have no starvation. Shortcoming: convoy effect: if task A is CPU-bound and followed by a number of IO-bound tasks X, then while A is running Xs are waiting (IO idle) and when A is blocked on IO, Xs all run and then get blocked waiting for IO (CPU idle).
+
+\sldef{Shortest job first}: select task with smallest total CPU time. Need to know total CPU time in advance, or guess. This minimises average waiting time, but starvation is possible; a long job may never be scheduled.
+
+A common approach to predicting is an exponential average: \(P_{n+1} = \alpha A_n + (1-\alpha) P_n\), where \(\alpha\) is the weight placed on recent events.
+
+\sldef{Shortest remaining time}: variant of SJF, using the shortest remaining time instead. It is preemptive: a new job with a shorter remaining time can preempt a currently running task.
+
+\section{Interactive scheduling}
+Criteria: \begin{slinenum}
+\item response time: time between request and response
+\item predictability: minimise variation in response time
+\end{slinenum}.
+
+To ensure good response time, preemptive scheduling algorithms are used. In order to preempt, the scheduler needs to run periodically, using a timer interrupt and a handler that invokes the scheduler.
+
+The \sldef{interval of timer interrupt} (ITI) is the interval between timer interrupts. The \sldef{time quantum} is the execution duration given to a process, which must be multiples of the ITI, and could be constant or variable among processes.
+
+\sldef{Round-robin}: tasks stored in FIFO queue, and run until TQ/yield/block. Response time bounded by \((n-1)q\) where \(q\) is TQ. Choice of TQ is important: high has lower overhead but longer waiting time, and v.v.
+
+\sldef{Priority}: Select task with highest priority. Can be preemptive i.e. late high-prio task can preempt low-prio running task, or non-preemptive i.e. has to wait for next scheduling. Shortcomings: low-prio task can starve; solutions: decrease prio of running task after each TQ, or don't consider current running task in next scheduling if TQ expires.
+
+\sldef{Priority inversion}: If lower prio task preempts higher prio task e.g. high A, B, low C, C starts and locks file, B preempts C, A arrives and needs file but locked by C, so B runs even though A has higher prio.
+
+\sldef{Multi-level feedback queue}: Adapts to process behaviour and minimises response (for IO-bound) and turnaround (for CPU-bound) time. Rules: if \(p(A) > p(B)\) then A runs; if \(p(A) == p(B)\) then A and B run in RR. New tasks start at highest prio; tasks that finish TQ drop prio, but if yield/block before TQ then keep prio. Shortcomings: too many interactive tasks can cause long-running tasks to starve; can be gamed if tasks yield just before TQ; task that stops being CPU-bound stays at low prio. Solutions: periodic priority boost, and account overall time usage, and drop prio when that exceeds allotment.
+
+\sldef{Lottery}: Give tickets to processes for resources, and choose tickets randomly when scheduling. It \begin{slinenum}
+\item is responsive: new tasks can participate in the next lottery
+\item provides good control: can vary tickets per task
+\item is simple in implementation
+\end{slinenum}.
+
+\chapter{IPC}
+\sldef{Shared memory}: communicate using a memory region mapped to multiple tasks. Advantages: efficient (OS only involved in initial steps) and easy to use. Disadvantages: synchronisation is hard because it is a shared resource.
+
+POSIX shared memory: \begin{slinenum}
+\item \texttt{int shmget(key, size, shmflg)} returns the ID of a new or existing shared memory segment (to create, \texttt{key = IPC\_PRIVATE}, \texttt{shmflg = IPC\_CREAT | <octal permissions>})
+\item \texttt{void *shmat(shmid, shmaddr, shmflg)} attaches the specified SHM to \texttt{shmaddr} or a suitable address if null
+\item \texttt{int shmdt(shmaddr)} detaches the SHM at the address
+\item \texttt{int shmctl(shmid, cmd, ...)} destroys the SHM if \texttt{cmd} is \texttt{IPC\_RMID} (only for owner/creator)
+\end{slinenum}.
+
+\sldef{Message passing}: passing message via (usually) syscalls. Messages have to be stored in kernel memory, and each operation is a syscall. Naming: either direct or indirect i.e. via mailboxes or ports, which can be shared. Sync/async: sync means sender/receiver is blocked until message is received/sent; async means sender resumes immediately and receiver receives if available else \texttt{EAGAIN}. Advantages: portable and easier synchronisation. Disadvantages: inefficient and harder to use (messages limited in size/format).
+
+\sldef{Unix pipes}: read and write ends; can be shared between processes; FIFO---bytes read in order. Functons as a circular bounded byte buffer with implicit synchronisation: writers wait when buffer is full, readers wait when buffer is empty. Variants: half-duplex like Linux, or full-duplex i.e. any end can read/write.
+
+Unix pipes: \texttt{int pipe(int fd[])}, returns an array of read and write end FD. Also \texttt{dup}/\texttt{dup2}.
+
+\sldef{Unix signals}: asynchronous notification regarding an event; recipient handles the signal with default handlers or user-supplied handler (only for some signals). Install handler with \texttt{signal} or \texttt{sigaction}.
+
+\chapter{Threading}
+Motivations: processes are expensive due to duplicate memory space and other context, and it is harder for independent processes to communicate (requiring IPC).
+
+Threads share the same memory context (text, data, heap) and others (PID, FDs, etc.), but usually have a unique TID, and of course stack and registers.
+
+Switching processes involves switching the OS, memory and hardware contexts; switching threads only requires a hardware context switch (registers and stack i.e. SP/FP).
+
+Benefits: less resources to manage compared to multiprocess; resources shared so no need for IPC/etc.; can appear more responsive and take advantage of multiple CPUs.
+
+Problems: parallel threads can call system calls simultaneously, so need to ensure correctness. \texttt{fork} will clone only the thread that called it (but that includes the entire memory space of the parent); \texttt{exit} (syscall) exits only the thread but libc calls \texttt{exit\_group} so ends all threads; \texttt{execve} destroys all threads.
+
+Threads can be implemented as user threads or kernel threads.
+
+\sldef{User threads}: advantages: doesn't require OS support, thread operations are just library calls, and can be more configurable and flexible; disadvantages: OS is unaware so scheduling is done at process level; if one thread is blocked the process is blocked; and cannot use multiple CPUs.
+
+\sldef{Kernel threads}: advantages: kernel can schedule multiple threads so can use multiple CPUs; disadvantages: thread operations are now syscalls so slower; generally less flexible.
+
+\sldef{Hybrid threads}: both user and kernel threads; user threads can bind to kernel threads. Very flexible.
+
+Modern processors: simultaneous multithreading: allow threads to run natively and in parallel on the same core.
+
+\texttt{int pthread\_create(pthread\_t *thread, pthread\_attr\_t *attr, void *(*start\_routine) (void *), void *arg)}
+
+\texttt{void pthread\_exit(void *retval)}
+
+\texttt{int pthread\_join(pthread\_t thread, void **retval)}.
+
+\chapter{Synchronisation}
+With parallelism, race conditions can happen due to unsynchronised read/write of a resource. Solution: designate given section of code as a \sldef{critical section} that only one process can enter at a time.
+
+Properties of correct critical section impl.: \begin{slinenum}
+\item mutual exclusion: if one process is in CS, all others cannot enter
+\item progress: if no process is in CS, one waiting process should be granted access
+\item bounded wait: after process P requests to enter CS, there must be an upper bound of the number of times another process can enter the CS before P
+\item independence: a process not in CS should never block another process
+\end{slinenum}.
+
+Incorrect synchronisation can lead to: \begin{slinenumor}
+\item \sldef{deadlock}: all processes blocked
+\item \sldef{livelock}: processes keep changing state to avoid deadlock but make no meaningful progress
+\item \sldef{starvation}: some processes are blocked forever
+\end{slinenumor}.
+
+Critical sections can be implemented in multiple ways.
+
+\sldef{Test and set}: instruction that returns the value at a memory location, then sets it to 1 (both actions as one atomic action). To enter CS, test-and-set until value returned is 0. To exit, just set value to zero. Disadvantages: busy waiting.
+
+\sldef{Peterson's algorithm}
+
+\includegraphics[width=\columnwidth]{petersons.pdf}
+
+Disadvantages: busy-waiting, low-level, and not general
+
+\sldef{Semaphore}: high-level mechanism; provides a way to block some processes, and unblock some sleeping processes. A semaphore contains an integer value, and can be initialised with any non-negative values.
+
+Two atomic operations: \begin{slinenum}
+\item \sldef{wait}: decrement \(S\); if now \(S < 0\), blocks
+\item \sldef{signal}: increments \(S\); wakes up one sleeping process if any; never blocks
+\end{slinenum}.
+
+Semaphore invariant: \(S_{\text{current}} = S_{\text{initial}} + \text{no. signal()s} - \text{no. wait()s}\)
+
+A binary semaphore is limited to 0 or 1; a general semaphore (\(S \ge 0\) can be implemented by a binary semaphore.
+
+\sldef{Conditional variable}: allow tasks to wait for an event to happen; another task can signal one waiting task, or broadcast to all waiting tasks. Note: different from semaphore as if no tasks are waiting, signalling has no effect. (A task that later waits will still block.)
+
+\section{Synchronisation problems}
+\sldef{Producer-consumer}: producer produces only when buffer is not full; consumer consumes only when buffer is not empty.
+
+\sldef{Reader-writer}: readers can share, writers must have exclusive excess.
+
+\sldef{Dining philosophers}: Tanenbaum solution: diners signal their left and right if they are waiting. Partial order solution: number chopsticks 1 to 5; always pick up lower-numbered chopstick.
+
+pthread provides a mutex \texttt{pthread\_mutex} with \texttt{pthread\-\_\-mutex\-\_\-(un)lock()}, and a conditional variable \texttt{pthread\_cond} with \texttt{pthread\-\_\-cond\-\_\-\{wait\-,\-signal\-,\-broadcast\}()}.
 \end{document}
