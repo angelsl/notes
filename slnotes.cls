@@ -1,14 +1,21 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{slnotes}[2015/06/13]
+\RequirePackage{scrbase}
+\newlength{\slfontsize}
+\setlength{\slfontsize}{11pt}
+\DefineFamily{slnotes}
+\DefineFamilyMember{slnotes}
+\DefineFamilyKey{slnotes}{fontsize}{\setlength{\slfontsize}{#1}}
 \newif\if@slchem\@slchemfalse
 \DeclareOption{chem}{\@slchemtrue\@slchemformulatrue}
 \newif\if@slchemformula\@slchemformulafalse
 \DeclareOption{chemformula}{\@slchemformulatrue}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
-\ExecuteOptions{11pt}
-\ProcessOptions\relax
+\FamilyProcessOptions{slnotes}\relax
 %
 \LoadClass[a4paper,twocolumn]{report}
+\RequirePackage{scrextend}
+\KOMAoptions{fontsize=\the\slfontsize}
 \RequirePackage{amsmath}
 \RequirePackage{amsthm}
 \RequirePackage{thmtools}
@@ -99,6 +106,8 @@
 \setlist[slinenum]{font=\normalfont\bfseries,label=(\alph*),itemjoin={{; }},itemjoin*={{; and }}}
 \newlist{slinenumor}{enumerate*}{1}
 \setlist[slinenumor]{font=\normalfont\bfseries,label=(\alph*),itemjoin={{; }},itemjoin*={{; or }}}
+\newlist{slinenumthen}{enumerate*}{1}
+\setlist[slinenumthen]{font=\normalfont\bfseries,label=(\arabic*),itemjoin={{; }},itemjoin*={{; then }}}
 \setlist{font=\sffamily\bfseries,leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=0pt}
 \setlist[enumerate,1]{label=\arabic*}
 \setlist[enumerate,2]{label=\Alph*}
