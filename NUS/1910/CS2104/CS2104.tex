@@ -1,0 +1,753 @@
+\documentclass[fontsize=10pt]{slnotes}
+\usepackage{listings}
+\lstset{language=Haskell,
+basicstyle=\ttfamily,
+breaklines=true,aboveskip=0pt,postbreak=\mbox{\(\hookrightarrow\)}}
+\begin{document}
+\chapter{CS2104: Haskell}
+\begin{lstlisting}
+map :: (a -> b) -> [a] -> [b]
+map _ []     = []
+map f (x:xs) = f x : map f xs
+
+foldr :: Foldable t => (a -> b -> b) -> b -> t a -> b
+
+foldl :: Foldable t => (b -> a -> b) -> b -> t a -> b
+
+scanl :: (b -> a -> b) -> b -> [a] -> [b]
+scanl = scanlGo
+  where
+    scanlGo :: (b -> a -> b) -> b -> [a] -> [b]
+    scanlGo f q ls = q :
+        (case ls of
+           []   -> []
+           x:xs -> scanlGo f (f q x) xs)
+
+scanr :: (a -> b -> b) -> b -> [a] -> [b]
+scanr _ q0 []     = [q0]
+scanr f q0 (x:xs) = f x q : qs
+  where qs@(q:_) = scanr f q0 xs
+
+filter :: (a -> Bool) -> [a] -> [a]
+filter _pred [] = []
+filter pred (x:xs)
+  | pred x    = x : filter pred xs
+  | otherwise = filter pred xs
+
+reverse :: [a] -> [a]
+reverse = foldl (flip (:)) [] -- or
+reverse l = rev l []
+  where
+    rev []     a = a
+    rev (x:xs) a = rev xs (x:a)
+
+take :: Int -> [a] -> [a]
+take n _ | n <= 0 = []
+take _ []         = []
+take n (x:xs)     = x : take (n-1) xs
+
+drop :: Int -> [a] -> [a]
+drop n xs | n <= 0 = xs
+drop _ []          = []
+drop n (_:xs)      = drop (n-1) xs
+
+(++) :: [a] -> [a] -> [a] -- infixr 5
+(++) []     ys = ys
+(++) (x:xs) ys = x : xs ++ ys
+
+(:) :: a -> [a] -> [a] -- infixr 5
+
+($) :: forall r a (b :: TYPE r). (a -> b) -> a -> b -- infixr 0
+f $ x =  f x
+
+data T = AAA | BBB Int | CCC [String] | DDD {name::String, age::Int}
+     deriving Show
+-- access functions are name, age
+v1 = AAA
+v2 = CCC ["hello","cs2104"]
+v3 = DDD {name="Ali", age=12}
+-- update syntax sugar
+v4 = v3 {name="Mohd"}
+-- desugared
+setName (DDD _ age_) name = DDD name age_
+
+sieve (x:xs) = x:(sieve [y | y <-xs, (mod y x) /= 0])
+primes = sieve [2..]
+\end{lstlisting}
+\section{Monads}
+\begin{lstlisting}
+x1 = return 42 :: Maybe Int
+x2 = return 42 :: [Int]
+x3 = return 42 :: IO Int
+
+perform_twice m =
+  do
+    x1 <- m
+    x2 <- m
+    return (x1,x2)
+
+perform_twice' :: Monad m => m t -> m (t, t)
+perform_twice' m = m >>= \ t1 ->
+                   m >>= \ t2 ->
+                   return (t1,t2)
+
+const :: a -> b -> a
+const x _ =  x
+
+mult_table n m = [(a,b,a*b)| a <- [1..n],b <-[1..m]]
+\end{lstlisting}
+
+The Functor class is used for types that can be mapped over. Instances of Functor should satisfy the following laws:
+\begin{lstlisting}
+fmap id == id
+fmap (f . g) == fmap f . fmap g
+class Functor f where
+    fmap :: (a -> b) -> f a -> f b
+\end{lstlisting}
+Replace all locations in the input with the same value.
+\begin{lstlisting}
+    (<$) :: a -> f b -> f a
+    (<$) =  fmap . const
+
+class Functor f => Applicative f where
+    {-# MINIMAL pure, ((<*>) | liftA2) #-}
+    pure :: a -> f a
+    (<*>) :: f (a -> b) -> f a -> f b
+    (<*>) = liftA2 id
+\end{lstlisting}
+Sequence actions, discarding the value of the first argument.
+\begin{lstlisting}
+    (*>) :: f a -> f b -> f b
+    a1 *> a2 = (id <$ a1) <*> a2
+\end{lstlisting}
+Sequence actions, discarding the value of the second argument.
+\begin{lstlisting}
+    (<*) :: f a -> f b -> f a
+    (<*) = liftA2 const
+\end{lstlisting}
+
+Instances of Monad should satisfy the following laws:
+\begin{lstlisting}
+'return' a '>>=' k = k a
+m >>= return = m
+m >>= (\x -> k x >>= h) = (m >>= k) >>= h
+\end{lstlisting}
+
+Furthermore, the Monad and Applicative operations should relate as follows:
+\begin{lstlisting}
+pure = return
+<*> = ap
+\end{lstlisting}
+
+The above laws imply:
+\begin{lstlisting}
+fmap f xs = xs >>= return . f
+(>>) = (*>)
+
+class Applicative m => Monad m where
+\end{lstlisting}
+Sequentially compose two actions, passing any value produced by the first as an argument to the second.
+\begin{lstlisting}
+    (>>=) :: forall a b. m a -> (a -> m b) -> m b
+\end{lstlisting}
+Sequentially compose two actions, discarding any value produced
+by the first, like sequencing operators (such as the semicolon)
+in imperative languages.
+\begin{lstlisting}
+    (>>) :: forall a b. m a -> m b -> m b
+    m >> k = m >>= \_ -> k
+\end{lstlisting}
+Inject a value into the monadic type.
+\begin{lstlisting}
+    return :: a -> m a
+    return = pure
+\end{lstlisting}
+Fail with a message.  This operation is not part of the
+mathematical definition of a monad, but is invoked on pattern-match
+failure in a do expression.
+\begin{lstlisting}
+    fail :: String -> m a
+    fail s = errorWithoutStackTrace s
+\end{lstlisting}
+
+\clearpage\chapter{Prolog}
+\section{Tutorial 6}
+\begin{lstlisting}[escapechar=\~,escapebegin=\rmfamily,language=Prolog]
+father(john, mary).
+father(john, tom).
+father(kevin, john).
+mother(eva, mary).
+mother(eva, tom).
+mother(cristina, john).
+mother(cristina, kelly).
+mother(kelly, alloy).
+male(john).
+male(kevin).
+male(tom).
+% ~works for known X~
+female(X):-atom(X),not(male(X)).
+parent(X,Y) :- father(X,Y).
+parent(X,Y) :- mother(X,Y).
+grandparent(X,Y) :- parent(X,Z),parent(Z,Y).
+daughter(X,Y) :- female(X),parent(Y,X).
+sibling(X,Y) :- parent(Z,X),parent(Z,Y),X\==Y.
+true_sibling(X,Y) :- father(Z,X),father(Z,Y),X\==Y,mother(M,X),mother(M,Y).
+ancestor(X,Y) :- parent(X,Y).
+ancestor(X,Y) :- parent(X,Z),ancestor(Z,Y).
+
+/* Q1 */
+/* ~Q1. (Answer and explanation)~
+grandparent(G,mary).
+% parent(kevin, john), parent(john, mary)
+G = kevin ;
+% parent(cristina, john), parent(john, mary)
+G = cristina ;
+false.
+
+ancestor(A,mary).
+% parent(john, mary)
+A = john ;
+% parent(eva, mary)
+A = eva ;
+% parent(kevin, john), ancestor(john, mary)
+A = kevin ;
+% parent(cristina, john), ancestor(john, mary)
+A = cristina ;
+false.
+
+sibling(S,mary).
+% parent(john, tom), parent(john, mary)
+S = tom ;
+% parent(eva, tom), parent(eva, mary)
+S = tom ; */
+
+/* Q2
+   aunt(X,Y)~ means ~X~ is aunt of ~Y
+   cousin(X,Y)~ means ~X~ is cousin of ~Y
+   nephew(X,Y)~ means ~X~ is nephew of ~Y
+~Many possible answers since conjunction is in general commutative. Below is one of the possible answers.~
+*/
+aunt(X,Y) :- sibling(X,Z), parent(Z,Y), female(X).
+cousin(X,Y) :- parent(Z,X), sibling(Z,W), parent(W,Y).
+nephew(X,Y) :- male(X), parent(Z,X), sibling(Z,Y).
+
+sel(X,[X|_]).
+sel(X,[_|T]) :- sel(X,T).
+remDupl([],[]).
+remDupl([H|T],R) :- sel(H,T), remDupl(T,R).
+remDupl([H|T],[H|R]) :- remDupl(T,R).
+
+append([],Y,Y).
+append([X|Xs],Y,[X|Rs]):-append(Xs,Y,Rs).
+rev([],[]).
+rev([X|Xs],Y) :- rev(Xs,Y2),append(Y2,[X],Y).
+rev3([],[]).
+rev3([X|Xs],Y) :- append(Y2,[X],Y),rev3(Xs,Y2).
+rev2([],[]).
+rev2(.(X,Xs),Y) :- rev2(Xs,Y2),append(Y2,[X],Y).
+fact(0,1).
+fact(N,R) :- N>0, M is N-1, fact(M,R1), R is N*R1.
+select2(X,[X]).
+select2(X,[_|T]):-select2(X,T).
+
+/* Q3
+ last(Xs,X) :- X~ is the last element of ~Xs
+ len(Xs,N) - N~ is the length of ~Xs
+ nth(Xs,I,X) - X~ is the ~I~-th element of ~Xs~, starting from 0.~
+ occurs(Ys,X,N) - X~ occurs ~N~-times in ~Ys~.~
+
+   last([X]) ==> X
+   last([X|T]) ==> last(T)
+*/
+
+last([X], X):-!.
+last([_|Y], X) :- last(Y, X).
+
+len([], 0).
+len([_|Y], N) :- len(Y, M), N is M+1.
+
+nth([X|_], 0, X) :- !.
+nth([_|Y], N, Z) :- N > 0, M is N-1, nth(Y, M, Z).
+
+occurs([], _, 0) :- !.
+occurs([X|Y], X, N) :- occurs(Y, X, M), N is M+1, !.
+occurs([X|Y], Z, N) :- X \= Z, occurs(Y, Z, N).
+
+/* Q5
+   Hint: you may use mod operation
+   ?- divisors(30,X).
+	X = [1,2,3,5,6,10,15,30]
+*/
+
+divides(X, Y) :- Y > 0, 0 is X mod Y.
+divisors1(_, 0, []) :- !.
+divisors1(X, N, [N|L]):- N>0, P is N-1, divides(X,N), divisors1(X,P,L), !.
+divisors1(X, N, L):- N>0, P is N-1, not(divides(X,N)), divisors1(X,P,L).
+
+divisors(X, L) :- X > 0, divisors1(X, X, L).
+\end{lstlisting}
+Here are the definitions of similar functions using constraint logic programming finite domain. Notice that these definitions are more powerful than the definitions given above. e.g. \texttt{nth\-(\-[\-1\-,\-4\-,\-10\-,\-5\-,\-4\-,\-8\-,\-10\-,\-7\-,\-8\-,\-10\-]\-,\-X\-,\-8\-)} does not provide us the positions of 8 in the list, however, \texttt{cnth\-(\-[\-1\-,\-4\-,\-10\-,\-5\-,\-4\-,\-8\-,\-10\-,\-7\-,\-8\-,\-10\-]\-,\-X\-,\-8\-)} provides us the positions of 8, 5th and 8th. You can try similar example to see noccurs is more powerful than occurs.
+\begin{lstlisting}[escapechar=\~,escapebegin=\rmfamily,language=Prolog]
+:- use_module(library(clpfd)).
+
+clen([], 0).
+clen([_|Y], N) :- clen(Y, M), N #= M+1.
+
+cnth([X|_], 0, X).
+cnth([_|Y], N, Z) :- N #> 0, N #= M+1, cnth(Y, M, Z).
+
+coccurs([], _, 0).
+coccurs([X|Y], X, N) :- N #= M+1, coccurs(Y, X, M).
+coccurs([X|Y], Z, N) :- X #\= Z, coccurs(Y, Z, N).
+
+:- use_module(library(clpfd)).
+
+appendall([],[]).
+appendall([L|Ls],R) :- appendall(Ls,R1),append(L,R1,R).
+\end{lstlisting}
+
+\begin{enumerate}
+\item The Sagittarius owes more money than Landyn.
+\item The person who ordered soup of the day as an appetizer owes less money than the Aries.
+\item The patient with the \$550 hospital bill didn't order soup of the day.
+\item The 5 people were the patient with the \$760 hospital bill, the person who ordered soup of the day as an appetizer, Skylar, the Pisces, and the patient with the \$960 hospital bill.
+\item Either the Sagittarius or the Virgo ordered fried pickles.
+\item The Pisces didn't order buffalo wings.
+\item The person who ordered fried pickles as an appetizer is Kayla.
+\item The patient with the \$960 hospital bill is the Virgo.
+\item Kayla owes less money than Skylar.
+\item Of Perla and the person who ordered potato skins as an appetizer, one has the \$1610 hospital bill and the other has the \$960 hospital bill.
+\end{enumerate}
+
+\begin{lstlisting}[language=Prolog]
+main(Answer) :- Answer =
+[['Jorge'=Jorge, 'Kayla'=Kayla,
+'Landyn'=Landyn, 'Perla'=Perla,
+'Skylar'=Skylar],
+['BuffaloWings'=Wings, 'FriedMozarella'=Mozarella,
+'FriedPickles'=Pickles, 'PotatoSkins'=PSkins,
+'SoupofDay'=Soup],
+['Aries'=Aries, 'Leo'=Leo,
+'Pisces'=Pisces, 'Sagittarius'=Sagittarius,
+'Virgo'=Virgo]],
+Names = [Jorge,Kayla,Landyn,Perla,Skylar],
+Appetizers = [Wings,Mozarella,Pickles,PSkins,Soup],
+Signs = [Aries,Leo,Pisces,Sagittarius,Virgo],
+Bills=[B550,B760,B960,B1610,B2500],
+Bills=[1,2,3,4,5],
+/*B550=1,B760=2,B960=3,B1610=4,B2500=5,*/
+L=[Names,Appetizers,Signs],
+appendall(L,All),
+All ins 1..5,
+all_different(Names), all_different(Appetizers),
+all_different(Signs),
+Sagittarius #> Landyn,
+Soup #< Aries,
+B550 #\= Soup,
+all_different([B760,Soup,Skylar,Pisces,B960]),
+(Sagittarius #= Pickles; Virgo #= Pickles),
+Pisces #\= Wings,
+Kayla #= Pickles,
+Virgo #= B960,
+Kayla #< Skylar,
+tuples_in([[Perla, PSkins]], [[B1610, B960], [B960, B1610]]),
+label(All).
+
+/*
+Answer =
+[['Jorge'=3, 'Kayla'=2, 'Landyn'=1, 'Perla'=4, 'Skylar'=5],
+['BuffaloWings'=5, 'FriedMozarella'=1, 'FriedPickles'=2, 'PotatoSkins'=3, 'SoupofDay'=4],
+['Aries'=5, 'Leo'=4, 'Pisces'=1, 'Sagittarius'=2, 'Virgo'=3]]
+*/
+\end{lstlisting}
+
+\clearpage\chapter{OCaml}
+\begin{lstlisting}[escapechar=\~,escapebegin=\rmfamily,language={[Objective]Caml}]
+~Q1: Consider a tail-recursive method. Re-implement this method using an iterative loop together with two imperative ref type values that are internal to the method.~
+let fib n =
+  let rec aux n a b =
+    if n<=0 then (a,b)
+    else aux (n-1) (a+b) a
+ in fst(aux n 1 0);;
+
+let fib_imp n =
+  let a = ref 1 in
+  let b = ref 0 in
+  for i = n downto 1 do
+    let aplusb = !a + !b in
+    let () = b := !a in
+    let () = a := aplusb in
+    ()
+  done; !a ;;
+
+let fib_imp2 n =
+  let a = ref 1 in
+  let b = ref 0 in
+  let rec aux n =
+    if n<=0 then ()
+    else
+      let aplusb = !a + !b in
+      let () = b := !a in
+      let () = a := aplusb in
+      aux (n-1) in
+  let () = aux n in
+  !a;;
+
+~Q2: The for-loop is implemented as follows. What is the polymoprhic type of this method?~
+
+Ans: for_loop:: ini -> int -> (int -> unit) -> unit
+
+let for_loop init final stmt =
+  let rec aux i =
+    if i<=final then (stmt i; aux (i+1))
+    else ()
+  in aux init
+
+~Q3: Write two higher-order methods that would implement a for-down-to loop iterator, and a while loop method~
+
+(* let while_loop t1 body = *)
+(*   failwith "TBI" *)
+(* ;; *)
+
+let rec while_loop (t1:unit -> bool) (body:unit -> unit) : unit =
+  if t1 () then (body(); while_loop t1 body)
+  else ()
+;;
+
+(* let for_loop init final stmt = *)
+(*   failwith "TBI" *)
+(* ;; *)
+
+let for_loop_down init final stmt =
+  let rec aux i =
+    if i>=final then (stmt i; aux (i-1))
+    else ()
+  in aux init
+
+~Q4: Implement fib function with memoization using a hash table. How does this compares with your implementation in Q1?~
+
+~Ans: memoization is a more general memoization (which applies to other functions, but require some extra codes to maintain table and its retrieval. Memoization also leads to extra space costs.~
+
+(* let fib8 n = *)
+(*   let h = Hashtbl.create 10 in *)
+(*   let rec aux n = *)
+(*     if n<=1 then 1 *)
+(*     else  *)
+(*       aux (n-1) + aux (n-2) *)
+(*   in aux n;; *)
+
+let fib8 =
+  let h = Hashtbl.create 10 in
+  fun n ->
+  let rec aux n =
+    if n<=1 then 1
+    else
+      try
+       Hashtbl.find h n
+      with _ ->
+       let r = aux (n-1) + aux (n-2) in
+       let () = print_endline ("hash add "^(string_of_int n)) in
+       let () = Hashtbl.add h n r in
+       r
+  in aux n;;
+
+~Q1. Consider a generic memoizing function~
+memo_fn : ('a -> 'b) -> 'a -> 'a
+~Show how this may be used to memoize fibonacci function~
+
+let memo_fn (f:'a ->'b) : 'a -> 'b =
+  let () = print_endline ("hash create ") in
+  let h = Hashtbl.create 10 in
+   (fun n ->
+      try
+       Hashtbl.find h n
+      with _ ->
+       let r = f n in
+       let () = print_endline ("hash add ") in
+       let () = Hashtbl.add h n r in
+         r)
+   ;;
+
+~this version is generic + fast but need lazy evaluation~
+let rec fib n =
+        let f = Lazy.force aux in
+	if n<=1 then 1
+        else (f (n-1)) + (f (n-2))
+and aux = lazy (memo_fn fib)
+ ;;
+
+~this version does not memoize properly~
+let rec fib3 n =
+        let f = (memo_fn fib3) in
+	if n<=1 then 1
+        else (f (n-1)) + (f (n-2))
+;;
+
+(* let fib n = memo_fn fib1;; *)
+
+(* let rec fib1 n = *)
+(*   if n<=1 then 1 *)
+(*   else *)
+(*      let fib1 = memo_fn fib in  *)
+(*      fib1 (n-1) + fib1 (n-2) *)
+(* ;; *)
+
+(* lazy :: 'a -> 'a Lazy.t *)
+(* force :: 'a Lazy.t -> a *)
+
+let rec fib1 n =
+	if n<=1 then 1
+        else (fib1 (n-1)) + (fib1 (n-2))
+;;
+
+(* let rec bin (n,m) = *)
+(*    let f = Lazy.force bin' in *)
+(*    if base then r *)
+(*    else f (n-1,m-1)+ f(n-1,m) *)
+(* and bin' = lazy (memo_fn bin) *)
+(* ;; *)
+
+(* below does not work! *)
+let rec fib2 n =
+	let aux = lazy (memo_fn fib2) in
+        let f = Lazy.force aux in
+	if n<=1 then 1
+        else f (n-1) + f (n-2)
+;;
+
+(* print_endline(string_of_int (fib(40))) *)
+\end{lstlisting}
+Comment on the Objects and Modules for OCaml below.
+
+You have been given a imperative stack of integers,
+called stack\_int, as an OO type class.
+
+Study the stack carefully, and describe which are
+pure vs imperative methods. Take note of mutable
+variables inside objects
+
+Ans: push, pop are imperative since it modifies memory
+\texttt{top}, \texttt{is\_empty}, \texttt{size} and \texttt{show} are pure methods
+
+You are tasked to make a new polymorphic stack by
+    declaring instead:
+    \texttt{class ['a] stack}
+    Create such a polymorphic stack.
+    Write test harness that would then creates two stacks:
+      (i) a stack of integer and
+      (ii) another stack of strings.
+
+   Ans: see s short fragment starting with
+       \texttt{class ['a] stack =}
+
+The current stack is an imperative one with updates.
+    Can you design a polymorphic functional stack, call
+    it \texttt{stack\_pure}, without any updates
+
+\begin{lstlisting}[escapechar=\~,escapebegin=\rmfamily,language={[Objective]Caml}]
+class stack_pure_int =
+object (self)
+  val stk = []
+  method push (i:int) = i:stk
+  (* ~make sure modified stack is always returned~ *)
+\end{lstlisting}
+
+You are given a module, called Mstack\_int, which can be
+    used to build an imperative stack of integers; by using
+     the command \texttt{Mstack\_int.make}.
+
+    Can you re-design a more general polymorphic module,
+    calling it \texttt{Mstack} module?
+\begin{lstlisting}[escapechar=\~,escapebegin=\rmfamily,language={[Objective]Caml}]
+module Mstack_int =
+struct
+  type t = ('a list) ref
+  let make () : t = ref []
+  let push (stk:t) (i:'a) : unit =
+    stk := i::!stk
+\end{lstlisting}
+
+    Contrast the pros and cons of OOP versus modules.
+
+Modules are meant for separate compilation and name space conservation
+OOP is meant to support class inheritance and subtyping
+both language feature are to support greater code reuse safely
+
+Can you also re-design a functional version of the
+    stack module that works for arbitrary types?
+
+\begin{lstlisting}[escapechar=\~,escapebegin=\rmfamily,language={[Objective]Caml}]
+module Mstack =
+struct
+  type t = ('a list)
+  let make () : t = []
+  let push (stk:t) (i:'a) : t = i::stk
+\end{lstlisting}
+
+For polymorphic stack, one of the problem we encounter
+    is obtaining the string representation of an element
+    The show method requires an extra \texttt{to\_string} function-type
+    parameter.
+
+    We can avoid this problem by using a functor, called \texttt{Sstack},
+    to structure our code. Complete this functor, so that we
+    can use it to build stacks which have the show method that
+    is imported for another module.
+\begin{lstlisting}[escapechar=\~,escapebegin=\rmfamily,language={[Objective]Caml}]
+module type SHOW_TYPE =
+sig
+  type t
+  val show : t -> string
+end;;
+
+module INT_Elem : SHOW_TYPE =
+struct
+  type t = int
+  let show (i:t) = string_of_int i
+end;;
+
+(* functor that takes a module of the show type *)
+module FStack =
+    functor (Elt: SHOW_TYPE) ->
+struct
+  type elem = Elt.t
+  type t = elem list ref
+  let show (stk:t) : string =
+    "["^(String.concat "," (List.map Elt.show !stk))^"]"
+end;;
+
+class ['a] stack =
+object (self)
+  val mutable stk = []
+  method push (i:'a) =
+    begin
+      stk <- i::stk
+    end
+  method pop  =
+    begin
+      match stk with
+        | [] -> failwith "~empty stack~"
+        | i::is -> stk <- is
+    end
+  method show (p:('a -> string))  =
+    "["^(String.concat "," (List.map p stk))^"]"
+end
+
+class stack_int =
+object (self)
+  val mutable stk = []
+  method push (i:int) =
+    begin
+      stk <- i::stk
+    end
+  method pop =
+    begin
+      match stk with
+        | [] -> failwith "~empty stack~"
+        | i::is -> stk <- is
+    end
+  method top =
+    begin
+      match stk with
+        | [] -> failwith "~empty stack~"
+        | i::is -> i
+    end
+  method is_empty  =
+    stk == []
+  method size  = (List.length stk)
+  method show  =
+    "["^(String.concat "," (List.map string_of_int stk))^"]"
+end
+
+let test_prog () =
+  let test_stk = new stack_int in
+  test_stk#push 5;
+  test_stk#push 2;
+  test_stk#push 6;
+  print_endline (test_stk#show);
+  test_stk#pop;
+  print_endline (test_stk#show);
+  test_stk#push 1;
+  test_stk#push 8;
+  let stk1 = new stack in
+  stk1#push 2;
+  let stk2 = new stack in
+  stk2#push "aa";
+  print_endline (test_stk#show);
+  print_endline ("size of stack is "^(string_of_int (test_stk#size)));;
+
+test_prog();;
+
+module Mstack_int =
+struct
+  type t = (int list) ref
+  let make () : t = ref []
+  let push (stk:t) (i:int) : unit =
+    stk := i::!stk
+  let pop (stk:t) : unit =
+    begin
+      match !stk with
+        | [] -> failwith "stack is empty"
+        | _::s -> stk := s
+    end
+  let top (stk:t) : int =
+    match !stk with
+      | [] -> failwith "stack is empty"
+      | i::s -> i
+  let is_empty (stk:t): bool =
+    !stk==[]
+  let size (stk:t) : int  = (List.length !stk)
+  let show (stk:t) : string =
+    "["^(String.concat "," (List.map string_of_int !stk))^"]"
+end
+
+module type Mstack_int_ADT =
+sig
+  type t
+  val make : unit -> t
+  val push : t -> int -> unit
+  val pop : t -> unit
+end;;
+
+module M2 = (Mstack_int : Mstack_int_ADT) ;;
+
+module M = Mstack_int;;
+
+let test_prog2 () =
+  let test_stk =  M.make () in
+  M.push test_stk 5;
+  M.push test_stk 2;
+  M.push test_stk 6;
+  print_endline (M.show test_stk);
+  M.pop test_stk;
+  print_endline (M.show test_stk);
+  M.push test_stk 1;
+  M.push test_stk 8;
+  print_endline (M.show test_stk);
+  print_endline ("size of stack is "^(string_of_int (M.size test_stk)));;
+
+test_prog2();;
+
+module type SHOW_TYPE =
+sig
+  type t
+  val show : t -> string
+end;;
+
+module INT_Elem : SHOW_TYPE =
+struct
+  type t = int
+  let show (i:t) = string_of_int i
+end;;
+
+(* ~functor that takes a module of the show type~ *)
+module FStack =
+    functor (Elt: SHOW_TYPE) ->
+struct
+  type elem = Elt.t
+  type t = elem list ref
+  let show (stk:t) : string =
+    "["^(String.concat "," (List.map Elt.show !stk))^"]"
+end;;
+\end{lstlisting}
+\end{document}
