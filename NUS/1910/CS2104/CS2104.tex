@@ -173,6 +173,10 @@ failure in a do expression.
 \clearpage\chapter{Prolog}
 \section{Tutorial 6}
 \begin{lstlisting}[escapechar=\~,escapebegin=\rmfamily,language=Prolog]
+~Or predicate.~
+Goal1 ; _Goal2 :- Goal1.
+_Goal1 ; Goal2 :- Goal2.
+
 father(john, mary).
 father(john, tom).
 father(kevin, john).
@@ -361,7 +365,71 @@ Answer =
 */
 \end{lstlisting}
 
-\clearpage\chapter{OCaml}
+\clearpage\chapter{OCaml}%
+Argument evaluation order is generally right-to-left but this is an implementation detail.
+
+\begin{lstlisting}[escapechar=\~,escapebegin=\rmfamily,language={[Objective]Caml}]
+OCaml name     Example type definition
+list           int list
+tuple          int * string
+record         type pair =
+                 { a: int; b: string }
+variant        type foo =
+                 | Int of int
+                 | Pair of int * string
+variant        type sign =
+                 | Positive
+                 | Zero
+                 | Negative
+parameterized  type 'a my_list =
+variant          | Empty
+                 | Cons of 'a * 'a my_list
+\end{lstlisting}
+
+\begin{lstlisting}[escapechar=\~,escapebegin=\rmfamily,language={[Objective]Caml}]
+~Array module.~
+val length : 'a array -> int
+val get : 'a array -> int -> 'a
+(* or a.(n) *)
+val set : 'a array -> int -> 'a -> unit
+(* or a.(n) <- x *)
+val make : int -> 'a -> 'a array
+val map : ('a -> 'b) -> 'a array -> 'b array
+val mapi : (int -> 'a -> 'b) -> 'a array -> 'b array
+val fold_left : ('a -> 'b -> 'a) -> 'a -> 'b array -> 'a
+val fold_right : ('b -> 'a -> 'a) -> 'b array -> 'a -> 'a
+
+~String module.~
+val length : string -> int
+val get : string -> int -> char
+(* or s.[n] *)
+val set : bytes -> int -> char -> unit
+(* or s.[n] <- x *)
+
+~Hashtbl module.~
+val create : ?random:bool -> int -> ('a, 'b) t
+val add : ('a, 'b) t -> 'a -> 'b -> unit
+val find : ('a, 'b) t -> 'a -> 'b
+val find_opt : ('a, 'b) t -> 'a -> 'b option
+val remove : ('a, 'b) t -> 'a -> unit
+
+~Option module.~
+type 'a t = 'a option = None | Some of 'a (**)
+val none : 'a option
+val some : 'a -> 'a option
+val value : 'a option -> default:'a -> 'a
+~\texttt{value o \~{}default} is \texttt{v} if \texttt{o} is \texttt{Some v} and \texttt{default} otherwise.~
+val get : 'a option -> 'a
+~\texttt{get o} is \texttt{v} if \texttt{o} is \texttt{Some v} and @raise Invalid\_argument otherwise.~
+val bind : 'a option -> ('a -> 'b option) -> 'b option
+~\texttt{bind o f} is \texttt{f v} if \texttt{o} is \texttt{Some v} and \texttt{None} if \texttt{o} is \texttt{None}.~
+val join : 'a option option -> 'a option
+~\texttt{join oo} is \texttt{Some v} if \texttt{oo} is \texttt{Some (Some v)} and \texttt{None} otherwise.~
+val map : ('a -> 'b) -> 'a option -> 'b option
+~\texttt{map f o} is \texttt{None} if \texttt{o} is \texttt{None} and \texttt{Some (f v)} is \texttt{o} is \texttt{Some v}.~
+\end{lstlisting}
+
+\section{Tutorials}
 \begin{lstlisting}[escapechar=\~,escapebegin=\rmfamily,language={[Objective]Caml}]
 ~Q1: Consider a tail-recursive method. Re-implement this method using an iterative loop together with two imperative ref type values that are internal to the method.~
 let fib n =
@@ -405,18 +473,9 @@ let for_loop init final stmt =
 
 ~Q3: Write two higher-order methods that would implement a for-down-to loop iterator, and a while loop method~
 
-(* let while_loop t1 body = *)
-(*   failwith "TBI" *)
-(* ;; *)
-
 let rec while_loop (t1:unit -> bool) (body:unit -> unit) : unit =
   if t1 () then (body(); while_loop t1 body)
-  else ()
-;;
-
-(* let for_loop init final stmt = *)
-(*   failwith "TBI" *)
-(* ;; *)
+  else ();;
 
 let for_loop_down init final stmt =
   let rec aux i =
@@ -465,23 +524,20 @@ let memo_fn (f:'a ->'b) : 'a -> 'b =
        let r = f n in
        let () = print_endline ("hash add ") in
        let () = Hashtbl.add h n r in
-         r)
-   ;;
+         r);;
 
 ~this version is generic + fast but need lazy evaluation~
 let rec fib n =
         let f = Lazy.force aux in
 	if n<=1 then 1
         else (f (n-1)) + (f (n-2))
-and aux = lazy (memo_fn fib)
- ;;
+and aux = lazy (memo_fn fib);;
 
 ~this version does not memoize properly~
 let rec fib3 n =
         let f = (memo_fn fib3) in
 	if n<=1 then 1
-        else (f (n-1)) + (f (n-2))
-;;
+        else (f (n-1)) + (f (n-2));;
 
 (* let fib n = memo_fn fib1;; *)
 
@@ -489,31 +545,27 @@ let rec fib3 n =
 (*   if n<=1 then 1 *)
 (*   else *)
 (*      let fib1 = memo_fn fib in  *)
-(*      fib1 (n-1) + fib1 (n-2) *)
-(* ;; *)
+(*      fib1 (n-1) + fib1 (n-2);; *)
 
 (* lazy :: 'a -> 'a Lazy.t *)
 (* force :: 'a Lazy.t -> a *)
 
 let rec fib1 n =
 	if n<=1 then 1
-        else (fib1 (n-1)) + (fib1 (n-2))
-;;
+        else (fib1 (n-1)) + (fib1 (n-2));;
 
 (* let rec bin (n,m) = *)
 (*    let f = Lazy.force bin' in *)
 (*    if base then r *)
 (*    else f (n-1,m-1)+ f(n-1,m) *)
-(* and bin' = lazy (memo_fn bin) *)
-(* ;; *)
+(* and bin' = lazy (memo_fn bin);; *)
 
 (* below does not work! *)
 let rec fib2 n =
 	let aux = lazy (memo_fn fib2) in
         let f = Lazy.force aux in
 	if n<=1 then 1
-        else f (n-1) + f (n-2)
-;;
+        else f (n-1) + f (n-2);;
 
 (* print_endline(string_of_int (fib(40))) *)
 \end{lstlisting}
