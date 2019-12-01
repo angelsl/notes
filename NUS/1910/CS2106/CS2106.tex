@@ -1,5 +1,12 @@
 \documentclass[fontsize=9pt]{slnotes}
 \usepackage{wrapfig}
+
+\newfontfamily{\symbolfont}{DejaVu Sans}[Scale=MatchLowercase]
+\DeclareTextFontCommand{\textsymbol}{\symbolfont}
+
+\newcommand\benefits{\checkmark}
+\newcommand\problems{\textsymbol{✗}}
+
 \newcommand\sltilde{\char`~}
 \begin{document}
 \chapter{CS2106: Basic ideas}
@@ -88,7 +95,7 @@ Criteria: \begin{slinenum}
 \item CPU utilitisation: \% of time CPU is working on a task
 \end{slinenum}.
 
-\sldef{FCFS}: arriving tasks are enqueued in a simple FIFO queue, and the head of the queue is run until done/block/yield. Guaranteed to have no starvation. Shortcoming: convoy effect: if task A is CPU-bound and followed by a number of IO-bound tasks X, then while A is running Xs are waiting (IO idle) and when A is blocked on IO, Xs all run and then get blocked waiting for IO (CPU idle).
+\sldef{FCFS}: arriving tasks are enqueued in a simple FIFO queue, and the head of the queue is run until done/block/yield. Guaranteed to have no starvation. \problems: convoy effect: if task A is CPU-bound and followed by a number of IO-bound tasks X, then while A is running Xs are waiting (IO idle) and when A is blocked on IO, Xs all run and then get blocked waiting for IO (CPU idle).
 
 \sldef{Shortest job first}: select task with smallest total CPU time. Need to know total CPU time in advance, or guess. This minimises average waiting time, but starvation is possible; a long job may never be scheduled.
 
@@ -108,11 +115,11 @@ The \sldef{interval of timer interrupt} (ITI) is the interval between timer inte
 
 \sldef{Round-robin}: tasks stored in FIFO queue, and run until TQ/yield/block. Response time bounded by \((n-1)q\) where \(q\) is TQ. Choice of TQ is important: high has lower overhead but longer waiting time, and v.v.
 
-\sldef{Priority}: Select task with highest priority. Can be preemptive i.e. late high-prio task can preempt low-prio running task, or non-preemptive i.e. has to wait for next scheduling. Shortcomings: low-prio task can starve; solutions: decrease prio of running task after each TQ, or don't consider current running task in next scheduling if TQ expires.
+\sldef{Priority}: Select task with highest priority. Can be preemptive i.e. late high-prio task can preempt low-prio running task, or non-preemptive i.e. has to wait for next scheduling. \problems: low-prio task can starve; solutions: decrease prio of running task after each TQ, or don't consider current running task in next scheduling if TQ expires.
 
 \sldef{Priority inversion}: If lower prio task preempts higher prio task e.g. high A, B, low C, C starts and locks file, B preempts C, A arrives and needs file but locked by C, so B runs even though A has higher prio.
 
-\sldef{Multi-level feedback queue}: Adapts to process behaviour and minimises response (for IO-bound) and turnaround (for CPU-bound) time. Rules: if \(p(A) > p(B)\) then A runs; if \(p(A) == p(B)\) then A and B run in RR. New tasks start at highest prio; tasks that finish TQ drop prio, but if yield/block before TQ then keep prio. Shortcomings: too many interactive tasks can cause long-running tasks to starve; can be gamed if tasks yield just before TQ; task that stops being CPU-bound stays at low prio. Solutions: periodic priority boost, and account overall time usage, and drop prio when that exceeds allotment.
+\sldef{Multi-level feedback queue}: Adapts to process behaviour and minimises response (for IO-bound) and turnaround (for CPU-bound) time. Rules: if \(p(A) > p(B)\) then A runs; if \(p(A) == p(B)\) then A and B run in RR. New tasks start at highest prio; tasks that finish TQ drop prio, but if yield/block before TQ then keep prio. \problems: too many interactive tasks can cause long-running tasks to starve; can be gamed if tasks yield just before TQ; task that stops being CPU-bound stays at low prio. Solutions: periodic priority boost, and account overall time usage, and drop prio when that exceeds allotment.
 
 \sldef{Lottery}: Give tickets to processes for resources, and choose tickets randomly when scheduling. It \begin{slinenum}
 \item is responsive: new tasks can participate in the next lottery
@@ -145,9 +152,9 @@ Threads share the same memory context (text, data, heap) and others (PID, FDs, e
 
 Switching processes involves switching the OS, memory and hardware contexts; switching threads only requires a hardware context switch (registers and stack i.e. SP/FP).
 
-Benefits: less resources to manage compared to multiprocess; resources shared so no need for IPC/etc.; can appear more responsive and take advantage of multiple CPUs.
+\benefits: less resources to manage compared to multiprocess; resources shared so no need for IPC/etc.; can appear more responsive and take advantage of multiple CPUs.
 
-Problems: parallel threads can call system calls simultaneously, so need to ensure correctness. \texttt{fork} will clone only the thread that called it (but that includes the entire memory space of the parent); \texttt{exit} (syscall) exits only the thread but libc calls \texttt{exit\_group} so ends all threads; \texttt{execve} destroys all threads.
+\problems: parallel threads can call system calls simultaneously, so need to ensure correctness. \texttt{fork} will clone only the thread that called it (but that includes the entire memory space of the parent); \texttt{exit} (syscall) exits only the thread but libc calls \texttt{exit\_group} so ends all threads; \texttt{execve} destroys all threads.
 
 Threads can be implemented as user threads or kernel threads.
 
@@ -212,4 +219,91 @@ A binary semaphore is limited to 0 or 1; a general semaphore (\(S \ge 0\) can be
 \sldef{Dining philosophers}: Tanenbaum solution: diners signal their left and right if they are waiting. Partial order solution: number chopsticks 1 to 5; always pick up lower-numbered chopstick.
 
 pthread provides a mutex \texttt{pthread\_mutex} with \texttt{pthread\-\_\-mutex\-\_\-(un)lock()}, and a conditional variable \texttt{pthread\_cond} with \texttt{pthread\-\_\-cond\-\_\-\{wait\-,\-signal\-,\-broadcast\}()}.
+
+\chapter{Memory}
+\sldef{Memory hierarchy}: registers ~1 ns access; cache ~10 ns access; RAM ~100 ns; HDD ~10 ms.
+
+\section{Abstractions}
+\sldef{No memory abstraction}: memory access is straightforward, but there is no way to protect one process's memory from other processes, and if two processes access the same addresses, they will conflict.
+
+\sldef{Relocation}: offset all references in a process. \problems: slow loading time; need to somehow identify memory addresses from other normal integers.
+
+\sldef{Base and limit}: compile all memory references to be an offset from the base register. Check all accesses against the limit register. \problems: every access involves an addition and comparison.
+
+\sldef{Logical address}: translated to physical address by hardware or OS.
+
+\section{Contiguous memory management}
+\sldef{Fixed partitioning}: divide physical memory into a fixed number of equal partitions. \benefits: easy to manage; fast allocation. \problems: partition size must be big enough to fit the largest process; smaller processes waste memory i.e. internal fragmentation.
+
+\sldef{Dynamic partitioning}: partitions created based on the needs of each process. \benefits: flexible; removes internal fragmentation. \problems: need to maintain more information; need to locate appropriate region when allocation; tends to lead to a large number of holes with many processes created and terminated i.e. external fragmentation.
+
+\sldef{Dynamic partitioning algorithm}: find a hole, then split the hole. To find a hole: \begin{slinenumor}
+\item first-fit: find the first hole large enough
+\item best-fit: find the smallest hole large enough
+\item worst-fit: find the largest hole
+\item buddy system
+\end{slinenumor}.
+
+\sldef{Buddy system}
+
+\includegraphics[width=\columnwidth]{buddysystem.pdf}
+
+\sldef{Storage}: an array of linked lists \texttt{A[0..=K]} where \(2^K\) is the largest block size, and \texttt{A[N]} tracks the address of free blocks of size \(2^N\). \sldef{Allocating} \(N\) bytes: find the smallest \(S\) s.t. \(2^S \ge N\). Access \texttt{A[S]}; if a free block exists, use that, else find the smallest \(R \in [S+1, K]\) s.t. \texttt{A[R]} has a free block, then split that block repeatedly to get a new free \(2^S\)-byte block. \sldef{Deallocating} a block B: check \texttt{A[S]} for B's buddy; if buddy is free, merge and repeatedly merge where buddies exist. Otherwise insert B to \texttt{A[S]}.
+
+Two blocks are size \(2^S\) buddies if their address's \(S\)th (0-based) bits are complements and the leading bits up to that bit are the same.
+
+\section{Disjoint memory management}
+\subsection{Paging}
+Divide physical memory into \sldef{physical frames} of fixed size; logical memory split into \sldef{logical pages} of equal size; at runtime, pages are loaded into any available logical frames.  \sldef{Implementation}: \sldef{page table} to map logical addresses to physical. Optimise this by keeping page size a power of 2; then the page/frame number is just the most significant bits of the address.
+
+\benefits: logical memory remains contiguous, but occupied physical memory can be discontinuous. No more external fragmentation: all free frames can be used. \problems: Internal fragmentation: logical memory space may not be a multiple of page size.
+
+Paging can be done in pure software, with a page table stored with the process information. \problems: two accesses required for every memory reference: one to get the frame number, one for the actual memory access.
+
+Modern processors provide a \sldef{translation lookaside buffer} which optimises this. On context switch, the TLB is flushed. The average memory access time with TLB is \(P (T_t + T_m) + (1 - P) (T_t + 2T_m)\) where \(P\) is the TLB-hit rate, \(T_t\) is the TLB access time, and \(T_m\) is the memory access time, ignoring the TLB insertion time and CPU caching.
+
+Paging can be extended to provide memory protection with access rights (R/W/X) (e.g. for shared R/X code frames) and page validity (to check for out-of-bounds access), attached to each page table entry.
+
+\subsection{Segmentation}
+Separate memory into separate segments with a name and a limit. All memory references must be specified as a segment and offset.
+
+Each segment is mapped to a contiguous physical memory region with a base address and a limit, and the logical address is the pair of segment and offset.
+
+\benefits: Each segment is independent and contiguous, so they can be resized and protected independently. \problems: Needs variable-size contiguous memory regions, so it can lead to external fragmentation.
+
+\sldef{Segmentation with paging}: each segment is now composed of pages instead of one contiguous region. A segment can grow by allocating a new page to the segment.
+
+\section{Virtual memory}
+...allows processes' logical memory to exceed the size of physical memory. This can be done by extending paging: now, some pages can be "paged out" to secondary storage.
+
+When a page is accessed, the OS needs to check if the page is in memory, and if not (\sldef{page fault}), load the page into memory.
+
+Virtual memory exploits the locality principle. Temporal: after a page is loaded, it is likely to be accessed again. Spatial: a page contains contiguous locations likely to be accessed again.
+
+\section{Page table structures}
+Note: each process must have its own page table!
+
+\sldef{Direct paging}: just have all entries in a single table, for each process. \problems: waste of space since most processes do not use the full range of virtual memory.
+
+\sldef{2/multi-level paging}: split the page table into regions; regions are allocated as needed. Need a "region table" to track regions; regions can also be identified by bit-prefixes, like pages. \benefits: less overhead. \problems: more indirection.
+
+\sldef{Inverted page table}: map frame number to process and page number. \benefits: only one table for all processes. \problems: very slow translation.
+
+\section{Page replacement algorithms}
+If there is no free frame during a page fault, a page needs to be evicted.
+
+\sldef{Local and global replacement}: if only a page owned by the page fault-causing process can be evicted, it is \sldef{local replacement}. \benefits: frames allocated to a process are constant, but any thrashing is contained to one process; \problems: need to decide how many frames to allocate; bad decision will cause the process to thrash.
+
+If any page can be evicted, it is \sldef{global replacement}. \benefits: processes that need more frames can get it from other processes; \problems: badly-behaving processes hinder others, possibly causing other processes to thrash.
+
+A good algorithm will minimise the number of page faults. The best algorithm replaces the page that will not be used again for the longest time; but this is impossible because future knowledge of memory references is needed. We use this as a basis of comparison.
+
+\sldef{FIFO}: evict the oldest page; can be implemented using a queue. \problems: Belady's anomaly: more pages leads to more page faults, because FIFO does not exploit temporal locality.
+
+\sldef{Least recently used} (LRU): makes use of temporal locality; replace the page that has not been used for the longest. \benefits: good results generally. \problems: hard to implement; need to keep track of last use. Can use a counter, but then to evict all pages need to be checked to find the oldest, and the counter can overflow. Can use a stack, but it is not a pure stack: entries can be removed from anywhere in the stack.
+
+\sldef{Second-chance} (CLOCK): modified FIFO: have a "referenced bit" in each PTE, and a "next victim" pointer in a circular queue. When a page is referenced, set the bit; when a page is to be evicted, if the next victim's bit is set, unset and advance, and repeat; else evict that page.
+
+\sldef{Working set model}: a model to determine the number of frames to allocate to a process. \(W(t, D)\) denotes the set of pages referenced in the past \(D\) time units from \(t\). By allocating just enough frames for the pages in \(W\), we reduce page faults.
+
 \end{document}
