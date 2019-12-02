@@ -1,5 +1,7 @@
-\documentclass[fontsize=9pt]{slnotes}
+\documentclass[fontsize=9pt,twoside]{slnotes}
 \usepackage{wrapfig}
+
+\geometry{outer=0.5\columnsep}
 
 \newfontfamily{\symbolfont}{DejaVu Sans}[Scale=MatchLowercase]
 \DeclareTextFontCommand{\textsymbol}{\symbolfont}
@@ -306,4 +308,84 @@ A good algorithm will minimise the number of page faults. The best algorithm rep
 
 \sldef{Working set model}: a model to determine the number of frames to allocate to a process. \(W(t, D)\) denotes the set of pages referenced in the past \(D\) time units from \(t\). By allocating just enough frames for the pages in \(W\), we reduce page faults.
 
+\chapter{Filesystems}
+Filesystems provide an abstraction over physical media, and also protection and sharing between processes and users. They need to be self-contained, persistent and efficient.
+
+Filesystems provide \sldef{files}, which have metadata including an ID (for the FS), a name, type, size, access control, time, etc. File data can be either just an array of bytes (Unix view), or fixed or variable length records. Files can be accessed sequentially, randomly or directly (e.g. mmap?).
+
+Filesystems also provide \sldef{directories} which provide a logical grouping of files. Directories can be single-level (i.e. cannot contain subdirs), trees (single-level + subdirs), DAGs (trees + hard links), or general graphs (DAGs + symlinks).
+
+File operations are done using system calls in Unix. Open files are tracked with a system-wide file descriptor table, and a per-process file descriptor table has pointers to file descriptors in the system-wide table.
+
+\section{Filesystem implementation}
+Disks can be treated generally as an array of logical blocks (~512 to 4096 bytes). Logical blocks are mapped to disk sectors, usually by the hardware.
+
+Filesystems usually contain some sort of boot information, partition metadata, directory data and file data.
+
+\subsection{File abstraction}
+Implementations of the file abstraction must allow efficient access while reducing wasted space and fragmentation.
+
+\sldef{Contiguous block allocation}: allocate consecutive blocks to a file; each file entry is the starting block and length. \benefits: simple; fast access. \problems: external fragmentation; entire file size needs to be allocated in advance.
+
+\sldef{Linked list}: have each block store the next block pointer along the file data; each file entry is just the first (and last, possibly) block number. \benefits: solve external fragmentation. \problems: slow random seek; part of disk block used for pointer; less reliable (an error in one pointer will destroy entire file).
+
+\sldef{FAT linked list}: move all block pointers into a single table; keep the table in memory. \benefits: faster random access. \problems: the FAT tracks all disk blocks; can be large when disk is large, consuming a lot of memory.
+
+\sldef{Indexed allocation}: each file has an index block which is an array of block addresses. \texttt{Index\-Block[N]} gives the address of the \(N\)th block of the file. \benefits: less memory overhead and fast random access; \problems: file size limited by index block size; index block overhead.
+
+Variations on indexed allocation: linked list index blocks to allow larger file size---each index block points to the next block; or multi-level index, a similar idea to multi-level paging.
+
+\subsection{Free space management}
+To allocate blocks for files, we need to know which disk blocks are free.
+
+\sldef{Bitmap}: each block is represented by 1 bit. \benefits: can find first free block or blocks easily by bit-level operations. \problems: need to keep bitmap in memory for efficiency.
+
+\sldef{Linked list}: use a linked list of free blocks. \benefits: easy to locate free blcok; only first pointer needed in memory. \problems: high overhead, but can be mitigated by storing the free block list in free blocks.
+
+\subsection{Directory abstraction}
+The directory needs to keep track of contained files, and usually, map filenames to files as well.
+
+\sldef{List}: \problems: linear search to find a file; can be somewhat mitigated by using a cache to remember a few recent searches.
+
+\sldef{Hashtable}: \benefits: faster lookup. \problems: hashtable has limited size; needs good hash function.
+
+\sldef{File metadata}: Either store everything in the directory entry, or just the filename, pointing to an auxilliary structure for the rest of the metadata.
+
+\subsection{Scheduling}
+Scheduling helps to mitigate seek time and fairly share I/O between processes.
+
+Some algorithms incldue: FCFS, shortest seek first, SCAN (bi-directional) and C-SCAN (single direction, usually out to in), deadline (3 queues: sorted, read FIFO, write FIFO), no-op, completely fair queueing (time slice and per-process sorted queues), and budget fair queueing (fair sharing based on the number of sectors requested).
+
+\section{Filesystem case studies}
+\subsection{FAT}
+File data is allocated to data block clusters. Allocation information is kept as a linked list.
+
+The FAT has one entry per cluster; it stores cluster information: free, EOF, bad, or the cluster number of the next cluster. Free space is not tracked and must be calculated from the FAT.
+
+A directory is a special file, with each entry being fixed at 32-bytes, containing the 8.3 file name, attributes, creation time, size, and first cluster. The first byte of the name may have special meanings: deleted (\texttt{0xE5}), end-of-directory, parent directory, etc. The creation time is limited to 1980 to 2107, and has 2-second resolution.
+
+The number in FAT12/16/32 indicates the number of bits in the cluster index, and therefore the maximum number of clusters. (FAT32 uses only 28 bits.) (Special values like EOF and FREE also reduce the number of valid cluster indices.)
+
+Larger cluster size \benefits: larger partition possible; \problems: larger internal fragmentation.
+
+Long filenames are implemented using entries in directories before the actual entry of the file. For backwards compatibility, LFN entries have invalid attributes so implementations that do not support LFN will ignore LFN entries.
+
+To delete a file: set the first letter in the filename to \texttt{0xE5}; mark FAT entries as free.
+
+\subsection{ext2}
+Disk space is split into blocks, corresponding to one or more disk sectors, and blocks are grouped into \sldef{block groups}. Each file and directory is denoted by an \sldef{inode}, containing file metadata and data block addresses.
+
+Each block group contains a \sldef{superblock} describing the FS (total inodes, inodes per group, total blocks, blocks per group, etc. The superblock is duplicated in each block group.
+
+Each block group also has a \sldef{group descriptor} describing each block group (number of free blocks, inodes, and location of bitmaps). Each block group contains a copy of all group descriptors after its superblock copy.
+
+Each block group also has a block bitmap, tracking block usage in the block group; an inode bitmap, tracking inode usage in the group; and an inode table of inodes in the group, which is just an array of inodes.
+
+The inode (128 bytes) contains the file's mode (2), uid (2), gid (2), size (4/8), a/m/ctime (4 ea), 15 data block pointers (4 ea), and refcount (2). The 15 pointers consist of 12 direct pointers to blocks, 1 pointer to a single indirect block, 1 pointer to a double indirect block, and 1 pointer to a triple indirect block. \benefits: fast access to small files with flexibility in handling large files.
+
+A directory is a special file, containing a list of directory entries containing the file's inode number, dentry size, filename size, file type (file, directory, etc), and filename.
+
+To delete a file: remove the dentry, updating the previous entry to point to the next entry (end); update the inode and block bitmap.
+
+Directory permissions: read: can read dentries; write: can modify dentries; execute: can use as working directory.
 \end{document}
